@@ -7,6 +7,6 @@ import Ball from "./components/ball";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Ball />
+    <App />
   </React.StrictMode>
 );

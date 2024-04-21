@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import FloatingCube from "./Domino";
 import getRandomColor from "./RandomColor";
 import Ground from "./Ground";
+import Domino from "./Domino";
 
 function SphereSpawner({ spheres, setSpheres }) {
   const leftController = useController("left");
@@ -86,21 +87,8 @@ function Ball() {
   const [spheres, setSpheres] = useState([]);
   return (
     <>
-      <ARButton />
-      <Canvas>
-        <XR>
-          <directionalLight position={[0, 0, 2]} intensity={1.9} />
-          <ambientLight position={[0, 0, 2]} intensity={1} />
-          <Controllers />
-          <Physics>
-            <Ground />
-            <SphereSpawner spheres={spheres} setSpheres={setSpheres} />
-            <StartGame spheres={spheres} setSpheres={setSpheres} />
-            <FloatingCube position={[0, 2, 0]} />
-          </Physics>
-          {/* <Model position={[0, 0, 0]} scale={[0.1, 0.1, 0.1]} /> */}
-        </XR>
-      </Canvas>
+      <SphereSpawner spheres={spheres} setSpheres={setSpheres} />
+      <StartGame spheres={spheres} setSpheres={setSpheres} />
     </>
   );
 }

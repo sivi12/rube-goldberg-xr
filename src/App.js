@@ -7,6 +7,10 @@ import Ground from "./components/Ground";
 import Ball from "./components/ball";
 import Domino from "./components/Domino";
 
+import BallTracking from "./components/Test/ball-position-tracking";
+import Ramp from "./components/Test/Ramp";
+import CubeTest from "./components/Test/Cube";
+
 const Cube = ({ position, size, color }) => {
   return (
     <mesh position={position}>
@@ -40,8 +44,9 @@ function App() {
           <Controllers />
           <Physics>
             <Ground />
-            <Ball />
-            <Domino />
+            <CubeTest />
+            <Ramp />
+            {/* <Domino /> */}
           </Physics>
           {/* <Model position={[0, 0, 0]} scale={[0.1, 0.1, 0.1]} /> */}
         </XR>

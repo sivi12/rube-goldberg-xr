@@ -5,7 +5,7 @@ function Ground() {
   const [ref] = useBox(() => ({
     mass: 0,
     position: [0, 0, 0],
-    args: [10, 1, 10],
+    args: [10, 1.1, 10],
   }));
   return (
     <mesh ref={ref}>

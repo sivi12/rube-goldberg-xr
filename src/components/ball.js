@@ -1,17 +1,28 @@
-import { Canvas } from "@react-three/fiber";
-import {
-  XR,
-  Controllers,
-  useXREvent,
-  useController,
-  ARButton,
-} from "@react-three/xr";
-import { Physics, useBox, useSphere } from "@react-three/cannon";
+import { useXREvent, useController } from "@react-three/xr";
+import { useSphere } from "@react-three/cannon";
 import { useEffect, useState } from "react";
-import FloatingCube from "./Domino";
 import getRandomColor from "./RandomColor";
-import Ground from "./Ground";
-import Domino from "./Domino";
+
+function Sphere({ position, color, mass }) {
+  let _mass = mass;
+  const [ref, api] = useSphere(() => ({
+    mass: mass,
+    position,
+    type: "Dynamic",
+    args: [0.05],
+  }));
+
+  useEffect(() => {
+    api.mass.set(mass); // Stellt sicher, dass die Masse aktualisiert wird, wenn sich die `mass` Prop ändert
+  }, [_mass]);
+
+  return (
+    <mesh ref={ref}>
+      <sphereGeometry args={[0.05, 16, 16]} />
+      <meshStandardMaterial color={color} />
+    </mesh>
+  );
+}
 
 function SphereSpawner({ spheres, setSpheres }) {
   const leftController = useController("left");
@@ -44,42 +55,21 @@ function SphereSpawner({ spheres, setSpheres }) {
 }
 
 function StartGame({ spheres, setSpheres }) {
-  const rightController = useController("right");
+  const leftController = useController("left");
 
   useXREvent(
-    "selectstart",
+    "squeeze",
     () => {
-      if (rightController) {
+      if (leftController) {
         setSpheres((prevSpheres) => {
           return prevSpheres.map((sphere) => ({
             ...sphere,
-            mass: 1,
+            mass: 10,
           }));
         });
       }
     },
-    { handedness: "right" }
-  );
-}
-
-function Sphere({ position, color, mass }) {
-  let _mass = mass;
-  const [ref, api] = useSphere(() => ({
-    mass: mass,
-    position,
-    type: "Dynamic",
-    args: [0.05],
-  }));
-
-  useEffect(() => {
-    api.mass.set(mass); // Stellt sicher, dass die Masse aktualisiert wird, wenn sich die `mass` Prop ändert
-  }, [_mass]);
-
-  return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.05, 16, 16]} />
-      <meshStandardMaterial color={color} />
-    </mesh>
+    { handedness: "left" }
   );
 }
 

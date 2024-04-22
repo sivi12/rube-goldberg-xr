@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useXREvent, useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
-import getRandomColor from "./RandomColor";
+import getRandomColor from "../RandomColor";
 
 function DominoModel({ position, color }) {
   const [ref, api] = useBox(() => ({
     mass: 10,
     position,
-    onCollide: (e) =>
-      e.contact.impactVelocity > 0.0001
-        ? api.sleep() & setTimeout(() => api.wakeUp(), 2000)
-        : null,
-    args: [0.02, 0.3, 0.1],
+    args: [1, 1, 1],
   }));
 
   // Funktion erstellen um collisonen zu handeln
@@ -22,15 +18,12 @@ function DominoModel({ position, color }) {
   // }
   return (
     <mesh ref={ref}>
-      <boxGeometry args={[0.02, 0.3, 0.1]} />
+      <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );
 }
-function CloneSpawner(position) {
-  console.log(position);
-  return <DominoModel position={position} color={getRandomColor()} />;
-}
+
 function DominoSpawner({ cubes, setCubes }) {
   const rightController = useController("right");
 
@@ -69,7 +62,7 @@ function DominoCloner(e) {
   return <DominoModel position={[1.5, 1, 0]} color={"red"} />;
 }
 
-function Domino() {
+function CubeTest() {
   const [cubes, setCubes] = useState([]);
 
   return (
@@ -79,4 +72,4 @@ function Domino() {
   );
 }
 
-export default Domino;
+export default CubeTest;

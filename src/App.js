@@ -10,6 +10,8 @@ import Domino from "./components/Domino";
 import BallTracking from "./components/Test/ball-position-tracking";
 import Ramp from "./components/Test/Ramp";
 import CubeTest from "./components/Test/Cube";
+import Domino2 from "./components/Test/Cube";
+import GrabCubeTest from "./components/Test/GrabCube";
 
 const Cube = ({ position, size, color }) => {
   return (
@@ -47,6 +49,7 @@ function App() {
             <CubeTest />
             <Ramp />
             {/* <Domino /> */}
+            {/* <Ball /> */}
           </Physics>
           {/* <Model position={[0, 0, 0]} scale={[0.1, 0.1, 0.1]} /> */}
         </XR>

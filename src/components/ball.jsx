@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import getRandomColor from "./RandomColor";
 
 function Sphere({ position, color, mass }) {
-  let _mass = mass;
   const [ref, api] = useSphere(() => ({
     mass: mass,
     position,
@@ -12,6 +11,7 @@ function Sphere({ position, color, mass }) {
     args: [0.05],
   }));
 
+  let _mass = mass;
   useEffect(() => {
     api.mass.set(mass); // Stellt sicher, dass die Masse aktualisiert wird, wenn sich die `mass` Prop ändert
   }, [_mass]);
@@ -25,19 +25,19 @@ function Sphere({ position, color, mass }) {
 }
 
 function SphereSpawner({ spheres, setSpheres }) {
-  const leftController = useController("left");
+  const rightController = useController("right");
 
   useXREvent(
     "selectstart",
     () => {
-      if (leftController) {
-        const position = leftController.controller.position.toArray();
+      if (rightController) {
+        const position = rightController.controller.position.toArray();
         const color = getRandomColor();
         let mass = 0;
         setSpheres([...spheres, { position, color, mass }]);
       }
     },
-    { handedness: "left" }
+    { handedness: "right" }
   );
 
   return (
@@ -55,21 +55,21 @@ function SphereSpawner({ spheres, setSpheres }) {
 }
 
 function StartGame({ spheres, setSpheres }) {
-  const leftController = useController("left");
+  const rightController = useController("right");
 
   useXREvent(
     "squeeze",
     () => {
-      if (leftController) {
+      if (rightController) {
         setSpheres((prevSpheres) => {
           return prevSpheres.map((sphere) => ({
             ...sphere,
-            mass: 10,
+            mass: 100,
           }));
         });
       }
     },
-    { handedness: "left" }
+    { handedness: "right" }
   );
 }
 

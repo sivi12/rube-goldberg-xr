@@ -1,76 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useXREvent, useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
-import { useThree, useFrame } from "@react-three/fiber";
-import { useXR, useXREvent, useController } from "@react-three/xr";
+import * as THREE from "three";
 import getRandomColor from "../RandomColor";
+import { useFrame } from "@react-three/fiber";
 
-function DominoModel({ position, color, id, updateDominoPosition }) {
+function DominoModel({ position, color, mass, type, onRef }) {
   const [ref, api] = useBox(() => ({
-    mass: 10,
+    mass: mass,
+    type: type,
     position,
-    args: [0.1, 0.1, 0.1],
+    args: [0.05, 0.3, 0.14],
   }));
-  const { scene } = useThree();
-  const [isGrabbed, setIsGrabbed] = useState(false);
-  const leftController = useController("left");
+  // Store reference to the mesh for use in raycasting
+  useEffect(() => {
+    onRef(ref);
+  }, [ref, onRef]);
 
-  useXREvent(
-    "selectstart",
-    (e) => {
-      if (
-        leftController &&
-        leftController.controller &&
-        e.controller &&
-        e.controller.controller === leftController.controller
-      ) {
-        setIsGrabbed(true);
-        scene.attach(ref.current);
-      }
-    },
-    { handedness: "left" }
-  );
-
-  useXREvent(
-    "selectend",
-    (e) => {
-      if (
-        leftController &&
-        leftController.controller &&
-        e.controller &&
-        e.controller.controller &&
-        isGrabbed
-      ) {
-        setIsGrabbed(false);
-        scene.attach(ref.current.parent);
-        updateDominoPosition(id, ref.current.position.toArray());
-      }
-    },
-    { handedness: "left" }
-  );
-
-  useFrame(() => {
-    if (isGrabbed && leftController && leftController.controller) {
-      ref.current.position.copy(leftController.controller.position);
+  let _mass = mass;
+  useEffect(() => {
+    api.mass.set(mass);
+    if (type == "Static") {
+      api.sleep();
+      api.position.set(...position);
     }
-  });
+  }, [_mass]);
+
+  useEffect(() => {
+    if (api.position) {
+      api.position.set(...position);
+    }
+  }, [position, api.position]);
 
   return (
     <mesh ref={ref}>
-      <boxGeometry args={[0.1, 0.1, 0.1]} />
+      <boxGeometry args={[0.05, 0.3, 0.1]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );
 }
 
 function DominoSpawner({ cubes, setCubes }) {
-  const updateDominoPosition = (id, newPosition) => {
-    setCubes((cubes) =>
-      cubes.map((cube) =>
-        cube.id === id ? { ...cube, position: newPosition } : cube
-      )
-    );
-  };
-
   const rightController = useController("right");
 
   useXREvent(
@@ -79,9 +49,12 @@ function DominoSpawner({ cubes, setCubes }) {
       if (rightController && rightController.controller) {
         const position = rightController.controller.position.toArray();
         const color = getRandomColor();
-        let mass = 100;
-        const id = Math.random().toString(36).substring(7); // Unique ID for each cube
-        setCubes((prevCubes) => [...prevCubes, { id, position, color, mass }]);
+        const mass = 1;
+        const type = "Dynamic";
+        setCubes((prevCubes) => [
+          ...prevCubes,
+          { position, color, mass, type },
+        ]);
       }
     },
     { handedness: "right" }
@@ -89,27 +62,86 @@ function DominoSpawner({ cubes, setCubes }) {
 
   return (
     <>
-      {cubes.map((cube) => (
+      {cubes.map((cube, index) => (
         <DominoModel
-          key={cube.id}
-          id={cube.id}
+          key={index}
           position={cube.position}
+          mass={cube.mass}
+          type={cube.type}
           color={cube.color}
-          updateDominoPosition={updateDominoPosition}
+          onRef={(ref) => (cube.api = ref)}
         />
       ))}
     </>
   );
 }
 
-function GrabCubeTest() {
+function CubeSelector({ cubes, setCubes }) {
+  const leftController = useController("left");
+  const [selectedCube, setSelectedCube] = useState(null);
+
+  useXREvent(
+    "squeezestart",
+    () => {
+      if (leftController && leftController.controller) {
+        const tempMatrix = new THREE.Matrix4().extractRotation(
+          leftController.controller.matrixWorld
+        );
+        const raycaster = new THREE.Raycaster();
+        raycaster.ray.origin.setFromMatrixPosition(
+          leftController.controller.matrixWorld
+        );
+        raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+        const intersects = raycaster.intersectObjects(
+          cubes.map((cube) => cube.api.current),
+          true
+        );
+        if (intersects.length > 0) {
+          const firstIntersectedObject = intersects[0].object;
+          // Get the controller's current position
+
+          const cubeIndex = cubes.findIndex(
+            (cube) => cube.api.current === firstIntersectedObject
+          );
+          setSelectedCube(cubeIndex);
+          //index returnen lassen und neue funktion schreiben welche index entgegennimmt
+        }
+      }
+    },
+    { handedness: "left" }
+  );
+
+  useXREvent(
+    "squeezeend",
+    () => {
+      console.log("hallo");
+      setCubes(
+        cubes.map((cube, index) => {
+          if (index === selectedCube) {
+            return { ...cube, mass: 10 };
+          }
+          return cube;
+        })
+      );
+      setSelectedCube(null);
+    },
+    { handedness: "left" }
+  );
+
+  useFrame(() => {});
+
+  return null;
+}
+
+function GrabCube() {
   const [cubes, setCubes] = useState([]);
 
   return (
     <>
       <DominoSpawner cubes={cubes} setCubes={setCubes} />
+      <CubeSelector cubes={cubes} setCubes={setCubes} />
     </>
   );
 }
 
-export default GrabCubeTest;
+export default GrabCube;

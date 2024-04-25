@@ -12,6 +12,8 @@ import Ramp from "./components/Test/Ramp";
 import CubeTest from "./components/Test/Cube";
 import Domino2 from "./components/Test/Cube";
 import GrabCubeTest from "./components/Test/GrabCube";
+import GrabCube from "./components/Test/GrabCube";
+import DraggableBox from "./components/Test/grab-test";
 
 const Cube = ({ position, size, color }) => {
   return (
@@ -46,10 +48,13 @@ function App() {
           <Controllers />
           <Physics>
             <Ground />
-            <CubeTest />
-            <Ramp />
+            {/* <DraggableBox /> */}
+            <GrabCube />
+            {/* <CubeTest /> */}
+            {/* <Ramp /> */}
             {/* <Domino /> */}
             {/* <Ball /> */}
+            {/* <BallTracking /> */}
           </Physics>
           {/* <Model position={[0, 0, 0]} scale={[0.1, 0.1, 0.1]} /> */}
         </XR>

@@ -128,7 +128,24 @@ function CubeSelector({ cubes, setCubes }) {
     { handedness: "left" }
   );
 
-  useFrame(() => {});
+  useFrame(() => {
+    if (selectedCube !== null && leftController && leftController.controller) {
+      const newPosition = leftController.controller.position.toArray();
+      setCubes(
+        cubes.map((cube, index) => {
+          if (index === selectedCube) {
+            return {
+              ...cube,
+              position: newPosition,
+              mass: 0,
+              type: "Static",
+            };
+          }
+          return cube;
+        })
+      );
+    }
+  });
 
   return null;
 }

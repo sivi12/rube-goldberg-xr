@@ -1,12 +1,17 @@
-import { useXREvent, useController } from "@react-three/xr";
+import { useXREvent } from "@react-three/xr";
 import * as THREE from "three";
 import { updatePosition } from "./update-object-position";
+import { useState } from "react";
+import { useFrame } from "@react-three/fiber";
 
 export function ObjectSelector({ cubes, setCubes, _controller }) {
+  const [selectedCube, setSelectedCube] = useState(null);
+
   useXREvent(
     "squeezestart",
     () => {
       if (_controller && _controller.controller) {
+        console.log(_controller.controller);
         const tempMatrix = new THREE.Matrix4().extractRotation(
           _controller.controller.matrixWorld
         );
@@ -21,18 +26,34 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
         );
         if (intersects.length > 0) {
           const firstIntersectedObject = intersects[0].object;
-          const cubeIndex = cubes.findIndex(
-            (cube) => cube.api.current === firstIntersectedObject
-          );
 
-          // Neue Position setzen
-          const newPosition = _controller.controller.position.toArray();
-          setCubes(updatePosition(cubes, cubeIndex, newPosition));
+          setSelectedCube(
+            cubes.findIndex(
+              (cube) => cube.api.current === firstIntersectedObject
+            )
+          );
         }
       }
     },
     { handedness: "left" }
   );
+
+  useXREvent(
+    "squeezeend",
+    () => {
+      setSelectedCube(null);
+    },
+    { handedness: "left" }
+  );
+
+  useFrame(() => {
+    if (selectedCube !== null && _controller && _controller.controller) {
+      const newPosition = _controller.controller.position.toArray();
+      const newRoation = _controller.controller.rotation.toArray();
+
+      setCubes(updatePosition(cubes, selectedCube, newPosition, newRoation));
+    }
+  });
 
   return null;
 }

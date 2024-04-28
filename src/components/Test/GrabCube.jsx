@@ -114,15 +114,6 @@ function CubeSelector({ cubes, setCubes }) {
   useXREvent(
     "squeezeend",
     () => {
-      console.log("hallo");
-      setCubes(
-        cubes.map((cube, index) => {
-          if (index === selectedCube) {
-            return { ...cube, mass: 10 };
-          }
-          return cube;
-        })
-      );
       setSelectedCube(null);
     },
     { handedness: "left" }

@@ -5,15 +5,15 @@ import { ARButton, Controllers, XR } from "@react-three/xr";
 import { Physics } from "@react-three/cannon";
 import Ground from "./components/Ground";
 import Ball from "./components/ball";
-import Domino from "./components/Domino";
 
 import BallTracking from "./components/Test/ball-position-tracking";
 import Ramp from "./components/Test/Ramp";
-import CubeTest from "./components/Test/Cube";
-import Domino2 from "./components/Test/Cube";
+import CubeTest from "./components/Domino";
+import Domino2 from "./components/Domino";
 import GrabCubeTest from "./components/Test/GrabCube";
 import GrabCube from "./components/Test/GrabCube";
 import DraggableBox from "./components/Test/grab-test";
+import Domino from "./components/Domino";
 
 const Cube = ({ position, size, color }) => {
   return (
@@ -49,11 +49,11 @@ function App() {
           <Physics>
             <Ground />
             {/* <DraggableBox /> */}
-            <GrabCube />
-            {/* <CubeTest /> */}
-            {/* <Ramp /> */}
+            {/* <GrabCube /> */}
+            <Domino />
+            <Ramp />
             {/* <Domino /> */}
-            {/* <Ball /> */}
+            <Ball />
             {/* <BallTracking /> */}
           </Physics>
           {/* <Model position={[0, 0, 0]} scale={[0.1, 0.1, 0.1]} /> */}

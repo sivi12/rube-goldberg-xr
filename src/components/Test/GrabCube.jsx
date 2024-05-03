@@ -5,7 +5,7 @@ import * as THREE from "three";
 import getRandomColor from "../RandomColor";
 import { useFrame } from "@react-three/fiber";
 
-function DominoModel({ position, color, mass, type, onRef }) {
+function DominoModelo({ position, color, mass, type, onRef }) {
   const [ref, api] = useBox(() => ({
     mass: mass,
     type: type,
@@ -41,13 +41,13 @@ function DominoModel({ position, color, mass, type, onRef }) {
 }
 
 function DominoSpawner({ cubes, setCubes }) {
-  const rightController = useController("right");
+  const leftController = useController("left");
 
   useXREvent(
     "selectstart",
     () => {
-      if (rightController && rightController.controller) {
-        const position = rightController.controller.position.toArray();
+      if (leftController && leftController.controller) {
+        const position = leftController.controller.position.toArray();
         const color = getRandomColor();
         const mass = 1;
         const type = "Dynamic";
@@ -57,13 +57,13 @@ function DominoSpawner({ cubes, setCubes }) {
         ]);
       }
     },
-    { handedness: "right" }
+    { handedness: "left" }
   );
 
   return (
     <>
       {cubes.map((cube, index) => (
-        <DominoModel
+        <DominoModelo
           key={index}
           position={cube.position}
           mass={cube.mass}

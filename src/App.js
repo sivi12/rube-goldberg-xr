@@ -1,62 +1,60 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import "./App.css";
-import { useRef } from "react";
-import { ARButton, Controllers, XR } from "@react-three/xr";
-import { Physics } from "@react-three/cannon";
+import React, { useRef, useState } from "react";
+import { ARButton, Controllers, XR, useController } from "@react-three/xr";
+import { Physics, Debug, usePlane } from "@react-three/cannon";
 import Ground from "./components/Ground";
 import Ball from "./components/ball";
-
-import BallTracking from "./components/Test/ball-position-tracking";
 import Ramp from "./components/Test/Ramp";
-import CubeTest from "./components/Domino";
-import Domino2 from "./components/Domino";
-import GrabCubeTest from "./components/Test/GrabCube";
-import GrabCube from "./components/Test/GrabCube";
-import DraggableBox from "./components/Test/grab-test";
+import PipeModel from "./components/Test/Pipe";
+import { useGLTF } from "@react-three/drei";
+import { App2, Monkey2 } from "./components/Test/Cube";
 import Domino from "./components/Domino";
+import GrabCube from "./components/Test/GrabCube";
 
-const Cube = ({ position, size, color }) => {
-  return (
-    <mesh position={position}>
-      <boxGeometry args={size} />
-      <meshStandardMaterial color={color} />
-    </mesh>
-  );
-};
-
-const AnimatedCube = ({ position, size, color }) => {
-  const ref = useRef();
-  useFrame((state, delta) => {
-    ref.current.rotation.x += delta;
-  });
-  return (
-    <mesh position={position} ref={ref}>
-      <boxGeometry args={size} />
-      <meshStandardMaterial color={color} />
-    </mesh>
-  );
-};
+import { ObjectSpawner } from "./helpers/pipe-spawner";
+import Monkey from "./components/Test/monkey";
+import Monkeyy from "./components/Test/monkey";
 
 function App() {
+  // const { nodes, materials } = useGLTF("/sm_track_modular_half_pipe.glb");
+
+  // const pip = [
+  //   <PipeModel
+  //     _position={[0, 1.7, 0]}
+  //     nodes={nodes}
+  //     materials={materials}
+  //     key={"pipe1"}
+  //   />,
+  //   <PipeModel
+  //     _position={[0.1, 1.3, 0]}
+  //     nodes={nodes}
+  //     materials={materials}
+  //     key={"pipe2"}
+  //   />,
+  // ];
+
+  const { nodes } = useGLTF("/suzanne.glb");
+  const _geometry = nodes.Suzanne_1.geometry.scale(0.5, 0.5, 0.5);
+
   return (
     <>
       <ARButton />
       <Canvas>
+        <directionalLight position={[0, 0, 2]} intensity={1.9} />
+        <ambientLight position={[0, 0, 2]} intensity={1} />
         <XR>
-          <directionalLight position={[0, 0, 2]} intensity={1.9} />
-          <ambientLight position={[0, 0, 2]} intensity={1} />
           <Controllers />
           <Physics>
-            <Ground />
-            {/* <DraggableBox /> */}
-            {/* <GrabCube /> */}
-            <Domino />
+            <Debug>
+              <Monkeyy nodes={nodes} _geometry={_geometry} />
+              {/* <Domino /> */}
+            </Debug>
+            <Ground rotation={[-Math.PI / 2, 0, 0]} />
             <Ramp />
-            {/* <Domino /> */}
+
             <Ball />
-            {/* <BallTracking /> */}
           </Physics>
-          {/* <Model position={[0, 0, 0]} scale={[0.1, 0.1, 0.1]} /> */}
         </XR>
       </Canvas>
     </>

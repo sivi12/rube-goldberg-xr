@@ -5,13 +5,12 @@ import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
 export function ObjectSelector({ cubes, setCubes, _controller }) {
-  const [selectedCube, setSelectedCube] = useState(null);
+  const [selectedObject, setSelectedObject] = useState(null);
 
   useXREvent(
     "squeezestart",
     () => {
       if (_controller && _controller.controller) {
-        console.log(_controller.controller);
         const tempMatrix = new THREE.Matrix4().extractRotation(
           _controller.controller.matrixWorld
         );
@@ -25,9 +24,8 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
           true
         );
         if (intersects.length > 0) {
-          const firstIntersectedObject = intersects[0].object;
-
-          setSelectedCube(
+          const firstIntersectedObject = intersects[0].object.parent;
+          setSelectedObject(
             cubes.findIndex(
               (cube) => cube.api.current === firstIntersectedObject
             )
@@ -41,17 +39,17 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
   useXREvent(
     "squeezeend",
     () => {
-      setSelectedCube(null);
+      setSelectedObject(null);
     },
     { handedness: "left" }
   );
 
   useFrame(() => {
-    if (selectedCube !== null && _controller && _controller.controller) {
+    if (selectedObject !== null && _controller && _controller.controller) {
       const newPosition = _controller.controller.position.toArray();
       const newRoation = _controller.controller.rotation.toArray();
 
-      setCubes(updatePosition(cubes, selectedCube, newPosition, newRoation));
+      setCubes(updatePosition(cubes, selectedObject, newPosition, newRoation));
     }
   });
 

@@ -8,7 +8,7 @@ function Sphere({ position, color, mass }) {
     mass: mass,
     position,
     type: "Dynamic",
-    args: [0.05],
+    args: [0.02],
   }));
 
   let _mass = mass;
@@ -18,7 +18,7 @@ function Sphere({ position, color, mass }) {
 
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[0.05, 16, 16]} />
+      <sphereGeometry args={[0.02, 16, 16]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );

@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../helpers/object-selcetor";
-import { DominoSpawner } from "../helpers/objekt-spwaner";
+import { DominoSpawner } from "../helpers/domino-spwaner";
+import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
+import getRandomColor from "./RandomColor";
 
-export function DominoModel({ position, color, mass, type, rotation, onRef }) {
+export function DominoModel({ position, mass, type, rotation, onRef }) {
   const [ref, api] = useBox(() => ({
     mass: mass,
     position,
@@ -33,7 +35,7 @@ export function DominoModel({ position, color, mass, type, rotation, onRef }) {
   return (
     <mesh ref={ref}>
       <boxGeometry args={[0.02, 0.2, 0.1]} />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial color={getRandomColor()} />
     </mesh>
   );
 }
@@ -41,6 +43,7 @@ export function DominoModel({ position, color, mass, type, rotation, onRef }) {
 function Domino() {
   const [cubes, setCubes] = useState([]);
   const leftController = useController("left");
+  console.log(leftController);
 
   return (
     <>
@@ -48,6 +51,7 @@ function Domino() {
         cubes={cubes}
         setCubes={setCubes}
         _controller={leftController}
+        model={"domino"}
       />
       <ObjectSelector
         cubes={cubes}

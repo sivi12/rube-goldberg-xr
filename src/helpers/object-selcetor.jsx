@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { updatePosition } from "./update-object-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useAButton } from "../components/Test/a-button-pressed";
+import { useAButton } from "../components/a-button-pressed";
 
 export function ObjectSelector({ cubes, setCubes, _controller }) {
   const [selectedObject, setSelectedObject] = useState(null);
@@ -28,11 +28,11 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
         if (intersects.length > 0) {
           //const firstIntersectedObject = intersects[0].object.parent; <---- für monkey model
           const firstIntersectedObject = intersects[0].object;
-          setSelectedObject(
-            cubes.findIndex(
-              (cube) => cube.api.current === firstIntersectedObject
-            )
+          const index = cubes.findIndex(
+            (cube) => cube.api.current === firstIntersectedObject
           );
+          setSelectedObject(index);
+          setLastSelectedObject(index);
         }
       }
     },
@@ -46,12 +46,6 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
     },
     { handedness: "right" }
   );
-
-  // useAButton(controller, () => {
-  //   console.log(api);
-  //   //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
-  //   api.wakeUp(ref);
-  // });
 
   useFrame(() => {
     if (selectedObject !== null && _controller && _controller.controller) {

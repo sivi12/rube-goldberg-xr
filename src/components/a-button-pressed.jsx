@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export function useAButton(controller, handler) {
+export function useButton(controller, button, handler) {
   useEffect(() => {
     let interval = setInterval(() => {
       if (
@@ -9,8 +9,16 @@ export function useAButton(controller, handler) {
         controller.inputSource.gamepad
       ) {
         const aButton = controller.inputSource.gamepad.buttons[4];
-        if (aButton.pressed) {
-          console.log("pressed");
+        const bButton = controller.inputSource.gamepad.buttons[5];
+        if ((button === "a" || button === "x") && aButton.pressed) {
+          console.log("a pressed");
+
+          if (handler) {
+            handler();
+          }
+        }
+        if ((button === "b" || button === "y") && bButton.pressed) {
+          console.log("b pressed");
 
           if (handler) {
             handler();

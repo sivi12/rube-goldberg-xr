@@ -6,7 +6,7 @@ import { DominoSpawner } from "../helpers/domino-spwaner";
 import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
 import getRandomColor from "./RandomColor";
 import { useThree } from "@react-three/fiber";
-import { useAButton } from "./Test/a-button-pressed";
+import { useAButton, useButton } from "./a-button-pressed";
 
 export function DominoModel({
   position,
@@ -26,8 +26,7 @@ export function DominoModel({
     onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
   }));
 
-  useAButton(controller, () => {
-    console.log(api);
+  useButton(controller, "a", () => {
     //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
     api.wakeUp(ref);
   });
@@ -54,21 +53,22 @@ export function DominoModel({
 
 function Domino() {
   const [cubes, setCubes] = useState([]);
-  const leftController = useController("right");
+  const rightController = useController("right");
 
   return (
     <>
       <DominoSpawner
         cubes={cubes}
         setCubes={setCubes}
-        _controller={leftController}
+        _controller={rightController}
         model={"domino"}
       />
       <ObjectSelector
         cubes={cubes}
         setCubes={setCubes}
-        _controller={leftController}
+        _controller={rightController}
       />
+      {}
     </>
   );
 }

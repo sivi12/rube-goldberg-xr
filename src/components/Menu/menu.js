@@ -1,12 +1,11 @@
 import { Text, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useController, useXREvent } from "@react-three/xr";
-import { useEffect, useRef, useState } from "react";
-import MonkeyModel from "../Test/monkeyModel";
+import { useRef, useState } from "react";
 import * as THREE from "three";
-import getRandomColor from "../RandomColor";
 import Domino from "../Domino";
 import Ball from "../ball";
+import { AnimatedCube, AnimatedSphere, Model } from "./animated-mini-models";
 
 export default function MenuButton({ label, onClick }) {
   const leftController = useController("left");
@@ -15,10 +14,12 @@ export default function MenuButton({ label, onClick }) {
   const [selected, setSelected] = useState(null);
   const [showDomino, setShowDomino] = useState(false);
   const [showKugel, setShowKugel] = useState(false);
+  const [startGame, setStartGame] = useState(false);
 
   const menuRef = useRef();
   const dominoRef = useRef();
   const kugelRef = useRef();
+  const startButtonRef = useRef();
 
   useXREvent("selectstart", (event) => {
     if (leftController) {
@@ -39,6 +40,10 @@ export default function MenuButton({ label, onClick }) {
         true
       );
       const intersectsKugel = raycaster.intersectObject(kugelRef.current, true);
+      const intersectsStartButton = raycaster.intersectObject(
+        startButtonRef.current,
+        true
+      );
 
       //   if (intersectsMenu.length > 0) {
       //     console.log("Menu ausgewählt");
@@ -52,6 +57,10 @@ export default function MenuButton({ label, onClick }) {
       if (intersectsKugel.length > 0) {
         console.log("Kugel ausgewählt");
         setShowKugel(true);
+      }
+      if (intersectsStartButton.length > 0) {
+        console.log("start ausgewählt");
+        setStartGame(true);
       }
     }
   });
@@ -78,10 +87,10 @@ export default function MenuButton({ label, onClick }) {
     <>
       <group position={position} rotation={rotation}>
         <mesh name="background" ref={menuRef}>
-          <boxGeometry args={[0.6, 0.5, 0.02]} />
+          <boxGeometry args={[0.6, 0.7, 0.02]} />
           <meshStandardMaterial color="royalblue" />
           <Text
-            position={[0, 0.2, 0.05]}
+            position={[0, 0.3, 0.05]}
             fontSize={0.03}
             color="white"
             anchorX="center"
@@ -90,11 +99,8 @@ export default function MenuButton({ label, onClick }) {
             Menu
           </Text>
         </mesh>
-        <mesh position={[0.27, -0.225, 0.0]} name="grabPoint">
-          <boxGeometry args={[0.06, 0.05, 0.025]} />
-          <meshStandardMaterial color="yellow" />
-        </mesh>
-        <mesh position={[-0.13, 0.07, 0.1]} ref={dominoRef}>
+
+        <mesh position={[-0.13, 0.17, 0.1]} ref={dominoRef}>
           <AnimatedCube size={[0.06, 0.1, 0.015]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -107,7 +113,7 @@ export default function MenuButton({ label, onClick }) {
           </Text>
         </mesh>
 
-        <mesh position={[0.13, 0.07, 0.1]} ref={kugelRef}>
+        <mesh position={[0.13, 0.17, 0.1]} ref={kugelRef}>
           <AnimatedSphere size={[]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -120,7 +126,7 @@ export default function MenuButton({ label, onClick }) {
           </Text>
         </mesh>
 
-        <mesh position={[0.13, -0.09, 0.1]}>
+        <mesh position={[0.13, 0.01, 0.1]}>
           <AnimatedCube size={[0.06, 0.1, 0.015]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -133,7 +139,7 @@ export default function MenuButton({ label, onClick }) {
           </Text>
         </mesh>
 
-        <mesh position={[-0.13, -0.09, 0.1]}>
+        <mesh position={[-0.13, 0.01, 0.1]}>
           <Model />
           <Text
             position={[0, 0.08, 0.0]}
@@ -145,6 +151,20 @@ export default function MenuButton({ label, onClick }) {
             Rampe
           </Text>
         </mesh>
+
+        <mesh position={[0, -0.275, 0.0]} name="grabPoint" ref={startButtonRef}>
+          <boxGeometry args={[0.3, 0.15, 0.025]} />
+          <meshStandardMaterial color="green" />
+          <Text
+            position={[0, 0, 0.02]}
+            fontSize={0.03}
+            color="white"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Start Game
+          </Text>
+        </mesh>
       </group>
       <group>
         {showDomino && <Domino />}
@@ -154,51 +174,3 @@ export default function MenuButton({ label, onClick }) {
     </>
   );
 }
-
-function Model(props) {
-  const { nodes, materials } = useGLTF("/sm_track_modular_half_pipe.glb");
-  const ref = useRef();
-  useFrame((state, delta) => {
-    ref.current.rotation.y += delta;
-  });
-  return (
-    <group {...props} dispose={null} ref={ref}>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={
-          nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0
-            .geometry
-        }
-        material={materials.M_TrackModularHalfPipe_LOW}
-        scale={0.000016}
-      />
-    </group>
-  );
-}
-
-const AnimatedCube = ({ size, color }) => {
-  const ref = useRef();
-  useFrame((state, delta) => {
-    ref.current.rotation.y += delta;
-  });
-  return (
-    <mesh ref={ref}>
-      <boxGeometry args={size} />
-      <meshStandardMaterial color={getRandomColor()} />
-    </mesh>
-  );
-};
-
-const AnimatedSphere = ({ size, color }) => {
-  const ref = useRef();
-  useFrame((state, delta) => {
-    ref.current.rotation.y += delta;
-  });
-  return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.05, 16, 16]} />
-      <meshLambertMaterial color={getRandomColor()} />
-    </mesh>
-  );
-};

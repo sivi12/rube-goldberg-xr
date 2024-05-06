@@ -1,5 +1,6 @@
 import { useXREvent } from "@react-three/xr";
 import { DominoModel } from "../components/Domino";
+import getRandomColor from "../components/RandomColor";
 
 export function DominoSpawner({ cubes, setCubes, _controller, model }) {
   useXREvent(
@@ -12,13 +13,14 @@ export function DominoSpawner({ cubes, setCubes, _controller, model }) {
         // console.log(_controller.controller);
         const mass = 100;
         const type = "Dynamic";
+        const color = getRandomColor();
         setCubes((prevCubes) => [
           ...prevCubes,
-          { position, mass, type, rotation },
+          { position, mass, type, rotation, color },
         ]);
       }
     },
-    { handedness: "left" }
+    { handedness: "right" }
   );
 
   return (
@@ -29,7 +31,9 @@ export function DominoSpawner({ cubes, setCubes, _controller, model }) {
           position={cube.position}
           mass={cube.mass}
           type={cube.type}
+          color={cube.color}
           rotation={cube.rotation}
+          controller={_controller}
           onRef={(ref) => (cube.api = ref)}
         />
       ))}

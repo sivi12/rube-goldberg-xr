@@ -3,9 +3,11 @@ import * as THREE from "three";
 import { updatePosition } from "./update-object-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useAButton } from "../components/Test/a-button-pressed";
 
 export function ObjectSelector({ cubes, setCubes, _controller }) {
   const [selectedObject, setSelectedObject] = useState(null);
+  const [lastSelectedObject, setLastSelectedObject] = useState(null);
 
   useXREvent(
     "squeezestart",
@@ -24,7 +26,8 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
           true
         );
         if (intersects.length > 0) {
-          const firstIntersectedObject = intersects[0].object.parent;
+          //const firstIntersectedObject = intersects[0].object.parent; <---- für monkey model
+          const firstIntersectedObject = intersects[0].object;
           setSelectedObject(
             cubes.findIndex(
               (cube) => cube.api.current === firstIntersectedObject
@@ -33,7 +36,7 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
         }
       }
     },
-    { handedness: "left" }
+    { handedness: "right" }
   );
 
   useXREvent(
@@ -41,15 +44,23 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
     () => {
       setSelectedObject(null);
     },
-    { handedness: "left" }
+    { handedness: "right" }
   );
+
+  // useAButton(controller, () => {
+  //   console.log(api);
+  //   //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
+  //   api.wakeUp(ref);
+  // });
 
   useFrame(() => {
     if (selectedObject !== null && _controller && _controller.controller) {
       const newPosition = _controller.controller.position.toArray();
       const newRoation = _controller.controller.rotation.toArray();
-
-      setCubes(updatePosition(cubes, selectedObject, newPosition, newRoation));
+      const type = "Static";
+      setCubes(
+        updatePosition(cubes, selectedObject, type, newPosition, newRoation)
+      );
     }
   });
 

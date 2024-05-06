@@ -15,6 +15,7 @@ import GrabCube from "./components/Test/GrabCube";
 import { ObjectSpawner } from "./helpers/pipe-spawner";
 import Monkey from "./components/Test/monkey";
 import Monkeyy from "./components/Test/monkey";
+import MenuButton from "./components/Menu/menu";
 
 function App() {
   // const { nodes, materials } = useGLTF("/sm_track_modular_half_pipe.glb");
@@ -47,13 +48,14 @@ function App() {
           <Controllers />
           <Physics>
             <Debug>
-              <Monkeyy nodes={nodes} _geometry={_geometry} />
-              {/* <Domino /> */}
+              {/* <Monkeyy nodes={nodes} _geometry={_geometry} /> */}
+              <Domino />
+              {/* <MenuButton /> */}
             </Debug>
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
             <Ramp />
 
-            <Ball />
+            {/* <Ball /> */}
           </Physics>
         </XR>
       </Canvas>

@@ -1,20 +1,36 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useController } from "@react-three/xr";
+import { useController, useXR, useXREvent } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../helpers/object-selcetor";
 import { DominoSpawner } from "../helpers/domino-spwaner";
 import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
 import getRandomColor from "./RandomColor";
+import { useThree } from "@react-three/fiber";
+import { useAButton } from "./Test/a-button-pressed";
 
-export function DominoModel({ position, mass, type, rotation, onRef }) {
+export function DominoModel({
+  position,
+  mass,
+  type,
+  rotation,
+  color,
+  controller,
+  onRef,
+}) {
   const [ref, api] = useBox(() => ({
     mass: mass,
     position,
     type: type,
     rotation: rotation,
     args: [0.02, 0.2, 0.1],
-    onCollide: (e) => (e.contact.impactVelocity > 0.001 ? api.sleep() : null),
+    onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
   }));
+
+  useAButton(controller, () => {
+    console.log(api);
+    //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
+    api.wakeUp(ref);
+  });
 
   useEffect(() => {
     onRef(ref);
@@ -27,23 +43,18 @@ export function DominoModel({ position, mass, type, rotation, onRef }) {
     if (api.rotation) {
       api.rotation.set(...rotation);
     }
-
-    if (type == "Static") {
-      api.sleep();
-    }
-  }, [position, api.position, type, api]);
+  }, [position, api.position, api]);
   return (
     <mesh ref={ref}>
       <boxGeometry args={[0.02, 0.2, 0.1]} />
-      <meshStandardMaterial color={getRandomColor()} />
+      <meshStandardMaterial color={color} />
     </mesh>
   );
 }
 
 function Domino() {
   const [cubes, setCubes] = useState([]);
-  const leftController = useController("left");
-  console.log(leftController);
+  const leftController = useController("right");
 
   return (
     <>

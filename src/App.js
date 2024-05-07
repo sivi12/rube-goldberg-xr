@@ -50,8 +50,8 @@ function App() {
             <Debug>
               {/* <Monkeyy nodes={nodes} _geometry={_geometry} /> */}
               {/* <Domino /> */}
-              <MenuButton />
             </Debug>
+            <MenuButton />
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
             <Ramp />
 

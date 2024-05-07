@@ -21,49 +21,58 @@ export default function MenuButton({ label, onClick }) {
   const kugelRef = useRef();
   const startButtonRef = useRef();
 
-  useXREvent("selectstart", (event) => {
-    if (leftController) {
-      const tempMatrix = new THREE.Matrix4();
-      // Raycaster Setup
-      const raycaster = new THREE.Raycaster();
-      tempMatrix
-        .identity()
-        .extractRotation(leftController.controller.matrixWorld);
-      raycaster.ray.origin.setFromMatrixPosition(
-        leftController.controller.matrixWorld
-      );
-      raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+  useXREvent(
+    "selectstart",
+    (event) => {
+      if (leftController) {
+        const tempMatrix = new THREE.Matrix4();
+        // Raycaster Setup
+        const raycaster = new THREE.Raycaster();
+        tempMatrix
+          .identity()
+          .extractRotation(leftController.controller.matrixWorld);
+        raycaster.ray.origin.setFromMatrixPosition(
+          leftController.controller.matrixWorld
+        );
+        raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
 
-      const intersectsMenu = raycaster.intersectObject(menuRef.current, true);
-      const intersectsDomino = raycaster.intersectObject(
-        dominoRef.current,
-        true
-      );
-      const intersectsKugel = raycaster.intersectObject(kugelRef.current, true);
-      const intersectsStartButton = raycaster.intersectObject(
-        startButtonRef.current,
-        true
-      );
+        const intersectsMenu = raycaster.intersectObject(menuRef.current, true);
+        const intersectsDomino = raycaster.intersectObject(
+          dominoRef.current,
+          true
+        );
+        const intersectsKugel = raycaster.intersectObject(
+          kugelRef.current,
+          true
+        );
+        const intersectsStartButton = raycaster.intersectObject(
+          startButtonRef.current,
+          true
+        );
 
-      //   if (intersectsMenu.length > 0) {
-      //     console.log("Menu ausgewählt");
-      //     setSelected("menu");
-      //     console.log(selected);
-      //   }
-      if (intersectsDomino.length > 0) {
-        console.log("Domino ausgewählt");
-        setShowDomino(true);
+        //   if (intersectsMenu.length > 0) {
+        //     console.log("Menu ausgewählt");
+        //     setSelected("menu");
+        //     console.log(selected);
+        //   }
+        if (intersectsDomino.length > 0) {
+          console.log("Domino ausgewählt");
+          setShowDomino(true);
+          setShowKugel(false);
+        }
+        if (intersectsKugel.length > 0) {
+          console.log("Kugel ausgewählt");
+          setShowKugel(true);
+          setShowDomino(false);
+        }
+        if (intersectsStartButton.length > 0) {
+          console.log("start ausgewählt");
+          setStartGame(true);
+        }
       }
-      if (intersectsKugel.length > 0) {
-        console.log("Kugel ausgewählt");
-        setShowKugel(true);
-      }
-      if (intersectsStartButton.length > 0) {
-        console.log("start ausgewählt");
-        setStartGame(true);
-      }
-    }
-  });
+    },
+    { handedness: "left" }
+  );
 
   useXREvent(
     "selectend",

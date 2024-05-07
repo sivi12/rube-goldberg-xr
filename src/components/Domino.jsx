@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useController, useXR, useXREvent } from "@react-three/xr";
+import React, { useEffect, useState } from "react";
+import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../helpers/object-selcetor";
 import { DominoSpawner } from "../helpers/domino-spwaner";
-import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
-import getRandomColor from "./RandomColor";
-import { useThree } from "@react-three/fiber";
-import { useAButton, useButton } from "./a-button-pressed";
+import { observer } from "mobx-react";
+import { useButton } from "./a-button-pressed";
+import cubeStore from "../Store/cube-store";
 
 export function DominoModel({
   position,
@@ -51,26 +50,16 @@ export function DominoModel({
   );
 }
 
-function Domino() {
-  const [cubes, setCubes] = useState([]);
+export const Domino = observer(() => {
   const rightController = useController("right");
 
   return (
     <>
-      <DominoSpawner
-        cubes={cubes}
-        setCubes={setCubes}
-        _controller={rightController}
-        model={"domino"}
-      />
-      <ObjectSelector
-        cubes={cubes}
-        setCubes={setCubes}
-        _controller={rightController}
-      />
+      <DominoSpawner _controller={rightController} model={"domino"} />
+      <ObjectSelector _controller={rightController} />
       {}
     </>
   );
-}
+});
 
 export default Domino;

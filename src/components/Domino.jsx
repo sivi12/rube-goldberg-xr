@@ -3,10 +3,7 @@ import { useController, useXR, useXREvent } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../helpers/object-selcetor";
 import { DominoSpawner } from "../helpers/domino-spwaner";
-import { Controller } from "three/examples/jsm/libs/lil-gui.module.min.js";
-import getRandomColor from "./RandomColor";
-import { useThree } from "@react-three/fiber";
-import { useAButton, useButton } from "./a-button-pressed";
+import { useButton } from "../helpers/buttons";
 
 export function DominoModel({
   position,
@@ -51,10 +48,8 @@ export function DominoModel({
   );
 }
 
-function Domino() {
-  const [cubes, setCubes] = useState([]);
+function Domino({ cubes, setCubes }) {
   const rightController = useController("right");
-
   return (
     <>
       <DominoSpawner

@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { updatePosition } from "./update-object-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useAButton } from "../components/a-button-pressed";
+import { useAButton } from "./buttons";
 
 export function ObjectSelector({ cubes, setCubes, _controller }) {
   const [selectedObject, setSelectedObject] = useState(null);

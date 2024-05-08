@@ -1,7 +1,7 @@
 import { useXREvent } from "@react-three/xr";
 import { DominoModel } from "../components/Domino";
 import getRandomColor from "../components/RandomColor";
-import { useAButton } from "../components/a-button-pressed";
+import { useAButton } from "./buttons";
 import { useEffect, useState } from "react";
 
 export function DominoSpawner({ cubes, setCubes, _controller, model }) {

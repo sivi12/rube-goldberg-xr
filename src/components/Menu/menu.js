@@ -6,6 +6,9 @@ import * as THREE from "three";
 import Domino from "../Domino";
 import Ball from "../ball";
 import { AnimatedCube, AnimatedSphere, Model } from "./animated-mini-models";
+import GameDominos from "../../helpers/game-dominos";
+import { useButton } from "../../helpers/buttons";
+import SaveGameDominos from "../../helpers/save-game-dominos";
 
 export default function MenuButton({ label, onClick }) {
   const leftController = useController("left");
@@ -15,6 +18,10 @@ export default function MenuButton({ label, onClick }) {
   const [showDomino, setShowDomino] = useState(false);
   const [showKugel, setShowKugel] = useState(false);
   const [startGame, setStartGame] = useState(false);
+  const [saveCubes, setSaveCubes] = useState(false); // wird erst nach 0.3 sekunden gesetzt damit api laden kann und gleichzeitig wartet game domino 0.3 sek mit rendern
+
+  const [cubes, setCubes] = useState([]);
+  const [newCubes, setNewCubes] = useState([]);
 
   const menuRef = useRef();
   const dominoRef = useRef();
@@ -53,14 +60,18 @@ export default function MenuButton({ label, onClick }) {
       if (intersectsDomino.length > 0) {
         console.log("Domino ausgewählt");
         setShowDomino(true);
+        setShowKugel(false);
       }
       if (intersectsKugel.length > 0) {
         console.log("Kugel ausgewählt");
         setShowKugel(true);
+        setShowDomino(false);
       }
       if (intersectsStartButton.length > 0) {
         console.log("start ausgewählt");
         setStartGame(true);
+        setShowKugel(false);
+        setShowDomino(false);
       }
     }
   });
@@ -81,6 +92,21 @@ export default function MenuButton({ label, onClick }) {
       setPosition(newPosition);
       setRotation(newRotation);
     }
+  });
+
+  useButton(leftController, "x", () => {
+    setSaveCubes(true);
+
+    setTimeout(() => {
+      setStartGame(true);
+      console.log(newCubes);
+    }, 200);
+  });
+
+  useButton(leftController, "y", () => {
+    setStartGame(false);
+    setSaveCubes(false);
+    setNewCubes([]);
   });
 
   return (
@@ -167,8 +193,17 @@ export default function MenuButton({ label, onClick }) {
         </mesh>
       </group>
       <group>
-        {showDomino && <Domino />}
+        {!startGame && <Domino cubes={cubes} setCubes={setCubes} />}
         {showKugel && <Ball />}
+        {saveCubes && (
+          <SaveGameDominos
+            cubes={cubes}
+            newCubes={newCubes}
+            setNewCubes={setNewCubes}
+            saveCubes={saveCubes}
+          />
+        )}
+        {startGame && <GameDominos newCubes={newCubes} />}
         {/* andere Elemente Ihrer Komponente */}
       </group>
     </>

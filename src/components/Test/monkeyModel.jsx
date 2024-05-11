@@ -2,13 +2,13 @@ import { useTrimesh } from "@react-three/cannon";
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { MeshNormalMaterial } from "three";
-import { ObjectSpawner } from "../../helpers/pipe-spawner";
+import { ObjectSpawner } from "../../helpers/model-spawner";
 
 export default function MonkeyModel({
   position,
   rotation,
   nodes,
-  _geometry,
+  geometry,
   onRef,
 }) {
   const data1 = nodes.Suzanne_1.geometry.attributes.position.array;
@@ -39,7 +39,7 @@ export default function MonkeyModel({
     <group ref={ref} position={position} dispose={null}>
       <mesh
         castShadow
-        geometry={_geometry}
+        geometry={geometry}
         material={useMemo(() => new MeshNormalMaterial(), [])}
       />
     </group>

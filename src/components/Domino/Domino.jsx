@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useController, useXR, useXREvent } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
-import { ObjectSelector } from "../helpers/object-selcetor";
-import { DominoSpawner } from "../helpers/domino-spwaner";
-import { useButton } from "../helpers/buttons";
+import { ObjectSelector } from "../../helpers/object-selcetor";
+
+import { useButton } from "../../helpers/buttons";
+import { ObejctSpawner } from "../../helpers/object-spwaner";
 
 export function DominoModel({
   position,
@@ -48,15 +49,16 @@ export function DominoModel({
   );
 }
 
-function Domino({ cubes, setCubes }) {
+function Domino({ cubes, setCubes, showObject }) {
   const rightController = useController("right");
   return (
     <>
-      <DominoSpawner
-        cubes={cubes}
-        setCubes={setCubes}
+      <ObejctSpawner
+        objects={cubes}
+        setObjects={setCubes}
         _controller={rightController}
         model={"domino"}
+        showObject={showObject}
       />
       <ObjectSelector
         cubes={cubes}

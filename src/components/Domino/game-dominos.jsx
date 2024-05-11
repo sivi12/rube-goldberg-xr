@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 function DominoModel({ position, mass, type, rotation, color }) {
   const [ref, api] = useBox(() => ({
-    mass: mass,
+    mass: 10,
     position,
     type: type,
     rotation: rotation,
@@ -20,10 +20,6 @@ function DominoModel({ position, mass, type, rotation, color }) {
 }
 
 export default function GameDominos({ newCubes }) {
-  console.log("ukjsvdncalkfjsdnldmfknsdllöadsvnjdlkm");
-  useEffect(() => {
-    console.log(newCubes); // Dies wird jedes Mal ausgeführt, wenn newCubes sich ändert
-  }, [newCubes]);
   //   const [newCubes, setNewCubes] = useState([]);
 
   //   useEffect(() => {

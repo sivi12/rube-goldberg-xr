@@ -5,17 +5,17 @@ import { ARButton, Controllers, XR, useController } from "@react-three/xr";
 import { Physics, Debug, usePlane } from "@react-three/cannon";
 import Ground from "./components/Ground";
 import Ball from "./components/ball";
-import Ramp from "./components/Test/Ramp";
-import PipeModel from "./components/Test/Pipe";
+import PipeModel from "./components/Pipe/Pipe";
 import { useGLTF } from "@react-three/drei";
 import { App2, Monkey2 } from "./components/Test/Cube";
-import Domino from "./components/Domino";
+import Domino from "./components/Domino/Domino";
 import GrabCube from "./components/Test/GrabCube";
 
-import { ObjectSpawner } from "./helpers/pipe-spawner";
+import { ObjectSpawner } from "./helpers/model-spawner";
 import Monkey from "./components/Test/monkey";
 import Monkeyy from "./components/Test/monkey";
 import MenuButton from "./components/Menu/menu";
+import Pipe from "./components/Pipe/Pipe";
 
 function App() {
   // const { nodes, materials } = useGLTF("/sm_track_modular_half_pipe.glb");
@@ -35,8 +35,15 @@ function App() {
   //   />,
   // ];
 
-  const { nodes } = useGLTF("/suzanne.glb");
-  const _geometry = nodes.Suzanne_1.geometry.scale(0.5, 0.5, 0.5);
+  const { nodes } = useGLTF("/sm_track_modular_half_pipe.glb");
+  const _geometry =
+    nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry.scale(
+      0.005,
+      0.005,
+      0.005
+    );
+  // const { nodes } = useGLTF("/suzanne.glb");
+  // const _geometry = nodes.Suzanne_1.geometry.scale(0.5, 0.5, 0.5);
 
   return (
     <>
@@ -48,14 +55,13 @@ function App() {
           <Controllers />
           <Physics>
             <Debug>
+              {/* <Pipe nodes={nodes} _geometry={_geometry} /> */}
               {/* <Monkeyy nodes={nodes} _geometry={_geometry} /> */}
               {/* <Domino /> */}
+              <MenuButton nodes={nodes} _geometry={_geometry} />
             </Debug>
-            <MenuButton />
-            <Ground rotation={[-Math.PI / 2, 0, 0]} />
-            <Ramp />
 
-            {/* <Ball /> */}
+            <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Physics>
         </XR>
       </Canvas>

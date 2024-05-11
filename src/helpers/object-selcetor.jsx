@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useAButton } from "./buttons";
 
-export function ObjectSelector({ cubes, setCubes, _controller }) {
+export function ObjectSelector({ cubes, setCubes, _controller, isGLTF }) {
   const [selectedObject, setSelectedObject] = useState(null);
   const [lastSelectedObject, setLastSelectedObject] = useState(null);
 
@@ -25,9 +25,14 @@ export function ObjectSelector({ cubes, setCubes, _controller }) {
           cubes.map((cube) => cube.api.current),
           true
         );
+        let firstIntersectedObject;
         if (intersects.length > 0) {
-          //const firstIntersectedObject = intersects[0].object.parent; <---- für monkey model
-          const firstIntersectedObject = intersects[0].object;
+          if (isGLTF) {
+            firstIntersectedObject = intersects[0].object.parent;
+          } else {
+            firstIntersectedObject = intersects[0].object;
+          }
+
           const index = cubes.findIndex(
             (cube) => cube.api.current === firstIntersectedObject
           );

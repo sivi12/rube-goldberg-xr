@@ -8,7 +8,8 @@ function Sphere({ position, color, mass }) {
     mass: mass,
     position,
     type: "Dynamic",
-    args: [0.02],
+    args: [0.03],
+    ccdSweptSphereRadius: 0.05,
   }));
 
   let _mass = mass;
@@ -18,19 +19,19 @@ function Sphere({ position, color, mass }) {
 
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[0.02, 16, 16]} />
+      <sphereGeometry args={[0.03, 16, 16]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );
 }
 
-function SphereSpawner({ spheres, setSpheres }) {
+function SphereSpawner({ spheres, setSpheres, showObject }) {
   const rightController = useController("right");
 
   useXREvent(
     "selectstart",
     () => {
-      if (rightController) {
+      if (rightController && showObject === "kugel") {
         const position = rightController.controller.position.toArray();
         const color = getRandomColor();
         let mass = 0;
@@ -73,11 +74,14 @@ function StartGame({ spheres, setSpheres }) {
   );
 }
 
-function Ball() {
-  const [spheres, setSpheres] = useState([]);
+function Ball({ spheres, setSpheres, showObject }) {
   return (
     <>
-      <SphereSpawner spheres={spheres} setSpheres={setSpheres} />
+      <SphereSpawner
+        spheres={spheres}
+        setSpheres={setSpheres}
+        showObject={showObject}
+      />
       <StartGame spheres={spheres} setSpheres={setSpheres} />
     </>
   );

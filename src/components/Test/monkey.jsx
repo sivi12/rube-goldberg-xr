@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useController } from "@react-three/xr";
 import { useState } from "react";
-import { ObjectSpawner } from "../../helpers/pipe-spawner";
+import { ModelSpawner } from "../../helpers/model-spawner";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 
 export default function Monkeyy({ nodes, _geometry }) {
@@ -9,7 +9,7 @@ export default function Monkeyy({ nodes, _geometry }) {
   const _controller = useController("left");
   return (
     <>
-      <ObjectSpawner
+      <ModelSpawner
         objects={objects}
         setObjects={setObjects}
         _controller={_controller}

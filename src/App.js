@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { ARButton, Controllers, XR, useController } from "@react-three/xr";
 import { Physics, Debug, usePlane } from "@react-three/cannon";
 import Ground from "./components/Ground";
-import Ball from "./components/ball";
+import Ball from "./components/Ball/ball";
 import PipeModel from "./components/Pipe/Pipe";
 import { useGLTF } from "@react-three/drei";
 import { App2, Monkey2 } from "./components/Test/Cube";
@@ -58,8 +58,8 @@ function App() {
               {/* <Pipe nodes={nodes} _geometry={_geometry} /> */}
               {/* <Monkeyy nodes={nodes} _geometry={_geometry} /> */}
               {/* <Domino /> */}
-              <MenuButton nodes={nodes} _geometry={_geometry} />
             </Debug>
+            <MenuButton nodes={nodes} _geometry={_geometry} />
 
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Physics>

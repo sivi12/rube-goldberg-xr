@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTrimesh } from "@react-three/cannon";
-import { useController } from "@react-three/xr";
-import { ModelSpawner } from "../../helpers/model-spawner";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
 
@@ -57,26 +55,19 @@ export function PipeModel({
 export default function Pipe({ nodes, _geometry, showObject }) {
   // console.log(_geometry);
   // console.log(nodes);
-  const [objects, setObjects] = useState([]);
-  const _controller = useController("right");
+  const [objects, setObjects] = useState([]); //wird nicht wie bei den anderen Objekten im Menü definiert. Grund dafür ist scale
 
   return (
     <>
       <ObejctSpawner
         objects={objects}
         setObjects={setObjects}
-        _controller={_controller}
         nodes={nodes}
         _geometry={_geometry}
         model={"pipe"}
         showObject={showObject}
       />
-      <ObjectSelector
-        cubes={objects}
-        setCubes={setObjects}
-        _controller={_controller}
-        isGLTF={true}
-      />
+      <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
     </>
   );
 }

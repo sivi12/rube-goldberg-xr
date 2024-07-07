@@ -5,7 +5,6 @@ import { ObjectSelector } from "../../helpers/object-selcetor";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
 
 export function RampModel({ position, rotation, color, onRef }) {
-  console.log("rampppp");
   const [ref, api] = useBox(() => ({
     mass: 100,
     position,
@@ -35,25 +34,19 @@ export function RampModel({ position, rotation, color, onRef }) {
   );
 }
 
-function Rampp({ ramps, setRamps, showObject }) {
-  const rightController = useController("right");
-  console.log(showObject);
+function Ramp({ showObject }) {
+  const [ramps, setRamps] = useState([]);
   return (
     <>
       <ObejctSpawner
         objects={ramps}
         setObjects={setRamps}
-        _controller={rightController}
         model={"ramp"}
         showObject={showObject}
       />
-      <ObjectSelector
-        cubes={ramps}
-        setCubes={setRamps}
-        _controller={rightController}
-      />
+      <ObjectSelector cubes={ramps} setCubes={setRamps} />
     </>
   );
 }
 
-export default Rampp;
+export default Ramp;

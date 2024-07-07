@@ -1,4 +1,4 @@
-// Funktion zur Aktualisierung der Position eines bestimmten Würfels
+// Funktion zur Aktualisierung der Position eines bestimmten Objekts
 export function updatePosition(cubes, index, type, newPosition, newRoation) {
   return cubes.map((cube, i) => {
     if (i === index) {

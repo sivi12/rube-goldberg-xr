@@ -1,9 +1,10 @@
 import { useXREvent, useController } from "@react-three/xr";
 import { useSphere } from "@react-three/cannon";
 import { useEffect, useState } from "react";
-import getRandomColor from "./RandomColor";
+import { ObjectSelector } from "../../helpers/object-selcetor";
+import { ObejctSpawner } from "../../helpers/object-spwaner";
 
-function Sphere({ position, color, mass }) {
+export function SphereModel({ position, color, mass, onRef }) {
   const [ref, api] = useSphere(() => ({
     mass: mass,
     position,
@@ -12,10 +13,20 @@ function Sphere({ position, color, mass }) {
     ccdSweptSphereRadius: 0.05,
   }));
 
+  useEffect(() => {
+    onRef(ref);
+  }, [ref, onRef]);
+
   let _mass = mass;
   useEffect(() => {
     api.mass.set(mass); // Stellt sicher, dass die Masse aktualisiert wird, wenn sich die `mass` Prop ändert
   }, [_mass]);
+
+  useEffect(() => {
+    if (api.position) {
+      api.position.set(...position);
+    }
+  }, [position, api.position, api]);
 
   return (
     <mesh ref={ref}>
@@ -25,37 +36,7 @@ function Sphere({ position, color, mass }) {
   );
 }
 
-function SphereSpawner({ spheres, setSpheres, showObject }) {
-  const rightController = useController("right");
-
-  useXREvent(
-    "selectstart",
-    () => {
-      if (rightController && showObject === "kugel") {
-        const position = rightController.controller.position.toArray();
-        const color = getRandomColor();
-        let mass = 0;
-        setSpheres([...spheres, { position, color, mass }]);
-      }
-    },
-    { handedness: "right" }
-  );
-
-  return (
-    <>
-      {spheres.map((sphere, index) => (
-        <Sphere
-          key={index}
-          position={sphere.position}
-          color={sphere.color}
-          mass={sphere.mass}
-        />
-      ))}
-    </>
-  );
-}
-
-function StartGame({ spheres, setSpheres }) {
+function StartGame({ setSpheres }) {
   const rightController = useController("right");
 
   useXREvent(
@@ -74,17 +55,17 @@ function StartGame({ spheres, setSpheres }) {
   );
 }
 
-function Ball({ spheres, setSpheres, showObject }) {
+export function Ball({ spheres, setSpheres, showObject }) {
   return (
     <>
-      <SphereSpawner
-        spheres={spheres}
-        setSpheres={setSpheres}
+      <ObejctSpawner
+        objects={spheres}
+        setObjects={setSpheres}
+        model={"ball"}
         showObject={showObject}
       />
+      <ObjectSelector cubes={spheres} setCubes={setSpheres} />
       <StartGame spheres={spheres} setSpheres={setSpheres} />
     </>
   );
 }
-
-export default Ball;

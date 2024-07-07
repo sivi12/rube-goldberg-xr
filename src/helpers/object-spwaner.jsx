@@ -1,48 +1,57 @@
-import { useXREvent } from "@react-three/xr";
-
+import { useController, useXREvent } from "@react-three/xr";
 import getRandomColor from "../components/RandomColor";
 import { DominoModel } from "../components/Domino/Domino";
 import { RampModel } from "../components/Ramp/ramp";
 import { PipeModel } from "../components/Pipe/Pipe";
+import { SphereModel } from "../components/Ball/ball";
 
 export function ObejctSpawner({
   objects,
   setObjects,
-  _controller,
-  model,
+  model, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
   showObject,
   nodes,
   _geometry,
 }) {
+  const rightController = useController("right");
   useXREvent(
     "selectstart",
     () => {
-      if (_controller && _controller.controller) {
-        const position = _controller.controller.position.toArray();
-        const rotationX = _controller.controller.rotation.toArray()[0];
-        const rotationY = _controller.controller.rotation.toArray()[1];
-        const rotationZ = _controller.controller.rotation.toArray()[2];
+      if (rightController && rightController.controller) {
+        const position = rightController.controller.position.toArray();
+        const rotationX = rightController.controller.rotation.toArray()[0];
+        const rotationY = rightController.controller.rotation.toArray()[1];
+        const rotationZ = rightController.controller.rotation.toArray()[2];
         // console.log(rotationX + " x");
         // console.log(rotationY + " y");
         // console.log(rotationZ + " z");
 
         if (model === "domino" && showObject === "domino") {
           const rotation = [0, rotationY, 0];
-          const mass = 1000;
+          const mass = 0.01;
           const type = "Dynamic";
           const color = getRandomColor();
-          setObjects((prevCubes) => [
-            ...prevCubes,
+          setObjects((prevObjekts) => [
+            ...prevObjekts,
             { position, mass, type, rotation, color },
           ]);
         }
 
+        if (model === "ball" && showObject === "ball") {
+          const color = getRandomColor();
+          let mass = 0;
+          setObjects((prevObjekts) => [
+            ...prevObjekts,
+            { position, mass, color },
+          ]);
+        }
+
         if (model === "ramp" && showObject === "ramp") {
-          const rotation = [0, rotationY, rotationZ];
+          const rotation = [rotationX, rotationY, rotationZ];
           const type = "Static";
           const color = getRandomColor();
-          setObjects((prevCubes) => [
-            ...prevCubes,
+          setObjects((prevObjekts) => [
+            ...prevObjekts,
             { position, type, rotation, color },
           ]);
         }
@@ -62,16 +71,32 @@ export function ObejctSpawner({
   if (model === "domino") {
     return (
       <>
-        {objects.map((cube, index) => (
+        {objects.map((objekt, index) => (
           <DominoModel
             key={index}
-            position={cube.position}
-            mass={cube.mass}
-            type={cube.type}
-            color={cube.color}
-            rotation={cube.rotation}
-            controller={_controller}
-            onRef={(ref) => (cube.api = ref)}
+            position={objekt.position}
+            mass={objekt.mass}
+            type={objekt.type}
+            color={objekt.color}
+            rotation={objekt.rotation}
+            controller={rightController}
+            onRef={(ref) => (objekt.api = ref)}
+          />
+        ))}
+      </>
+    );
+  }
+
+  if (model === "ball") {
+    return (
+      <>
+        {objects.map((objekt, index) => (
+          <SphereModel
+            key={index}
+            position={objekt.position}
+            mass={objekt.mass}
+            color={objekt.color}
+            onRef={(ref) => (objekt.api = ref)}
           />
         ))}
       </>
@@ -81,13 +106,13 @@ export function ObejctSpawner({
   if (model === "ramp") {
     return (
       <>
-        {objects.map((cube, index) => (
+        {objects.map((objekt, index) => (
           <RampModel
             key={index}
-            position={cube.position}
-            color={cube.color}
-            rotation={cube.rotation}
-            onRef={(ref) => (cube.api = ref)}
+            position={objekt.position}
+            color={objekt.color}
+            rotation={objekt.rotation}
+            onRef={(ref) => (objekt.api = ref)}
           />
         ))}
       </>

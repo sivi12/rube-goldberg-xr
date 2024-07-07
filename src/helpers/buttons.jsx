@@ -8,17 +8,17 @@ export function useButton(controller, button, handler) {
         controller.inputSource &&
         controller.inputSource.gamepad
       ) {
-        const aButton = controller.inputSource.gamepad.buttons[4];
-        const bButton = controller.inputSource.gamepad.buttons[5];
-        if ((button === "a" || button === "x") && aButton.pressed) {
-          console.log("a pressed");
+        const a_xButton = controller.inputSource.gamepad.buttons[4]; //a wenn der rechte und x wenn linke Controller benutzt wird
+        const b_yButton = controller.inputSource.gamepad.buttons[5]; //b wenn der rechte und y wenn linke Controller benutzt wird
+        if ((button === "a" || button === "x") && a_xButton.pressed) {
+          console.log("a or x pressed");
 
           if (handler) {
             handler();
           }
         }
-        if ((button === "b" || button === "y") && bButton.pressed) {
-          console.log("b pressed");
+        if ((button === "b" || button === "y") && b_yButton.pressed) {
+          console.log("b or y pressed");
 
           if (handler) {
             handler();

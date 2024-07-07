@@ -13,7 +13,7 @@ export function ModelSpawner({
   useXREvent(
     "selectstart",
     () => {
-      console.log("hello2");
+      console.log("mira<3");
       if (_controller && _controller.controller) {
         const position = _controller.controller.position.toArray();
         const rotation = _controller.controller.rotation.toArray();

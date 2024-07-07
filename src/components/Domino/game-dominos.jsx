@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 function DominoModel({ position, mass, type, rotation, color }) {
   const [ref, api] = useBox(() => ({
-    mass: 10,
+    mass: 50,
     position,
     type: type,
     rotation: rotation,
@@ -48,7 +48,6 @@ export default function GameDominos({ newCubes }) {
     <>
       {newCubes.map((cube, index) => (
         <>
-          <>{console.log(newCubes)}</>
           <DominoModel
             key={index}
             position={cube.newPosition}

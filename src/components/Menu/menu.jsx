@@ -4,34 +4,39 @@ import { useController, useXREvent } from "@react-three/xr";
 import { useRef, useState } from "react";
 import * as THREE from "three";
 import Domino from "../Domino/Domino";
-import Ball from "../ball";
+
 import { AnimatedCube, AnimatedSphere, Model } from "./animated-mini-models";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
-import SaveGameDominos from "../../helpers/save-game-dominos";
+import SaveGameObjects from "../../helpers/save-game-dominos";
 
-import Rampp from "../Ramp/ramp";
+import Ramp from "../Ramp/ramp";
 import Pipe from "../Pipe/Pipe";
+import handleLedClick from "../../helpers/handleLedClick";
+import ConnectToArduino from "../../helpers/connectToArduino";
+import { Ball } from "../Ball/ball";
+import GameBalls from "../Ball/game-ball";
 
 export default function MenuButton({ nodes, _geometry }) {
+  ConnectToArduino();
   const leftController = useController("left");
-  const [position, setMenuPoistion] = useState([0, 1.5, 0]);
+  const rightController = useController("right");
+  const [position, setMenuPoistion] = useState([0, 1.5, -1]);
   const [rotation, SetMenuRotation] = useState([0, 0, 0]);
   const [selected, setSelected] = useState(null);
 
-  const [showObject, setShowObject] = useState("");
+  const [showObject, setShowObject] = useState(""); //Umbenennen in currentObjekt, da showObjekt nicht passend ist
 
   const [startGame, setStartGame] = useState(false);
-  const [saveCubes, setSaveCubes] = useState(false); // wird erst nach 0.3 sekunden gesetzt damit api laden kann und gleichzeitig wartet game domino 0.3 sek mit rendern
-
+  const [saveCubes, setSaveCubes] = useState(false);
   const [cubes, setCubes] = useState([]);
   const [newCubes, setNewCubes] = useState([]);
-  const [ramps, setRamps] = useState([]);
   const [spheres, setSpheres] = useState([]);
+  const [saveSpheres, setSaveSpheres] = useState([]);
 
   const menuRef = useRef();
   const dominoRef = useRef();
-  const kugelRef = useRef();
+  const ballRef = useRef();
   const startButtonRef = useRef();
   const rampRef = useRef();
   const pipeRef = useRef();
@@ -64,10 +69,7 @@ export default function MenuButton({ nodes, _geometry }) {
           dominoRef.current,
           true
         );
-        const intersectsKugel = raycaster.intersectObject(
-          kugelRef.current,
-          true
-        );
+        const intersectsBall = raycaster.intersectObject(ballRef.current, true);
         const intersectsStartButton = raycaster.intersectObject(
           startButtonRef.current,
           true
@@ -84,47 +86,35 @@ export default function MenuButton({ nodes, _geometry }) {
         if (intersectsDomino.length > 0) {
           console.log("Domino ausgewählt");
           setShowObject("domino");
-          // setShowDomino(true);
-          // setShowKugel(false);
-          // setShowRamp(false);
         }
-        if (intersectsKugel.length > 0) {
-          console.log("Kugel ausgewählt");
-          setShowObject("kugel");
-          // setShowKugel(true);
-          // setShowDomino(false);
-          // setShowRamp(false);
+        if (intersectsBall.length > 0) {
+          console.log("Ball ausgewählt");
+          setShowObject("ball");
         }
         if (intersectsRamp.length > 0) {
           console.log("Rampe ausgewählt");
           setShowObject("ramp");
-          // setShowRamp(true);
-          // setShowDomino(false);
-          // setShowKugel(false);
         }
         if (intersectsPipe.length > 0) {
           console.log("Pipe ausgewählt");
           setShowObject("pipe");
-          // setShowRamp(true);
-          // setShowDomino(false);
-          // setShowKugel(false);
         }
         if (intersectsStartButton.length > 0) {
           console.log("start ausgewählt");
-          setStartGame(true);
+          handleLedClick();
         }
       }
     },
     { handedness: "left" }
   );
 
-  useXREvent(
-    "selectend",
-    () => {
-      setSelected(null);
-    },
-    { handedness: "left" }
-  );
+  // useXREvent(
+  //   "selectend",
+  //   () => {
+  //     setSelected(null);
+  //   },
+  //   { handedness: "left" }
+  // );
 
   useFrame(() => {
     if (selected !== null) {
@@ -136,14 +126,14 @@ export default function MenuButton({ nodes, _geometry }) {
     }
   });
 
-  useButton(leftController, "x", () => {
+  useButton(rightController, "x", () => {
     setSaveCubes(true);
     setTimeout(() => {
-      setStartGame(true);
+      setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
     }, 200);
   });
 
-  useButton(leftController, "y", () => {
+  useButton(rightController, "y", () => {
     setStartGame(false);
     setSaveCubes(false);
     setNewCubes([]);
@@ -179,7 +169,7 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
-        <mesh position={[0.13, 0.17, 0.1]} ref={kugelRef}>
+        <mesh position={[0.13, 0.17, 0.1]} ref={ballRef}>
           <AnimatedSphere size={[]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -188,7 +178,7 @@ export default function MenuButton({ nodes, _geometry }) {
             anchorX="center"
             anchorY="middle"
           >
-            Kugel
+            Ball
           </Text>
         </mesh>
 
@@ -234,26 +224,37 @@ export default function MenuButton({ nodes, _geometry }) {
       </group>
       <group>
         {!startGame && (
-          <Domino cubes={cubes} setCubes={setCubes} showObject={showObject} />
+          <>
+            <Domino cubes={cubes} setCubes={setCubes} showObject={showObject} />{" "}
+            <Ball
+              showObject={showObject}
+              spheres={spheres}
+              setSpheres={setSpheres}
+            />
+          </>
         )}
-        {
-          <Ball
-            showObject={showObject}
-            spheres={spheres}
-            setSpheres={setSpheres}
-          />
-        }
-        {<Rampp ramps={ramps} setRamps={setRamps} showObject={showObject} />}
-        <Pipe nodes={nodes} _geometry={_geometry} showObject={showObject} />
         {saveCubes && (
-          <SaveGameDominos
+          <SaveGameObjects
             cubes={cubes}
             newCubes={newCubes}
             setNewCubes={setNewCubes}
             saveCubes={saveCubes}
+            spheres={spheres}
+            saveSpheres={saveSpheres}
+            setSaveSpheres={setSaveSpheres}
           />
         )}
-        {startGame && <GameDominos newCubes={newCubes} />}
+
+        {startGame && (
+          <>
+            <GameDominos newCubes={newCubes} />
+            <GameBalls saveSpheres={saveSpheres} />
+          </>
+        )}
+
+        {<Ramp showObject={showObject} />}
+        <Pipe nodes={nodes} _geometry={_geometry} showObject={showObject} />
+
         {/* andere Elemente Ihrer Komponente */}
       </group>
     </>

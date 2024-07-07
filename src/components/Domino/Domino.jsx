@@ -1,20 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useController, useXR, useXREvent } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 
 import { useButton } from "../../helpers/buttons";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
 
-export function DominoModel({
-  position,
-  mass,
-  type,
-  rotation,
-  color,
-  controller,
-  onRef,
-}) {
+export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   const [ref, api] = useBox(() => ({
     mass: mass,
     position,
@@ -24,10 +15,10 @@ export function DominoModel({
     onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
   }));
 
-  useButton(controller, "a", () => {
-    //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
-    api.wakeUp(ref);
-  });
+  // useButton(controller, "a", () => {
+  //   //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
+  //   api.wakeUp(ref);
+  // });
 
   useEffect(() => {
     onRef(ref);
@@ -50,21 +41,15 @@ export function DominoModel({
 }
 
 function Domino({ cubes, setCubes, showObject }) {
-  const rightController = useController("right");
   return (
     <>
       <ObejctSpawner
         objects={cubes}
         setObjects={setCubes}
-        _controller={rightController}
         model={"domino"}
         showObject={showObject}
       />
-      <ObjectSelector
-        cubes={cubes}
-        setCubes={setCubes}
-        _controller={rightController}
-      />
+      <ObjectSelector cubes={cubes} setCubes={setCubes} />
       {}
     </>
   );

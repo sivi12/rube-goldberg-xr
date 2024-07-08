@@ -3,6 +3,7 @@ import { useSphere } from "@react-three/cannon";
 import { useEffect, useState } from "react";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
+import RemoveLastItem from "../../helpers/delete-last-object";
 
 export function SphereModel({ position, color, mass, onRef }) {
   const [ref, api] = useSphere(() => ({
@@ -17,10 +18,10 @@ export function SphereModel({ position, color, mass, onRef }) {
     onRef(ref);
   }, [ref, onRef]);
 
-  let _mass = mass;
-  useEffect(() => {
-    api.mass.set(mass); // Stellt sicher, dass die Masse aktualisiert wird, wenn sich die `mass` Prop ändert
-  }, [_mass]);
+  // let _mass = mass;
+  // useEffect(() => {
+  //   api.mass.set(mass); // Stellt sicher, dass die Masse aktualisiert wird, wenn sich die `mass` Prop ändert
+  // }, [_mass]);
 
   useEffect(() => {
     if (api.position) {
@@ -36,22 +37,24 @@ export function SphereModel({ position, color, mass, onRef }) {
   );
 }
 
-function StartGame({ setSpheres }) {
-  const rightController = useController("right");
+function StartGame({ spheres, setSpheres, showObject }) {
+  const leftController = useController("left");
 
   useXREvent(
     "squeeze",
     () => {
-      if (rightController) {
-        setSpheres((prevSpheres) => {
-          return prevSpheres.map((sphere) => ({
-            ...sphere,
-            mass: 100,
-          }));
-        });
+      if (leftController && showObject === "ball" && spheres.length > 0) {
+        // setSpheres((prevSpheres) => {
+        //   return prevSpheres.map((sphere) => ({
+        //     ...sphere,
+        //     mass: 100,
+        //   }));
+        // });
+
+        setSpheres(spheres.slice(0, -1));
       }
     },
-    { handedness: "right" }
+    { handedness: "left" }
   );
 }
 
@@ -65,7 +68,9 @@ export function Ball({ spheres, setSpheres, showObject }) {
         showObject={showObject}
       />
       <ObjectSelector cubes={spheres} setCubes={setSpheres} />
-      <StartGame spheres={spheres} setSpheres={setSpheres} />
+      {showObject === "ball" && (
+        <RemoveLastItem items={spheres} setItems={setSpheres} />
+      )}
     </>
   );
 }

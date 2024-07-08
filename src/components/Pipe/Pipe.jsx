@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTrimesh } from "@react-three/cannon";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
+import RemoveLastItem from "../../helpers/delete-last-object";
 
 export function PipeModel({
   position,
@@ -68,6 +69,9 @@ export default function Pipe({ nodes, _geometry, showObject }) {
         showObject={showObject}
       />
       <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      {showObject === "pipe" && (
+        <RemoveLastItem items={objects} setItems={setObjects} />
+      )}
     </>
   );
 }

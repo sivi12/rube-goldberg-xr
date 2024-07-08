@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../../helpers/object-selcetor";
-
-import { useButton } from "../../helpers/buttons";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
+import { useController, useXREvent } from "@react-three/xr";
+import RemoveLastItem from "../../helpers/delete-last-object";
 
 export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   const [ref, api] = useBox(() => ({
@@ -14,11 +14,6 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
     args: [0.02, 0.2, 0.1],
     onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
   }));
-
-  // useButton(controller, "a", () => {
-  //   //TODO!!! NUR DER AKTUELLE DOMINO SOLLTE aufgeweckt werden --> am besten in select object
-  //   api.wakeUp(ref);
-  // });
 
   useEffect(() => {
     onRef(ref);
@@ -41,6 +36,7 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
 }
 
 function Domino({ cubes, setCubes, showObject }) {
+  console.log(showObject);
   return (
     <>
       <ObejctSpawner
@@ -50,7 +46,9 @@ function Domino({ cubes, setCubes, showObject }) {
         showObject={showObject}
       />
       <ObjectSelector cubes={cubes} setCubes={setCubes} />
-      {}
+      {showObject === "domino" && (
+        <RemoveLastItem items={cubes} setItems={setCubes} />
+      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export function useButton(controller, button, handler) {
+export function useButton(controller, button, handler, ...args) {
   useEffect(() => {
     let interval = setInterval(() => {
       if (
@@ -14,19 +14,19 @@ export function useButton(controller, button, handler) {
           console.log("a or x pressed");
 
           if (handler) {
-            handler();
+            handler(...args);
           }
         }
         if ((button === "b" || button === "y") && b_yButton.pressed) {
           console.log("b or y pressed");
 
           if (handler) {
-            handler();
+            handler(...args);
           }
         }
       }
-    }, 200); // Überprüfe alle 100ms
+    }, 240);
 
     return () => clearInterval(interval);
-  }, [controller]);
+  }, [controller, button, handler, args]);
 }

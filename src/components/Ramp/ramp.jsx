@@ -3,6 +3,7 @@ import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
+import RemoveLastItem from "../../helpers/delete-last-object";
 
 export function RampModel({ position, rotation, color, onRef }) {
   const [ref, api] = useBox(() => ({
@@ -45,6 +46,9 @@ function Ramp({ showObject }) {
         showObject={showObject}
       />
       <ObjectSelector cubes={ramps} setCubes={setRamps} />
+      {showObject === "ramp" && (
+        <RemoveLastItem items={ramps} setItems={setRamps} />
+      )}
     </>
   );
 }

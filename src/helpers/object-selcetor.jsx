@@ -1,13 +1,13 @@
 import { useController, useXREvent } from "@react-three/xr";
 import * as THREE from "three";
-import { updatePosition } from "./update-object-position";
+import { updatePosition, updateType } from "./update-object-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
 export function ObjectSelector({ cubes, setCubes, isGLTF }) {
   const rightController = useController("right");
   const [selectedObject, setSelectedObject] = useState(null);
-  const [lastSelectedObject, setLastSelectedObject] = useState(null);
+  const [itemType, setItemType] = useState(null);
 
   useXREvent(
     "squeezestart",
@@ -37,7 +37,7 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
             (cube) => cube.api.current === firstIntersectedObject
           );
           setSelectedObject(index);
-          setLastSelectedObject(index);
+          setItemType("Static");
         }
       }
     },
@@ -48,6 +48,10 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
     "squeezeend",
     () => {
       setSelectedObject(null);
+      setItemType("Dynamic");
+      setTimeout(() => {
+        setItemType("Static"); // wird erst nach 0.2 sekunden gesetzt damit
+      }, 1000);
     },
     { handedness: "right" }
   );
@@ -60,7 +64,20 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
     ) {
       const newPosition = rightController.controller.position.toArray();
       const newRoation = rightController.controller.rotation.toArray();
-      const type = "Static";
+
+      setCubes(
+        updatePosition(cubes, selectedObject, itemType, newPosition, newRoation)
+      );
+    }
+    if (
+      itemType === "Dynamic" &&
+      rightController &&
+      rightController.controller
+    ) {
+      console.log("hier gehts ab");
+      const newPosition = rightController.controller.position.toArray();
+      const newRoation = rightController.controller.rotation.toArray();
+      const type = "Dynamic";
       setCubes(
         updatePosition(cubes, selectedObject, type, newPosition, newRoation)
       );

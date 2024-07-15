@@ -22,15 +22,12 @@ export function ObejctSpawner({
         const rotationX = rightController.controller.rotation.toArray()[0];
         const rotationY = rightController.controller.rotation.toArray()[1];
         const rotationZ = rightController.controller.rotation.toArray()[2];
-        // console.log(rotationX + " x");
-        // console.log(rotationY + " y");
-        // console.log(rotationZ + " z");
+        const rotation = [rotationX, rotationY, rotationZ];
+        const color = getRandomColor();
 
         if (model === "domino" && showObject === "domino") {
-          const rotation = [0, rotationY, 0];
-          const mass = 0.01;
+          const mass = 0.001;
           const type = "Dynamic";
-          const color = getRandomColor();
           setObjects((prevObjekts) => [
             ...prevObjekts,
             { position, mass, type, rotation, color },
@@ -38,7 +35,6 @@ export function ObejctSpawner({
         }
 
         if (model === "ball" && showObject === "ball") {
-          const color = getRandomColor();
           let mass = 0;
           setObjects((prevObjekts) => [
             ...prevObjekts,
@@ -47,9 +43,7 @@ export function ObejctSpawner({
         }
 
         if (model === "ramp" && showObject === "ramp") {
-          const rotation = [rotationX, rotationY, rotationZ];
           const type = "Static";
-          const color = getRandomColor();
           setObjects((prevObjekts) => [
             ...prevObjekts,
             { position, type, rotation, color },
@@ -57,7 +51,6 @@ export function ObejctSpawner({
         }
 
         if (model === "pipe" && showObject === "pipe") {
-          const rotation = [rotationX, rotationY, rotationZ];
           setObjects((prevObjects) => [
             ...prevObjects,
             { position, rotation, nodes, _geometry },

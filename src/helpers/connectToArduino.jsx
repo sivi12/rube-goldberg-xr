@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
 const ConnectToArduino = () => {
-  const { lastMessage } = useWebSocket("wss://192.168.1.136:8080");
+  const { lastMessage, sendMessage } = useWebSocket("wss://192.168.1.136:8080");
+
+  sendMessage("huansooohn");
 
   useEffect(() => {
     if (lastMessage !== null) {

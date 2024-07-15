@@ -21,9 +21,9 @@ export default function MenuButton({ nodes, _geometry }) {
   ConnectToArduino();
   const leftController = useController("left");
   const rightController = useController("right");
-  const [position, setMenuPoistion] = useState([0, 1.5, -1]);
-  const [rotation, SetMenuRotation] = useState([0, 0, 0]);
-  const [selected, setSelected] = useState(null);
+  // const [position, setMenuPoistion] = useState([0, 1.5, -1]);
+  // const [rotation, SetMenuRotation] = useState([0, 0, 0]);
+  // const [selected, setSelected] = useState(null);
 
   const [showObject, setShowObject] = useState(""); //Umbenennen in currentObjekt, da showObjekt nicht passend ist
 
@@ -38,6 +38,7 @@ export default function MenuButton({ nodes, _geometry }) {
   const dominoRef = useRef();
   const ballRef = useRef();
   const startButtonRef = useRef();
+  const buildButtonRef = useRef();
   const rampRef = useRef();
   const pipeRef = useRef();
 
@@ -51,7 +52,7 @@ export default function MenuButton({ nodes, _geometry }) {
 
   useXREvent(
     "selectstart",
-    (event) => {
+    () => {
       if (leftController) {
         const tempMatrix = new THREE.Matrix4();
         // Raycaster Setup
@@ -63,8 +64,6 @@ export default function MenuButton({ nodes, _geometry }) {
           leftController.controller.matrixWorld
         );
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-
-        const intersectsMenu = raycaster.intersectObject(menuRef.current, true);
         const intersectsDomino = raycaster.intersectObject(
           dominoRef.current,
           true
@@ -74,9 +73,14 @@ export default function MenuButton({ nodes, _geometry }) {
           startButtonRef.current,
           true
         );
+        const intersectsBuildButton = raycaster.intersectObject(
+          buildButtonRef.current,
+          true
+        );
         const intersectsRamp = raycaster.intersectObject(rampRef.current, true);
-
         const intersectsPipe = raycaster.intersectObject(pipeRef.current, true);
+
+        // const intersectsMenu = raycaster.intersectObject(menuRef.current, true);
 
         // if (intersectsMenu.length > 0) {
         //   console.log("Menu ausgewählt");
@@ -101,7 +105,16 @@ export default function MenuButton({ nodes, _geometry }) {
         }
         if (intersectsStartButton.length > 0) {
           console.log("start ausgewählt");
-          handleLedClick();
+          setSaveCubes(true);
+          setTimeout(() => {
+            setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
+          }, 200);
+        }
+        if (intersectsBuildButton.length > 0) {
+          console.log("Build-Mode ausgewählt");
+          setStartGame(false);
+          setSaveCubes(false);
+          setNewCubes([]);
         }
       }
     },
@@ -116,15 +129,15 @@ export default function MenuButton({ nodes, _geometry }) {
   //   { handedness: "left" }
   // );
 
-  useFrame(() => {
-    if (selected !== null) {
-      console.log(selected);
-      const newPosition = leftController.controller.position.toArray();
-      const newRotation = leftController.controller.rotation.toArray();
-      setMenuPoistion(newPosition);
-      SetMenuRotation(newRotation);
-    }
-  });
+  // useFrame(() => {
+  //   if (selected !== null) {
+  //     console.log(selected);
+  //     const newPosition = leftController.controller.position.toArray();
+  //     const newRotation = leftController.controller.rotation.toArray();
+  //     setMenuPoistion(newPosition);
+  //     SetMenuRotation(newRotation);
+  //   }
+  // });
 
   useButton(rightController, "x", () => {
     setSaveCubes(true);
@@ -141,7 +154,7 @@ export default function MenuButton({ nodes, _geometry }) {
 
   return (
     <>
-      <group position={position} rotation={rotation}>
+      <group position={[0, 1.5, -1]} rotation={[0, 0, 0]}>
         <mesh name="background" ref={menuRef}>
           <boxGeometry args={[0.6, 0.7, 0.02]} />
           <meshStandardMaterial color="royalblue" />
@@ -208,7 +221,11 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
-        <mesh position={[0, -0.275, 0.0]} name="grabPoint" ref={startButtonRef}>
+        <mesh
+          position={[-0.15, -0.275, 0.0]}
+          name="grabPoint"
+          ref={startButtonRef}
+        >
           <boxGeometry args={[0.3, 0.15, 0.025]} />
           <meshStandardMaterial color="green" />
           <Text
@@ -219,6 +236,23 @@ export default function MenuButton({ nodes, _geometry }) {
             anchorY="middle"
           >
             Start Game
+          </Text>
+        </mesh>
+        <mesh
+          position={[0.15, -0.275, 0.0]}
+          name="grabPoint"
+          ref={buildButtonRef}
+        >
+          <boxGeometry args={[0.3, 0.15, 0.025]} />
+          <meshStandardMaterial color="red" />
+          <Text
+            position={[0, 0, 0.02]}
+            fontSize={0.03}
+            color="white"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Build Mode
           </Text>
         </mesh>
       </group>

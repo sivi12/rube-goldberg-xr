@@ -10,7 +10,7 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
     mass: mass,
     position,
     type: type,
-    rotation: rotation,
+    rotation: [0, rotation[1], 0],
     args: [0.02, 0.2, 0.1],
     onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
   }));
@@ -24,7 +24,8 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
       api.position.set(...position);
     }
     if (api.rotation) {
-      api.rotation.set(...rotation);
+      console.log(rotation);
+      api.rotation.set(...[0, rotation[1], 0]);
     }
   }, [position, api.position, api]);
   return (

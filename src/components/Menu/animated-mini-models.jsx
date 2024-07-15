@@ -34,7 +34,7 @@ export const AnimatedCube = ({ size }) => {
   return (
     <mesh ref={ref}>
       <boxGeometry args={size} />
-      <meshStandardMaterial color={getRandomColor()} />
+      <meshStandardMaterial color={"white"} />
     </mesh>
   );
 };
@@ -47,7 +47,7 @@ export const AnimatedSphere = ({ size }) => {
   return (
     <mesh ref={ref}>
       <sphereGeometry args={[0.05, 16, 16]} />
-      <meshLambertMaterial color={getRandomColor()} />
+      <meshLambertMaterial color={"white"} />
     </mesh>
   );
 };

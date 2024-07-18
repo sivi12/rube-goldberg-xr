@@ -50,6 +50,10 @@ export function ObejctSpawner({
           ]);
         }
 
+        if (model === "startBox" && showObject === "startBox") {
+          setObjects((prevObjekts) => [...prevObjekts, { position, rotation }]);
+        }
+
         if (model === "pipe" && showObject === "pipe") {
           setObjects((prevObjects) => [
             ...prevObjects,

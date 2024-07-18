@@ -11,6 +11,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
+    "gltfjsx": "^6.4.1",
+    "jsdom-global": "^3.0.2",
     "leva": "^0.9.35",
     "mobx": "^6.12.3",
     "mobx-react": "^9.1.1",

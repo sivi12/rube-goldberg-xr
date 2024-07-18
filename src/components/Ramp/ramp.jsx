@@ -12,7 +12,6 @@ export function RampModel({ position, rotation, color, onRef }) {
     type: "Static",
     rotation: rotation,
     args: [0.015, 0.3, 0.17],
-    ccdMotionThreshold: 0.1,
   }));
 
   useEffect(() => {

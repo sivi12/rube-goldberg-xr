@@ -7,12 +7,16 @@ import { useFrame } from "@react-three/fiber";
 export function ObjectSelector({ cubes, setCubes, isGLTF }) {
   const rightController = useController("right");
   const [selectedObject, setSelectedObject] = useState(null);
-  const [itemType, setItemType] = useState(null);
+
+  //eine ObjectSelector Methode anstatt es in jedem Objekt neu zu übergeben?
+  //
 
   useXREvent(
     "squeezestart",
     () => {
-      if (rightController && rightController.controller) {
+      console.log(cubes);
+      console.log("cubes");
+      if (rightController && rightController.controller && cubes) {
         const tempMatrix = new THREE.Matrix4().extractRotation(
           rightController.controller.matrixWorld
         );
@@ -21,10 +25,13 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
           rightController.controller.matrixWorld
         );
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+        cubes.map((cube) => console.log(cube.api.current));
+        //schaue durch alle objekte des gerade auswählten items, ob der strahl einen dieser objekte trifft
         const intersects = raycaster.intersectObjects(
           cubes.map((cube) => cube.api.current),
           true
         );
+        console.log(intersects);
         let firstIntersectedObject;
         if (intersects.length > 0) {
           if (isGLTF) {
@@ -37,7 +44,6 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
             (cube) => cube.api.current === firstIntersectedObject
           );
           setSelectedObject(index);
-          setItemType("Static");
         }
       }
     },
@@ -48,10 +54,6 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
     "squeezeend",
     () => {
       setSelectedObject(null);
-      setItemType("Dynamic");
-      setTimeout(() => {
-        setItemType("Static"); // wird erst nach 0.2 sekunden gesetzt damit
-      }, 1000);
     },
     { handedness: "right" }
   );
@@ -62,25 +64,13 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
       rightController &&
       rightController.controller
     ) {
-      const newPosition = rightController.controller.position.toArray();
+      const newPositionX = rightController.controller.position.toArray()[0];
+      const newPositionY = rightController.controller.position.toArray()[1];
+      const newPositionZ = rightController.controller.position.toArray()[2];
+      const newPosition = [newPositionX, newPositionY, newPositionZ];
       const newRoation = rightController.controller.rotation.toArray();
 
-      setCubes(
-        updatePosition(cubes, selectedObject, itemType, newPosition, newRoation)
-      );
-    }
-    if (
-      itemType === "Dynamic" &&
-      rightController &&
-      rightController.controller
-    ) {
-      console.log("hier gehts ab");
-      const newPosition = rightController.controller.position.toArray();
-      const newRoation = rightController.controller.rotation.toArray();
-      const type = "Dynamic";
-      setCubes(
-        updatePosition(cubes, selectedObject, type, newPosition, newRoation)
-      );
+      setCubes(updatePosition(cubes, selectedObject, newPosition, newRoation));
     }
   });
 

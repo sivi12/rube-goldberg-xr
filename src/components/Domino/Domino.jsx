@@ -6,6 +6,8 @@ import { useController, useXREvent } from "@react-three/xr";
 import RemoveLastItem from "../../helpers/delete-last-object";
 
 export function DominoModel({ position, mass, type, rotation, color, onRef }) {
+  //können eigentlich die position nach dem landen speichern. Unnötig dafür game dominos zu erstellen
+  //
   const [ref, api] = useBox(() => ({
     mass: mass,
     position,

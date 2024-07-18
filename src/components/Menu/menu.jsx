@@ -5,7 +5,12 @@ import { useRef, useState } from "react";
 import * as THREE from "three";
 import Domino from "../Domino/Domino";
 
-import { AnimatedCube, AnimatedSphere, Model } from "./animated-mini-models";
+import {
+  AnimatedCube,
+  AnimatedSphere,
+  Model,
+  Modell,
+} from "./animated-mini-models";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
 import SaveGameObjects from "../../helpers/save-game-dominos";
@@ -16,6 +21,7 @@ import handleLedClick from "../../helpers/handleLedClick";
 import ConnectToArduino from "../../helpers/connectToArduino";
 import { Ball } from "../Ball/ball";
 import GameBalls from "../Ball/game-ball";
+import { Dance } from "../../Dance";
 
 export default function MenuButton({ nodes, _geometry }) {
   ConnectToArduino();
@@ -41,6 +47,7 @@ export default function MenuButton({ nodes, _geometry }) {
   const buildButtonRef = useRef();
   const rampRef = useRef();
   const pipeRef = useRef();
+  const startAnimationRef = useRef();
 
   // const { nodes } = useGLTF("/sm_track_modular_half_pipe.glb");
   // const _geometry =
@@ -73,6 +80,10 @@ export default function MenuButton({ nodes, _geometry }) {
           startButtonRef.current,
           true
         );
+        const intersectsStartAnimation = raycaster.intersectObject(
+          startAnimationRef.current,
+          true
+        );
         const intersectsBuildButton = raycaster.intersectObject(
           buildButtonRef.current,
           true
@@ -102,6 +113,10 @@ export default function MenuButton({ nodes, _geometry }) {
         if (intersectsPipe.length > 0) {
           console.log("Pipe ausgewählt");
           setShowObject("pipe");
+        }
+        if (intersectsStartAnimation.length > 0) {
+          console.log("Start Animation ausgewählt");
+          setShowObject("startAnimation");
         }
         if (intersectsStartButton.length > 0) {
           console.log("start ausgewählt");
@@ -156,10 +171,10 @@ export default function MenuButton({ nodes, _geometry }) {
     <>
       <group position={[0, 1.5, -1]} rotation={[0, 0, 0]}>
         <mesh name="background" ref={menuRef}>
-          <boxGeometry args={[0.6, 0.7, 0.02]} />
+          <boxGeometry args={[0.6, 0.9, 0.02]} />
           <meshStandardMaterial color="royalblue" />
           <Text
-            position={[0, 0.3, 0.05]}
+            position={[0, 0.4, 0.05]}
             fontSize={0.03}
             color="white"
             anchorX="center"
@@ -169,7 +184,7 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
-        <mesh position={[-0.13, 0.17, 0.1]} ref={dominoRef}>
+        <mesh position={[-0.13, 0.27, 0.1]} ref={dominoRef}>
           <AnimatedCube size={[0.06, 0.1, 0.015]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -182,7 +197,7 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
-        <mesh position={[0.13, 0.17, 0.1]} ref={ballRef}>
+        <mesh position={[0.13, 0.27, 0.1]} ref={ballRef}>
           <AnimatedSphere size={[]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -195,20 +210,7 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
-        <mesh position={[0.13, 0.01, 0.1]} ref={rampRef}>
-          <AnimatedCube size={[0.06, 0.1, 0.015]} />
-          <Text
-            position={[0, 0.08, 0.0]}
-            fontSize={0.03}
-            color="white"
-            anchorX="center"
-            anchorY="middle"
-          >
-            Ramp
-          </Text>
-        </mesh>
-
-        <mesh position={[-0.13, 0.01, 0.1]} ref={pipeRef}>
+        <mesh position={[-0.13, 0.11, 0.1]} ref={pipeRef}>
           <Model />
           <Text
             position={[0, 0.08, 0.0]}
@@ -221,8 +223,47 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
+        <mesh position={[0.13, 0.11, 0.1]} ref={rampRef}>
+          <AnimatedCube size={[0.06, 0.1, 0.015]} />
+          <Text
+            position={[0, 0.08, 0.0]}
+            fontSize={0.03}
+            color="white"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Ramp
+          </Text>
+        </mesh>
+
+        <mesh position={[-0.13, -0.05, 0.1]} ref={startAnimationRef}>
+          <Modell />
+          <Text
+            position={[0, 0.08, 0.0]}
+            fontSize={0.03}
+            color="white"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Start Animation
+          </Text>
+        </mesh>
+
+        <mesh position={[0.13, -0.05, 0.1]}>
+          <AnimatedCube size={[0.06, 0.1, 0.015]} />
+          <Text
+            position={[0, 0.08, 0.0]}
+            fontSize={0.03}
+            color="white"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Light Animation
+          </Text>
+        </mesh>
+
         <mesh
-          position={[-0.15, -0.275, 0.0]}
+          position={[-0.15, -0.375, 0.0]}
           name="grabPoint"
           ref={startButtonRef}
         >
@@ -239,7 +280,7 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
         <mesh
-          position={[0.15, -0.275, 0.0]}
+          position={[0.15, -0.375, 0.0]}
           name="grabPoint"
           ref={buildButtonRef}
         >
@@ -267,6 +308,7 @@ export default function MenuButton({ nodes, _geometry }) {
             />
           </>
         )}
+
         {saveCubes && (
           <SaveGameObjects
             cubes={cubes}
@@ -286,8 +328,9 @@ export default function MenuButton({ nodes, _geometry }) {
           </>
         )}
 
-        {<Ramp showObject={showObject} />}
+        <Ramp showObject={showObject} />
         <Pipe nodes={nodes} _geometry={_geometry} showObject={showObject} />
+        <Dance showObject={showObject} />
 
         {/* andere Elemente Ihrer Komponente */}
       </group>

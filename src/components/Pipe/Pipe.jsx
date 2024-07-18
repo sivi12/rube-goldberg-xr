@@ -12,7 +12,6 @@ export function PipeModel({
   onRef,
   materials,
 }) {
-  console.log("pipemodel");
   const data1 =
     nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry
       .attributes.position.array;

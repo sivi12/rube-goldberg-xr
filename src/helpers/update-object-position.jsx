@@ -1,5 +1,5 @@
 // Funktion zur Aktualisierung der Position eines bestimmten Objekts
-export function updatePosition(cubes, index, type, newPosition, newRoation) {
+export function updatePosition(cubes, index, newPosition, newRoation) {
   return cubes.map((cube, i) => {
     if (i === index) {
       return {
@@ -7,7 +7,6 @@ export function updatePosition(cubes, index, type, newPosition, newRoation) {
         position: newPosition,
         rotation: newRoation,
         mass: 0,
-        type: type,
       };
     }
     return cube;

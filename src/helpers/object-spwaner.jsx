@@ -26,7 +26,7 @@ export function ObejctSpawner({
         const color = getRandomColor();
 
         if (model === "domino" && showObject === "domino") {
-          const mass = 0.001;
+          const mass = 10;
           const type = "Dynamic";
           setObjects((prevObjekts) => [
             ...prevObjekts,

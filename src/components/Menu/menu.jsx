@@ -1,5 +1,4 @@
 import { Text, useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
 import { useController, useXREvent } from "@react-three/xr";
 import { useRef, useState } from "react";
 import * as THREE from "three";
@@ -10,21 +9,19 @@ import {
   AnimatedSphere,
   Model,
   Modell,
-} from "./animated-mini-models";
+} from "../animated-mini-models";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
 import SaveGameObjects from "../../helpers/save-game-dominos";
 
 import Ramp from "../Ramp/ramp";
 import Pipe from "../Pipe/Pipe";
-import handleLedClick from "../../helpers/handleLedClick";
 import ConnectToArduino from "../../helpers/connectToArduino";
 import { Ball } from "../Ball/ball";
 import GameBalls from "../Ball/game-ball";
-import { Dance } from "../../Dance";
+import { AnimatedModel } from "../Animations/animation-handler";
 
 export default function MenuButton({ nodes, _geometry }) {
-  ConnectToArduino();
   const leftController = useController("left");
   const rightController = useController("right");
   // const [position, setMenuPoistion] = useState([0, 1.5, -1]);
@@ -39,6 +36,7 @@ export default function MenuButton({ nodes, _geometry }) {
   const [newCubes, setNewCubes] = useState([]);
   const [spheres, setSpheres] = useState([]);
   const [saveSpheres, setSaveSpheres] = useState([]);
+  const [arduinoButtonPressed, setArduinoButtonPressed] = useState(false);
 
   const menuRef = useRef();
   const dominoRef = useRef();
@@ -154,14 +152,15 @@ export default function MenuButton({ nodes, _geometry }) {
   //   }
   // });
 
-  useButton(rightController, "x", () => {
+  useButton(rightController, "a", () => {
     setSaveCubes(true);
+    setArduinoButtonPressed(true);
     setTimeout(() => {
       setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
     }, 200);
   });
 
-  useButton(rightController, "y", () => {
+  useButton(rightController, "b", () => {
     setStartGame(false);
     setSaveCubes(false);
     setNewCubes([]);
@@ -298,6 +297,10 @@ export default function MenuButton({ nodes, _geometry }) {
         </mesh>
       </group>
       <group>
+        <ConnectToArduino
+          arduinoButtonPressed={arduinoButtonPressed}
+          setArduinoButtonPressed={setArduinoButtonPressed}
+        />
         {!startGame && (
           <>
             <Domino cubes={cubes} setCubes={setCubes} showObject={showObject} />{" "}
@@ -330,7 +333,11 @@ export default function MenuButton({ nodes, _geometry }) {
 
         <Ramp showObject={showObject} />
         <Pipe nodes={nodes} _geometry={_geometry} showObject={showObject} />
-        <Dance showObject={showObject} />
+        <AnimatedModel
+          showObject={showObject}
+          model={"markerMan"}
+          arduinoButtonPressed={arduinoButtonPressed}
+        />
 
         {/* andere Elemente Ihrer Komponente */}
       </group>

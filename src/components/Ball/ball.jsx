@@ -37,26 +37,26 @@ export function SphereModel({ position, color, mass, onRef }) {
   );
 }
 
-function StartGame({ spheres, setSpheres, showObject }) {
-  const leftController = useController("left");
+// function StartGame({ spheres, setSpheres, showObject }) {
+//   const leftController = useController("left");
 
-  useXREvent(
-    "squeeze",
-    () => {
-      if (leftController && showObject === "ball" && spheres.length > 0) {
-        // setSpheres((prevSpheres) => {
-        //   return prevSpheres.map((sphere) => ({
-        //     ...sphere,
-        //     mass: 100,
-        //   }));
-        // });
+//   useXREvent(
+//     "squeeze",
+//     () => {
+//       if (leftController && showObject === "ball" && spheres.length > 0) {
+//         // setSpheres((prevSpheres) => {
+//         //   return prevSpheres.map((sphere) => ({
+//         //     ...sphere,
+//         //     mass: 100,
+//         //   }));
+//         // });
 
-        setSpheres(spheres.slice(0, -1));
-      }
-    },
-    { handedness: "left" }
-  );
-}
+//         setSpheres(spheres.slice(0, -1));
+//       }
+//     },
+//     { handedness: "left" }
+//   );
+// }
 
 export function Ball({ spheres, setSpheres, showObject }) {
   return (

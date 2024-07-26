@@ -8,7 +8,7 @@ import Ground from "./components/Ground";
 import { useGLTF } from "@react-three/drei";
 
 import MenuButton from "./components/Menu/menu";
-import { Dance, DanceModel } from "./Dance";
+import { MarkerManModel } from "./components/Animations/marker-man-model";
 
 function App() {
   const { nodes } = useGLTF("/sm_track_modular_half_pipe.glb");
@@ -30,7 +30,7 @@ function App() {
           <Physics>
             <Debug></Debug>
             <MenuButton nodes={nodes} _geometry={_geometry} />
-            {/* <DanceModel position={[0, 1, 0]} /> */}
+            {/* <MarkerManModel /> */}
 
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Physics>

@@ -10,7 +10,7 @@ import { useGLTF } from "@react-three/drei";
 import MenuButton from "./components/Menu/menu";
 
 function App() {
-  const { nodes } = useGLTF("/sm_track_modular_half_pipe.glb");
+  const { nodes } = useGLTF("/pipe.glb");
   const _geometry =
     nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry.scale(
       0.005,

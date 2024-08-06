@@ -19,7 +19,7 @@ export function MarkerManModel({
   const group = React.useRef();
   const ref = React.useRef();
   const hipRef = React.useRef();
-  const { scene, animations: loadedAnimations } = useGLTF("/markerMan.glb");
+  const { scene, animations: loadedAnimations } = useGLTF("/marker-man.glb");
   //console.log("Loaded animations:", loadedAnimations);
 
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
@@ -59,10 +59,10 @@ export function MarkerManModel({
     }
   });
 
-  // Ground box
+  // Ground box <-- diesen Teil in anderen File aussortieren sodass
   const [boxRef, boxRefApi] = useBox(() => ({
     type: "Static",
-    args: [0.215, 0.22, 0.115], // Size of the box
+    args: [0.215, 0.22, 0.115],
   }));
 
   useEffect(() => {
@@ -74,15 +74,6 @@ export function MarkerManModel({
       boxRefApi.rotation.set(...[Math.PI / 2, 0, rotation[2]]);
     }
   }, [position, boxRefApi.position, boxRefApi]);
-
-  // useEffect(() => {
-  //   if (hipRef.current) {
-  //     const position = hipRef.current.matrixWorld.elements;
-  //     const rotation = hipRef.current.rotation;
-  //     hitBoxApi.position.set(position[12], position[13], position[14]);
-  //     hitBoxApi.rotation.set(rotation._x, rotation._z, rotation._y);
-  //   }
-  // }, [hipRef.current]);
 
   return (
     <group ref={group} dispose={null}>
@@ -157,11 +148,16 @@ export function MarkerManModel({
           rotation={[Math.PI / 2, 0, rotation[2]]}
         >
           <boxGeometry args={[0.215, 0.22, 0.115]} />
-          <meshStandardMaterial color="blue" transparent opacity={0.5} />
+          <meshStandardMaterial
+            color="blue"
+            transparent={true}
+            opacity={0}
+            depthWrite={false}
+          />
         </mesh>
       </group>
     </group>
   );
 }
 
-useGLTF.preload("/markerMan.glb");
+useGLTF.preload("/marker-man.glb");

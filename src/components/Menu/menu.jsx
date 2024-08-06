@@ -7,8 +7,9 @@ import Domino from "../Domino/Domino";
 import {
   AnimatedCube,
   AnimatedSphere,
-  Model,
-  Modell,
+  MiniPipe,
+  MiniModel,
+  ButtonModel,
 } from "../animated-mini-models";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
@@ -210,7 +211,7 @@ export default function MenuButton({ nodes, _geometry }) {
         </mesh>
 
         <mesh position={[-0.13, 0.11, 0.1]} ref={pipeRef}>
-          <Model />
+          <MiniPipe />
           <Text
             position={[0, 0.08, 0.0]}
             fontSize={0.03}
@@ -236,7 +237,7 @@ export default function MenuButton({ nodes, _geometry }) {
         </mesh>
 
         <mesh position={[-0.13, -0.05, 0.1]} ref={startAnimationRef}>
-          <Modell />
+          <MiniModel />
           <Text
             position={[0, 0.08, 0.0]}
             fontSize={0.03}
@@ -249,7 +250,7 @@ export default function MenuButton({ nodes, _geometry }) {
         </mesh>
 
         <mesh position={[0.13, -0.05, 0.1]}>
-          <AnimatedCube size={[0.06, 0.1, 0.015]} />
+          <ButtonModel size={[0.06, 0.1, 0.015]} />
           <Text
             position={[0, 0.08, 0.0]}
             fontSize={0.03}

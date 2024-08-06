@@ -1,6 +1,5 @@
 import { useController, useXREvent } from "@react-three/xr";
 import { MarkerManModel } from "../components/Animations/marker-man-model";
-import { MarkerManModel2 } from "../components/Animations/MarkerMan";
 
 function AnimationSpwaner({
   model,
@@ -45,7 +44,7 @@ function AnimationSpwaner({
     return (
       <>
         {animationObjekt.map((objekt, index) => (
-          <MarkerManModel2
+          <MarkerManModel
             key={index}
             position={objekt.position}
             rotation={objekt.rotation}

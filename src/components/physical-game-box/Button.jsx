@@ -10,7 +10,7 @@ export function ButtonModel(props) {
   const { nodes, materials } = useGLTF("/button.glb");
   return (
     <group {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]} scale={0.23}>
+      <group rotation={[0, 0, 0]} scale={0.023} position={[0.0, -0.05, 0.15]}>
         <mesh
           geometry={nodes.defaultMaterial.geometry}
           material={materials["Material.001"]}

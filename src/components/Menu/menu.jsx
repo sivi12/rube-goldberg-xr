@@ -9,8 +9,8 @@ import {
   AnimatedSphere,
   MiniPipe,
   MiniModel,
-  ButtonModel,
-} from "../animated-mini-models";
+  ButtonModelAnimated,
+} from "./animated-mini-models";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
 import SaveGameObjects from "../../helpers/save-game-dominos";
@@ -20,7 +20,7 @@ import Pipe from "../Pipe/Pipe";
 import ConnectToArduino from "../../helpers/connectToArduino";
 import { Ball } from "../Ball/ball";
 import GameBalls from "../Ball/game-ball";
-import { AnimatedModel } from "../Animations/animation-handler";
+import { GameBox } from "../physical-game-box/game-box";
 
 export default function MenuButton({ nodes, _geometry }) {
   const leftController = useController("left");
@@ -250,7 +250,7 @@ export default function MenuButton({ nodes, _geometry }) {
         </mesh>
 
         <mesh position={[0.13, -0.05, 0.1]}>
-          <ButtonModel size={[0.06, 0.1, 0.015]} />
+          <ButtonModelAnimated size={[0.06, 0.1, 0.015]} />
           <Text
             position={[0, 0.08, 0.0]}
             fontSize={0.03}
@@ -334,7 +334,7 @@ export default function MenuButton({ nodes, _geometry }) {
 
         <Ramp showObject={showObject} />
         <Pipe nodes={nodes} _geometry={_geometry} showObject={showObject} />
-        <AnimatedModel
+        <GameBox
           showObject={showObject}
           model={"markerMan"}
           arduinoButtonPressed={arduinoButtonPressed}

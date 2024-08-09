@@ -46,57 +46,57 @@ export function markerManAnimations(actions, arduinoButtonPressed) {
   const dance2 = actions["DANCE2"];
   const dance2Time = dance2.getClip().duration * 1000 - 500;
 
-  //   sittingIdle.play();
-
-  //   if (actions && arduinoButtonPressed) {
-  //     sittingIdle.fadeOut(0.5);
-  //     setTimeout(() => {
-  //       scare.fadeIn(0.5).play();
-  //       setTimeout(() => {
-  //         scare.fadeOut(0.5);
-  //         tripp.fadeIn(0.5).play();
-  //         setTimeout(() => {
-  //           tripp.fadeOut(0.5);
-  //           layingIdle.fadeIn(0.5).play();
-  //         }, trippTime);
-  //       }, scareTime);
-  //     }, 0.5);
-  //   }
-
-  layingIdle.play();
+  sittingIdle.play();
 
   if (actions && arduinoButtonPressed) {
-    layingIdle.fadeOut(0.5);
+    sittingIdle.fadeOut(0.5);
     setTimeout(() => {
-      layingLooking.fadeIn(0.5).play();
+      scare.fadeIn(0.5).play();
       setTimeout(() => {
-        layingLooking.fadeOut(0.5);
-        waking.fadeIn(0.5).play();
+        scare.fadeOut(0.5);
+        tripp.fadeIn(0.5).play();
         setTimeout(() => {
-          waking.fadeOut(0.5);
-          getup.fadeIn(0.5).play();
-          setTimeout(() => {
-            getup.fadeOut(0.5);
-            stomp.fadeIn(0.5).play();
-            setTimeout(() => {
-              stomp.fadeOut(0.5);
-              jump.fadeIn(0.5).play();
-              setTimeout(() => {
-                jump.fadeOut(0.5);
-                looking.fadeIn(0.5).play();
-                setTimeout(() => {
-                  looking.fadeOut(0.5);
-                  fistPump.fadeIn(0.5).play();
-                  setTimeout(() => {
-                    fistPump.fadeOut(0.5);
-                    dance2.fadeIn(0.5).play();
-                  }, fistPumpTime);
-                }, lookingTime);
-              }, jumpTime);
-            }, stompTime);
-          }, getupTime);
-        }, wakingTime);
-      }, layingLookingTime);
+          tripp.fadeOut(0.5);
+          layingIdle.fadeIn(0.5).play();
+        }, trippTime);
+      }, scareTime);
     }, 0.5);
   }
+
+  //   layingIdle.play();
+
+  //   if (actions && arduinoButtonPressed) {
+  //     layingIdle.fadeOut(0.5);
+  //     setTimeout(() => {
+  //       layingLooking.fadeIn(0.5).play();
+  //       setTimeout(() => {
+  //         layingLooking.fadeOut(0.5);
+  //         waking.fadeIn(0.5).play();
+  //         setTimeout(() => {
+  //           waking.fadeOut(0.5);
+  //           getup.fadeIn(0.5).play();
+  //           setTimeout(() => {
+  //             getup.fadeOut(0.5);
+  //             stomp.fadeIn(0.5).play();
+  //             setTimeout(() => {
+  //               stomp.fadeOut(0.5);
+  //               jump.fadeIn(0.5).play();
+  //               setTimeout(() => {
+  //                 jump.fadeOut(0.5);
+  //                 looking.fadeIn(0.5).play();
+  //                 setTimeout(() => {
+  //                   looking.fadeOut(0.5);
+  //                   fistPump.fadeIn(0.5).play();
+  //                   setTimeout(() => {
+  //                     fistPump.fadeOut(0.5);
+  //                     dance2.fadeIn(0.5).play();
+  //                   }, fistPumpTime);
+  //                 }, lookingTime);
+  //               }, jumpTime);
+  //             }, stompTime);
+  //           }, getupTime);
+  //         }, wakingTime);
+  //       }, layingLookingTime);
+  //     }, 0.5);
+  //   }
 }

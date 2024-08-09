@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import getRandomColor from "./RandomColor";
+import getRandomColor from "../RandomColor";
 import { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
@@ -47,7 +47,7 @@ export function MiniModel(props) {
   );
 }
 
-export function ButtonModel(props) {
+export function ButtonModelAnimated(props) {
   const { nodes, materials } = useGLTF("/button.glb");
   const ref = useRef();
   useFrame((state, delta) => {

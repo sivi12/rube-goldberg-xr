@@ -10,14 +10,9 @@ import { SkeletonUtils } from "three-stdlib";
 import { useBox } from "@react-three/cannon";
 import { markerManAnimations } from "./maker-man-animations";
 
-export function MarkerManModel({
-  position,
-  rotation = [Math.PI / 2, 0, 0],
-  onRef,
-  arduinoButtonPressed,
-}) {
+export function MarkerManModel({ arduinoButtonPressed }) {
   const group = React.useRef();
-  const ref = React.useRef();
+
   const hipRef = React.useRef();
   const { scene, animations: loadedAnimations } = useGLTF("/marker-man.glb");
   //console.log("Loaded animations:", loadedAnimations);
@@ -31,11 +26,6 @@ export function MarkerManModel({
     markerManAnimations(actions, arduinoButtonPressed);
   }, [actions, arduinoButtonPressed]);
 
-  useEffect(() => {
-    if (onRef) {
-      onRef(ref);
-    }
-  }, [ref, onRef]);
   // Box for the character
   const [hitBoxRef, hitBoxApi] = useBox(() => ({
     type: "Static",
@@ -49,7 +39,7 @@ export function MarkerManModel({
     args: [0.05, 0.05, 0.17],
   }));
 
-  //Aktulaisiere die Position
+  //Aktulaisiere die Position der HitBox
   useFrame(() => {
     if (hipRef.current) {
       const position = hipRef.current.matrixWorld.elements;
@@ -59,35 +49,11 @@ export function MarkerManModel({
     }
   });
 
-  // Ground box <-- diesen Teil in anderen File aussortieren sodass
-  const [boxRef, boxRefApi] = useBox(() => ({
-    type: "Static",
-    args: [0.215, 0.22, 0.115],
-  }));
-
-  useEffect(() => {
-    if (boxRefApi.position) {
-      boxRefApi.position.set(...[position[0], position[1] - 0.05, position[2]]);
-    }
-    if (boxRefApi.rotation) {
-      console.log(rotation);
-      boxRefApi.rotation.set(...[Math.PI / 2, 0, rotation[2]]);
-    }
-  }, [position, boxRefApi.position, boxRefApi]);
-
   return (
     <group ref={group} dispose={null}>
-      <group name="Scene" position={position}>
-        <group
-          name="MocapGuy_HiRes_Meshes"
-          rrotation={[Math.PI / 2, 0, rotation[2]]}
-          scale={0.001}
-        />
-        <group
-          name="Armature007"
-          rotation={[Math.PI / 2, 0, rotation[2]]}
-          scale={0.001}
-        >
+      <group name="Scene">
+        <group name="MocapGuy_HiRes_Meshes" scale={0.001} />
+        <group name="Armature007" scale={0.001} rotation={[Math.PI / 2, 0, 0]}>
           <primitive object={nodes.mixamorigHips} ref={hipRef} />
           <group name="MocapGuy_Body">
             <skinnedMesh
@@ -142,22 +108,9 @@ export function MarkerManModel({
             skeleton={nodes.MocapGuy_Teeth.skeleton}
           /> */}
         </group>
-        <mesh
-          position={[0, -0.05, 0]}
-          ref={ref}
-          rotation={[Math.PI / 2, 0, rotation[2]]}
-        >
-          <boxGeometry args={[0.215, 0.22, 0.115]} />
-          <meshStandardMaterial
-            color="blue"
-            transparent={true}
-            opacity={0}
-            depthWrite={false}
-          />
-        </mesh>
       </group>
     </group>
   );
 }
 
-useGLTF.preload("/marker-man.glb");
+useGLTF.preload("/markerMan.glb");

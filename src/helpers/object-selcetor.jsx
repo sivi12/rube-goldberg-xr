@@ -14,8 +14,8 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
   useXREvent(
     "squeezestart",
     () => {
-      console.log(cubes);
-      console.log("cubes");
+      console.log("cubes", cubes);
+
       if (rightController && rightController.controller && cubes) {
         const tempMatrix = new THREE.Matrix4().extractRotation(
           rightController.controller.matrixWorld
@@ -25,13 +25,13 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
           rightController.controller.matrixWorld
         );
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-        cubes.map((cube) => console.log(cube.api.current));
+        // cubes.map((cube) => console.log(cube.api.current));
         //schaue durch alle objekte des gerade auswählten items, ob der strahl einen dieser objekte trifft
         const intersects = raycaster.intersectObjects(
           cubes.map((cube) => cube.api.current),
           true
         );
-        console.log(intersects);
+        console.log("intersects", intersects);
         let firstIntersectedObject;
         if (intersects.length > 0) {
           if (isGLTF) {

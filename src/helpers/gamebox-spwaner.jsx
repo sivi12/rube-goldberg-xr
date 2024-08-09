@@ -1,12 +1,14 @@
 import { useController, useXREvent } from "@react-three/xr";
-import { MarkerManModel } from "../components/Animations/marker-man-model";
+import { MarkerManModel } from "../components/physical-game-box/Marker-Man/marker-man-model";
+import GameBoxModel from "../components/physical-game-box/game-box-model";
 
-function AnimationSpwaner({
+function GameBoxSpawner({
   model,
   showObject,
-  animationObjekt,
-  setAnimationObjekt,
+  gameBoxItem,
+  setGameBoxItem,
   arduinoButtonPressed,
+  size,
 }) {
   const rightController = useController("right");
   useXREvent(
@@ -22,9 +24,9 @@ function AnimationSpwaner({
         if (
           model != "" &&
           showObject === "startAnimation" &&
-          animationObjekt.length < 3
+          gameBoxItem.length < 3
         ) {
-          setAnimationObjekt((prevObjects) => [
+          setGameBoxItem((prevObjects) => [
             ...prevObjects,
             { position, rotation },
           ]);
@@ -35,20 +37,23 @@ function AnimationSpwaner({
   );
 
   const handleReff = () => {
-    if (animationObjekt) {
-      animationObjekt.map((objekt) => console.log("hello", objekt));
+    if (gameBoxItem) {
+      gameBoxItem.map((objekt) => console.log("hello", objekt));
     }
   };
 
   if (model === "markerMan") {
+    handleReff();
     return (
       <>
-        {animationObjekt.map((objekt, index) => (
-          <MarkerManModel
+        {gameBoxItem.map((objekt, index) => (
+          <GameBoxModel
             key={index}
             position={objekt.position}
             rotation={objekt.rotation}
             arduinoButtonPressed={arduinoButtonPressed}
+            model={model}
+            size={size}
             onRef={(ref) => (objekt.api = ref)}
           />
         ))}
@@ -57,4 +62,4 @@ function AnimationSpwaner({
   }
 }
 
-export default AnimationSpwaner;
+export default GameBoxSpawner;

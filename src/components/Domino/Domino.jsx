@@ -13,6 +13,7 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
     position,
     type: type,
     rotation: [0, rotation[1], 0],
+    fixedRotation: true,
     args: [0.02, 0.2, 0.1],
     onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
   }));

@@ -3,12 +3,17 @@ import { useEffect, useState } from "react";
 
 function DominoModel({ position, mass, type, rotation, color }) {
   const [ref, api] = useBox(() => ({
-    mass: 50,
+    mass: 15,
     position,
     type: type,
     rotation: rotation,
     args: [0.02, 0.2, 0.1],
-    //   onCollide: (e) => (e.contact.impactVelocity > 0.0001 ? api.sleep() : null),
+
+    // onCollide: (e) =>
+    //   e.contact.impactVelocity > 0.01 ? api.wakeUp() : api.sleep(),
+    //linearDamping: 0.1,
+    linearFactor: [1, 1, 0],
+    angularFactor: [0, 0, 1],
   }));
 
   return (

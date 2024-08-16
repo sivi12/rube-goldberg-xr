@@ -4,14 +4,13 @@ import { DominoModel } from "../components/Domino/Domino";
 import { RampModel } from "../components/Ramp/ramp";
 import { PipeModel } from "../components/Pipe/Pipe";
 import { SphereModel } from "../components/Ball/ball";
+import { CannonModel } from "../components/Menu/Party_cannon";
 
 export function ObejctSpawner({
   objects,
   setObjects,
   model, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
   showObject,
-  nodes,
-  _geometry,
 }) {
   const rightController = useController("right");
   useXREvent(
@@ -43,6 +42,7 @@ export function ObejctSpawner({
         }
 
         if (model === "ramp" && showObject === "ramp") {
+          //const rampRotation = [0, rotation[1], Math.PI / 2];
           const type = "Static";
           setObjects((prevObjekts) => [
             ...prevObjekts,
@@ -57,7 +57,14 @@ export function ObejctSpawner({
         if (model === "pipe" && showObject === "pipe") {
           setObjects((prevObjects) => [
             ...prevObjects,
-            { position, rotation, nodes, _geometry },
+            { position, rotation, color },
+          ]);
+        }
+
+        if (model === "cannon" && showObject === "cannon") {
+          setObjects((prevObjects) => [
+            ...prevObjects,
+            { position, rotation, color },
           ]);
         }
       }
@@ -125,9 +132,25 @@ export function ObejctSpawner({
             index={index}
             position={pipe.position}
             rotation={pipe.rotation}
-            nodes={pipe.nodes}
-            geometry={pipe._geometry}
+            color={pipe.color}
             onRef={(ref) => (pipe.api = ref)}
+          />
+        ))}
+      </>
+    );
+  }
+
+  if (model === "cannon") {
+    return (
+      <>
+        {" "}
+        {objects.map((cannon, index) => (
+          <CannonModel
+            index={index}
+            position={cannon.position}
+            rotation={cannon.rotation}
+            color={cannon.color}
+            onRef={(ref) => (cannon.api = ref)}
           />
         ))}
       </>

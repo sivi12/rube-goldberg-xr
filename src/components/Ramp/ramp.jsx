@@ -23,7 +23,7 @@ export function RampModel({ position, rotation, color, onRef }) {
       api.position.set(...position);
     }
     if (api.rotation) {
-      api.rotation.set(...rotation);
+      api.rotation.set(0, rotation[1], Math.PI / 2);
     }
   }, [position, api.position, api]);
   return (

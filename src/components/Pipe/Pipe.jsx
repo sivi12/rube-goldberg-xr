@@ -3,21 +3,19 @@ import { useTrimesh } from "@react-three/cannon";
 import { ObjectSelector } from "../../helpers/object-selcetor";
 import { ObejctSpawner } from "../../helpers/object-spwaner";
 import RemoveLastItem from "../../helpers/delete-last-object";
+import { useGLTF } from "@react-three/drei";
 
-export function PipeModel({
-  position,
-  rotation,
-  nodes,
-  geometry,
-  onRef,
-  materials,
-}) {
+export function PipeModel({ position, rotation, color, onRef, materials }) {
+  const { nodes } = useGLTF("/pipe.glb");
+  const geometry =
+    nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry;
   const data1 =
     nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry
       .attributes.position.array;
   const data2 =
     nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry
       .index.array;
+
   const [ref, api] = useTrimesh(
     () => ({
       type: "Static",
@@ -46,15 +44,13 @@ export function PipeModel({
         geometry={geometry}
         // material={materials.M_TrackModularHalfPipe_LOW}
       >
-        <meshStandardMaterial color="blue" />{" "}
+        <meshStandardMaterial color={color} />{" "}
       </mesh>
     </group>
   );
 }
 
-export default function Pipe({ nodes, _geometry, showObject }) {
-  // console.log(_geometry);
-  // console.log(nodes);
+export default function Pipe({ showObject }) {
   const [objects, setObjects] = useState([]); //wird nicht wie bei den anderen Objekten im Menü definiert. Grund dafür ist scale
 
   return (
@@ -62,8 +58,6 @@ export default function Pipe({ nodes, _geometry, showObject }) {
       <ObejctSpawner
         objects={objects}
         setObjects={setObjects}
-        nodes={nodes}
-        _geometry={_geometry}
         model={"pipe"}
         showObject={showObject}
       />

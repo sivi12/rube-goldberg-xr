@@ -18,6 +18,10 @@ function App() {
       0.005
     );
 
+  const { nodes: partyCannonNodes, materials } = useGLTF("/party_cannon.glb");
+  const _geometry2 = partyCannonNodes.Object_4.geometry.scale(0.2, 0.2, 0.2);
+  const _geometry3 = partyCannonNodes.Object_5.geometry.scale(0.2, 0.2, 0.2);
+
   return (
     <>
       <ARButton />
@@ -26,12 +30,11 @@ function App() {
         <ambientLight position={[0, 0, 2]} intensity={1} />
         <XR>
           <Controllers />
-          <Physics>
+          <Physics broadphase="SAP">
             <Debug>
-              <MenuButton nodes={nodes} _geometry={_geometry} />
-              <Ground rotation={[-Math.PI / 2, 0, 0]} />
+              <MenuButton />
             </Debug>
-
+            <Ground rotation={[-Math.PI / 2, 0, 0]} />
             {/* <MarkerManModel /> */}
           </Physics>
         </XR>

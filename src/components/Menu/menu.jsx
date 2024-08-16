@@ -21,8 +21,9 @@ import ConnectToArduino from "../../helpers/connectToArduino";
 import { Ball } from "../Ball/ball";
 import GameBalls from "../Ball/game-ball";
 import { GameBox } from "../physical-game-box/game-box";
+import Cannon from "./Party_cannon";
 
-export default function MenuButton({ nodes, _geometry }) {
+export default function MenuButton({}) {
   const leftController = useController("left");
   const rightController = useController("right");
   // const [position, setMenuPoistion] = useState([0, 1.5, -1]);
@@ -46,6 +47,7 @@ export default function MenuButton({ nodes, _geometry }) {
   const buildButtonRef = useRef();
   const rampRef = useRef();
   const pipeRef = useRef();
+  const cannonRef = useRef();
   const startAnimationRef = useRef();
 
   // const { nodes } = useGLTF("/sm_track_modular_half_pipe.glb");
@@ -70,25 +72,32 @@ export default function MenuButton({ nodes, _geometry }) {
           leftController.controller.matrixWorld
         );
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+
         const intersectsDomino = raycaster.intersectObject(
           dominoRef.current,
           true
         );
         const intersectsBall = raycaster.intersectObject(ballRef.current, true);
-        const intersectsStartButton = raycaster.intersectObject(
-          startButtonRef.current,
-          true
-        );
+
         const intersectsStartAnimation = raycaster.intersectObject(
           startAnimationRef.current,
           true
         );
+        const intersectsStartButton = raycaster.intersectObject(
+          startButtonRef.current,
+          true
+        );
+
         const intersectsBuildButton = raycaster.intersectObject(
           buildButtonRef.current,
           true
         );
         const intersectsRamp = raycaster.intersectObject(rampRef.current, true);
         const intersectsPipe = raycaster.intersectObject(pipeRef.current, true);
+        const intersectsCannon = raycaster.intersectObject(
+          cannonRef.current,
+          true
+        );
 
         // const intersectsMenu = raycaster.intersectObject(menuRef.current, true);
 
@@ -116,6 +125,10 @@ export default function MenuButton({ nodes, _geometry }) {
         if (intersectsStartAnimation.length > 0) {
           console.log("Start Animation ausgewählt");
           setShowObject("startAnimation");
+        }
+        if (intersectsCannon.length > 0) {
+          console.log("Cannon ausgewählt");
+          setShowObject("cannon");
         }
         if (intersectsStartButton.length > 0) {
           console.log("start ausgewählt");
@@ -249,7 +262,7 @@ export default function MenuButton({ nodes, _geometry }) {
           </Text>
         </mesh>
 
-        <mesh position={[0.13, -0.05, 0.1]}>
+        <mesh position={[0.13, -0.05, 0.1]} ref={cannonRef}>
           <ButtonModelAnimated size={[0.06, 0.1, 0.015]} />
           <Text
             position={[0, 0.08, 0.0]}
@@ -258,7 +271,7 @@ export default function MenuButton({ nodes, _geometry }) {
             anchorX="center"
             anchorY="middle"
           >
-            Light Animation
+            Cannon
           </Text>
         </mesh>
 
@@ -298,10 +311,10 @@ export default function MenuButton({ nodes, _geometry }) {
         </mesh>
       </group>
       <group>
-        <ConnectToArduino
+        {/* <ConnectToArduino
           arduinoButtonPressed={arduinoButtonPressed}
           setArduinoButtonPressed={setArduinoButtonPressed}
-        />
+        /> */}
         {!startGame && (
           <>
             <Domino cubes={cubes} setCubes={setCubes} showObject={showObject} />{" "}
@@ -333,7 +346,8 @@ export default function MenuButton({ nodes, _geometry }) {
         )}
 
         <Ramp showObject={showObject} />
-        <Pipe nodes={nodes} _geometry={_geometry} showObject={showObject} />
+        <Pipe showObject={showObject} />
+        <Cannon showObject={showObject} />
         <GameBox
           showObject={showObject}
           model={"markerMan"}

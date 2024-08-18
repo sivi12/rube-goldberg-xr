@@ -99,7 +99,7 @@ export function CannonModel({ onRef, position, rotation }) {
     direction.applyEuler(new THREE.Euler(...rotation));
     direction.normalize();
     sphereApi.mass.set(10);
-    sphereApi.velocity.set(direction.x * 7, direction.y * 7, direction.z * 7);
+    sphereApi.velocity.set(direction.x * 5, direction.y * 5, direction.z * 5);
   };
 
   useButton(leftController, "x", () => shoot());

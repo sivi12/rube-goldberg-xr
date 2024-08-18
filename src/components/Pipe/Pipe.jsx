@@ -22,6 +22,10 @@ export function PipeModel({ position, rotation, color, onRef, materials }) {
       mass: 2,
       position: position,
       rotation: rotation,
+      material: {
+        friction: 0.001, // Weniger Reibung
+        restitution: 0.01, // Mehr Sprungkraft
+      },
       args: [data1, data2],
     }),
     useRef()

@@ -12,6 +12,10 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
     mass: mass,
     position,
     type: type,
+    material: {
+      friction: 0.001, // Weniger Reibung
+      restitution: 0.3, // Mehr Sprungkraft
+    },
     rotation: [0, rotation[1], 0],
     fixedRotation: true,
     args: [0.02, 0.2, 0.1],

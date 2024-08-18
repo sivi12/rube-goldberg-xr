@@ -10,8 +10,12 @@ export function SphereModel({ position, color, mass, onRef }) {
     mass: mass,
     position,
     type: "Dynamic",
-    args: [0.03],
+    args: [0.04],
     ccdSweptSphereRadius: 0.05,
+    material: {
+      friction: 0.1, // Weniger Reibung
+      restitution: 0.9, // Mehr Sprungkraft
+    },
   }));
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export function SphereModel({ position, color, mass, onRef }) {
 
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[0.03, 16, 16]} />
+      <sphereGeometry args={[0.04, 16, 16]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );

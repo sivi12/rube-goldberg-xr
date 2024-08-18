@@ -30,7 +30,7 @@ function App() {
         <ambientLight position={[0, 0, 2]} intensity={1} />
         <XR>
           <Controllers />
-          <Physics broadphase="SAP">
+          <Physics stepSize={1 / 180} gravity={[0, -9.81, 0]}>
             <Debug>
               <MenuButton />
             </Debug>

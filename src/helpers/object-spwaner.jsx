@@ -4,7 +4,7 @@ import { DominoModel } from "../components/Domino/Domino";
 import { RampModel } from "../components/Ramp/ramp";
 import { PipeModel } from "../components/Pipe/Pipe";
 import { SphereModel } from "../components/Ball/ball";
-import { CannonModel } from "../components/Menu/Party_cannon";
+import { CannonModel } from "../components/Party-cannon/party-cannon-model";
 
 export function ObejctSpawner({
   objects,

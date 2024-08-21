@@ -2,13 +2,10 @@ import * as THREE from "three";
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useBox, useSphere, useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-object";
-import { ArrowHelper } from "three";
 import { ButtonModel } from "../physical-game-box/Button";
 import { useButton } from "../../helpers/buttons";
 import { useController } from "@react-three/xr";
+import { applyOffset, arrowHelper, shoot } from "./helper-functions";
 
 export function CannonModel({ onRef, position, rotation }) {
   const leftController = useController("left");
@@ -58,12 +55,13 @@ export function CannonModel({ onRef, position, rotation }) {
     position,
     rotation: [0, 0, 0],
     args: [0.02, 0.02, 0.02],
+    //Nicht direkt hier aufrufen, da die Rotation sonst am Anfang festgelgt wird und nicht Dynamisch aktuallisiert
     onCollide: (e) => e.contact.impactVelocity > 0.0001 && setHasColided(true),
   }));
 
   useEffect(() => {
     if (hasColided) {
-      shoot();
+      shoot(rotation, sphereApi);
     }
   }, [hasColided]);
 
@@ -72,22 +70,12 @@ export function CannonModel({ onRef, position, rotation }) {
       bodyApi.position.set(...position);
       wheelApi.position.set(...position);
 
-      const ballOffset = new THREE.Vector3(0.1, 0.09, 0);
-      ballOffset.applyEuler(new THREE.Euler(...rotation));
+      console.log(applyOffset(position, rotation, 0.1, 0.09, 0));
 
-      sphereApi.position.set(
-        position[0] + ballOffset.x,
-        position[1] + ballOffset.y,
-        position[2] + ballOffset.z
-      );
-
-      const buttonOffset = new THREE.Vector3(-0.13, 0.009, 0);
-      buttonOffset.applyEuler(new THREE.Euler(...rotation));
+      sphereApi.position.set(...applyOffset(position, rotation, 0.1, 0.09, 0));
 
       buttonApi.position.set(
-        position[0] + buttonOffset.x,
-        position[1] + buttonOffset.y,
-        position[2] + buttonOffset.z
+        ...applyOffset(position, rotation, -0.13, 0.009, 0)
       );
     }
     if (bodyApi.position && wheelApi.rotation) {
@@ -101,37 +89,7 @@ export function CannonModel({ onRef, position, rotation }) {
     bodyRef.current.add(arrowHelper(direction, arrowPosition));
   }, [position, rotation, wheelApi, bodyApi, sphereApi]);
 
-  const arrowHelper = (arrowDirection, arrowPosition) => {
-    const dir = new THREE.Vector3(
-      arrowDirection[0],
-      arrowDirection[1],
-      arrowDirection[2]
-    ).normalize();
-
-    const arrowHelper = new ArrowHelper(
-      dir,
-      new THREE.Vector3(arrowPosition[0], arrowPosition[1], arrowPosition[2]),
-      1,
-      0xffff00
-    );
-
-    return arrowHelper;
-  };
-
-  const shoot = () => {
-    console.log(buttonRef.current);
-    const direction = new THREE.Vector3(
-      1,
-      Math.tan(THREE.MathUtils.degToRad(20)),
-      0
-    );
-    direction.applyEuler(new THREE.Euler(...rotation));
-    direction.normalize();
-    sphereApi.mass.set(10);
-    sphereApi.velocity.set(direction.x * 5, direction.y * 5, direction.z * 5);
-  };
-
-  useButton(leftController, "x", () => shoot());
+  useButton(leftController, "x", () => shoot(rotation, sphereApi));
 
   useEffect(() => {
     onRef(ref);
@@ -161,25 +119,6 @@ export function CannonModel({ onRef, position, rotation }) {
         />
       </mesh>
     </group>
-  );
-}
-
-export default function Cannon({ showObject }) {
-  const [objects, setObjects] = useState([]);
-
-  return (
-    <>
-      <ObejctSpawner
-        objects={objects}
-        setObjects={setObjects}
-        model={"cannon"}
-        showObject={showObject}
-      />
-      <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
-      {showObject === "cannon" && (
-        <RemoveLastItem items={objects} setItems={setObjects} />
-      )}
-    </>
   );
 }
 

@@ -21,7 +21,7 @@ import ConnectToArduino from "../../helpers/connectToArduino";
 import { Ball } from "../Ball/ball";
 import GameBalls from "../Ball/game-ball";
 import { GameBox } from "../physical-game-box/game-box";
-import Cannon from "./Party_cannon";
+import Cannon from "../Party-cannon/party-cannon";
 
 export default function MenuButton({}) {
   const leftController = useController("left");

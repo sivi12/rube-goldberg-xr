@@ -6,15 +6,18 @@ Command: npx gltfjsx@6.4.1 public/button.glb
 import React from "react";
 import { useGLTF } from "@react-three/drei";
 
-export function ButtonModel(props) {
+export function ButtonModel({
+  position = [0.0, -0.05, 0.15],
+  scale = 0.023,
+  rotation = [Math.PI / 2, 0, 0],
+}) {
   const { nodes, materials } = useGLTF("/button.glb");
   return (
-    <group {...props} dispose={null}>
-      <group rotation={[0, 0, 0]} scale={0.023} position={[0.0, -0.05, 0.15]}>
+    <group dispose={null}>
+      <group scale={scale} position={position} rotation={rotation}>
         <mesh
           geometry={nodes.defaultMaterial.geometry}
           material={materials["Material.001"]}
-          rotation={[Math.PI / 2, 0, 0]}
         />
       </group>
     </group>

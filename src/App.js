@@ -5,7 +5,7 @@ import { ARButton, Controllers, XR, useController } from "@react-three/xr";
 import { Physics, Debug, usePlane } from "@react-three/cannon";
 import Ground from "./components/Ground";
 
-import { useGLTF } from "@react-three/drei";
+import { Text, useGLTF } from "@react-three/drei";
 
 import MenuButton from "./components/Menu/menu";
 
@@ -34,6 +34,7 @@ function App() {
             <Debug>
               <MenuButton />
             </Debug>
+
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
             {/* <MarkerManModel /> */}
           </Physics>

@@ -8,22 +8,13 @@ import Ground from "./components/Ground";
 import { Text, useGLTF } from "@react-three/drei";
 
 import MenuButton from "./components/Menu/menu";
-
+import { ScaleGltfs } from "./helpers/scale-gltfs";
 function App() {
-  const { nodes } = useGLTF("/pipe.glb");
-  const _geometry =
-    nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry.scale(
-      0.005,
-      0.005,
-      0.005
-    );
-
-  const { nodes: partyCannonNodes, materials } = useGLTF("/party_cannon.glb");
-  const _geometry2 = partyCannonNodes.Object_4.geometry.scale(0.2, 0.2, 0.2);
-  const _geometry3 = partyCannonNodes.Object_5.geometry.scale(0.2, 0.2, 0.2);
-
+  const [scaledAlready, setScaledAlready] = useState("true");
+  //jkbdcscs
   return (
     <>
+      {scaledAlready && <ScaleGltfs setScaledAlready={setScaledAlready} />}
       <ARButton />
       <Canvas>
         <directionalLight position={[0, 0, 2]} intensity={1.9} />
@@ -36,7 +27,6 @@ function App() {
             </Debug>
 
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
-            {/* <MarkerManModel /> */}
           </Physics>
         </XR>
       </Canvas>

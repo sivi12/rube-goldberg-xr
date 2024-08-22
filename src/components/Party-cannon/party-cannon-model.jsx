@@ -87,7 +87,7 @@ export function CannonModel({ onRef, position, rotation }) {
     const direction = [-1, Math.tan(THREE.MathUtils.degToRad(-18)), 0];
     const arrowPosition = [0, -0.055, 0];
     bodyRef.current.add(arrowHelper(direction, arrowPosition));
-  }, [position, rotation, wheelApi, bodyApi, sphereApi]);
+  }, [position, rotation]);
 
   useButton(leftController, "x", () => shoot(rotation, sphereApi));
 

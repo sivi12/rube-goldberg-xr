@@ -23,6 +23,9 @@ import GameBalls from "../Ball/game-ball";
 import { GameBox } from "../physical-game-box/game-box";
 import Cannon from "../Party-cannon/party-cannon";
 
+import Trampoline from "../Trampoline/trampoline";
+import GolfTee from "../Golf-tee/golf-tee";
+
 export default function MenuButton({}) {
   const leftController = useController("left");
   const rightController = useController("right");
@@ -128,7 +131,7 @@ export default function MenuButton({}) {
         }
         if (intersectsCannon.length > 0) {
           console.log("Cannon ausgewählt");
-          setShowObject("cannon");
+          setShowObject("golfTee");
         }
         if (intersectsStartButton.length > 0) {
           console.log("start ausgewählt");
@@ -348,6 +351,8 @@ export default function MenuButton({}) {
         <Ramp showObject={showObject} />
         <Pipe showObject={showObject} />
         <Cannon showObject={showObject} />
+        <GolfTee showObject={showObject} />
+        <Trampoline showObject={showObject} />
         <GameBox
           showObject={showObject}
           model={"markerMan"}

@@ -15,6 +15,7 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
     "squeezestart",
     () => {
       console.log("cubes", cubes);
+      cubes.map((cube) => console.log(cube.api.current));
 
       if (rightController && rightController.controller && cubes) {
         const tempMatrix = new THREE.Matrix4().extractRotation(
@@ -44,6 +45,7 @@ export function ObjectSelector({ cubes, setCubes, isGLTF }) {
             (cube) => cube.api.current === firstIntersectedObject
           );
           setSelectedObject(index);
+          console.log(index, " index");
         }
       }
     },

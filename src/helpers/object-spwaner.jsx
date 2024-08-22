@@ -5,6 +5,8 @@ import { RampModel } from "../components/Ramp/ramp";
 import { PipeModel } from "../components/Pipe/Pipe";
 import { SphereModel } from "../components/Ball/ball";
 import { CannonModel } from "../components/Party-cannon/party-cannon-model";
+import { GolfTeeModel } from "../components/Golf-tee/golf-tee-model";
+import { TrampolineModel } from "../components/Trampoline/trampoline-model";
 
 export function ObejctSpawner({
   objects,
@@ -27,16 +29,16 @@ export function ObejctSpawner({
         if (model === "domino" && showObject === "domino") {
           const mass = 10;
           const type = "Dynamic";
-          setObjects((prevObjekts) => [
-            ...prevObjekts,
+          setObjects((prevObjects) => [
+            ...prevObjects,
             { position, mass, type, rotation, color },
           ]);
         }
 
         if (model === "ball" && showObject === "ball") {
           let mass = 0;
-          setObjects((prevObjekts) => [
-            ...prevObjekts,
+          setObjects((prevObjects) => [
+            ...prevObjects,
             { position, mass, color },
           ]);
         }
@@ -44,14 +46,15 @@ export function ObejctSpawner({
         if (model === "ramp" && showObject === "ramp") {
           //const rampRotation = [0, rotation[1], Math.PI / 2];
           const type = "Static";
-          setObjects((prevObjekts) => [
-            ...prevObjekts,
+          setObjects((prevObjects) => [
+            ...prevObjects,
+            //------------------------------------------type rauslöschen
             { position, type, rotation, color },
           ]);
         }
 
         if (model === "startBox" && showObject === "startBox") {
-          setObjects((prevObjekts) => [...prevObjekts, { position, rotation }]);
+          setObjects((prevObjects) => [...prevObjects, { position, rotation }]);
         }
 
         if (model === "pipe" && showObject === "pipe") {
@@ -62,6 +65,14 @@ export function ObejctSpawner({
         }
 
         if (model === "cannon" && showObject === "cannon") {
+          setObjects((prevObjects) => [...prevObjects, { position, rotation }]);
+        }
+
+        if (model === "golfTee" && showObject === "golfTee") {
+          setObjects((prevObjects) => [...prevObjects, { position, color }]);
+        }
+
+        if (model === "trampoline" && showObject === "trampoline") {
           setObjects((prevObjects) => [
             ...prevObjects,
             { position, rotation, color },
@@ -75,16 +86,16 @@ export function ObejctSpawner({
   if (model === "domino") {
     return (
       <>
-        {objects.map((objekt, index) => (
+        {objects.map((object, index) => (
           <DominoModel
             key={index}
-            position={objekt.position}
-            mass={objekt.mass}
-            type={objekt.type}
-            color={objekt.color}
-            rotation={objekt.rotation}
+            position={object.position}
+            mass={object.mass}
+            type={object.type}
+            color={object.color}
+            rotation={object.rotation}
             controller={rightController}
-            onRef={(ref) => (objekt.api = ref)}
+            onRef={(ref) => (object.api = ref)}
           />
         ))}
       </>
@@ -94,13 +105,13 @@ export function ObejctSpawner({
   if (model === "ball") {
     return (
       <>
-        {objects.map((objekt, index) => (
+        {objects.map((object, index) => (
           <SphereModel
             key={index}
-            position={objekt.position}
-            mass={objekt.mass}
-            color={objekt.color}
-            onRef={(ref) => (objekt.api = ref)}
+            position={object.position}
+            mass={object.mass}
+            color={object.color}
+            onRef={(ref) => (object.api = ref)}
           />
         ))}
       </>
@@ -110,13 +121,13 @@ export function ObejctSpawner({
   if (model === "ramp") {
     return (
       <>
-        {objects.map((objekt, index) => (
+        {objects.map((object, index) => (
           <RampModel
             key={index}
-            position={objekt.position}
-            color={objekt.color}
-            rotation={objekt.rotation}
-            onRef={(ref) => (objekt.api = ref)}
+            position={object.position}
+            color={object.color}
+            rotation={object.rotation}
+            onRef={(ref) => (object.api = ref)}
           />
         ))}
       </>
@@ -149,8 +160,39 @@ export function ObejctSpawner({
             index={index}
             position={cannon.position}
             rotation={cannon.rotation}
-            color={cannon.color}
             onRef={(ref) => (cannon.api = ref)}
+          />
+        ))}
+      </>
+    );
+  }
+
+  if (model === "golfTee") {
+    return (
+      <>
+        {" "}
+        {objects.map((golfTee, index) => (
+          <GolfTeeModel
+            index={index}
+            position={golfTee.position}
+            color={golfTee.color}
+            onRef={(ref) => (golfTee.api = ref)}
+          />
+        ))}
+      </>
+    );
+  }
+
+  if (model === "trampoline") {
+    return (
+      <>
+        {" "}
+        {objects.map((golfTee, index) => (
+          <TrampolineModel
+            index={index}
+            position={golfTee.position}
+            rotation={golfTee.rotation}
+            onRef={(ref) => (golfTee.api = ref)}
           />
         ))}
       </>

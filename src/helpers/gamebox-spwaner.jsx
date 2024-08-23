@@ -26,24 +26,21 @@ function GameBoxSpawner({
           currentItem === "startAnimation" &&
           gameBoxItem.length < 3
         ) {
-          setGameBoxItem((prevObjects) => [
-            ...prevObjects,
-            { position, rotation },
-          ]);
+          setGameBoxItem((prevItems) => [...prevItems, { position, rotation }]);
         }
       }
     },
     { handedness: "right" }
   );
 
-  const handleReff = () => {
-    if (gameBoxItem) {
-      gameBoxItem.map((objekt) => console.log("hello", objekt));
-    }
-  };
+  // const handleReff = () => {
+  //   if (gameBoxItem) {
+  //     gameBoxItem.map((objekt) => console.log("hello", objekt));
+  //   }
+  // };
 
   if (model === "markerMan") {
-    handleReff();
+    // handleReff();
     return (
       <>
         {gameBoxItem.map((objekt, index) => (

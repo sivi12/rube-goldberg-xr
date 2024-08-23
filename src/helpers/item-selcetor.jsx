@@ -4,20 +4,20 @@ import { updatePosition, updateType } from "./update-item-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
-export function ItemSelector({ cubes, setCubes, isGLTF }) {
+export function ItemSelector({ items, setItems, isGLTF }) {
   const rightController = useController("right");
   const [selectedObject, setSelectedObject] = useState(null);
 
-  //eine ObjectSelector Methode anstatt es in jedem Objekt neu zu übergeben?
+  //eine ItemSelector Methode anstatt es in jedem Objekt neu zu übergeben?
   //
 
   useXREvent(
     "squeezestart",
     () => {
-      console.log("cubes", cubes);
-      cubes.map((cube) => console.log(cube.api.current));
+      console.log("items", items);
+      items.map((cube) => console.log(cube.api.current));
 
-      if (rightController && rightController.controller && cubes) {
+      if (rightController && rightController.controller && items) {
         const tempMatrix = new THREE.Matrix4().extractRotation(
           rightController.controller.matrixWorld
         );
@@ -26,10 +26,10 @@ export function ItemSelector({ cubes, setCubes, isGLTF }) {
           rightController.controller.matrixWorld
         );
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-        // cubes.map((cube) => console.log(cube.api.current));
+        // items.map((cube) => console.log(cube.api.current));
         //schaue durch alle objekte des gerade auswählten items, ob der strahl einen dieser objekte trifft
         const intersects = raycaster.intersectObjects(
-          cubes.map((cube) => cube.api.current),
+          items.map((cube) => cube.api.current),
           true
         );
         console.log("intersects", intersects);
@@ -41,7 +41,7 @@ export function ItemSelector({ cubes, setCubes, isGLTF }) {
             firstIntersectedObject = intersects[0].object;
           }
 
-          const index = cubes.findIndex(
+          const index = items.findIndex(
             (cube) => cube.api.current === firstIntersectedObject
           );
           setSelectedObject(index);
@@ -72,7 +72,7 @@ export function ItemSelector({ cubes, setCubes, isGLTF }) {
       const newPosition = [newPositionX, newPositionY, newPositionZ];
       const newRoation = rightController.controller.rotation.toArray();
 
-      setCubes(updatePosition(cubes, selectedObject, newPosition, newRoation));
+      setItems(updatePosition(items, selectedObject, newPosition, newRoation));
     }
   });
 

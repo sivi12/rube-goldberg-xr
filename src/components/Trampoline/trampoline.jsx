@@ -9,24 +9,24 @@ Title: Trampoline
 
 import React, { useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
 export default function Trampoline({ currentItem }) {
-  const [objects, setObjects] = useState([]);
+  const [items, setItems] = useState([]);
 
   return (
     <>
-      <ObejctSpawner
-        objects={objects}
-        setObjects={setObjects}
+      <ItemSpawner
+        items={items}
+        setItems={setItems}
         model={"trampoline"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={objects} setCubes={setObjects} />
+      <ItemSelector items={items} setItems={setItems} />
       {currentItem === "trampoline" && (
-        <RemoveLastItem items={objects} setItems={setObjects} />
+        <RemoveLastItem items={items} setItems={setItems} />
       )}
     </>
   );

@@ -2,7 +2,7 @@ import { useXREvent, useController } from "@react-three/xr";
 import { useSphere } from "@react-three/cannon";
 import { useEffect, useState } from "react";
 import { ItemSelector } from "../../helpers/item-selcetor";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function SphereModel({ position, color, mass, onRef }) {
@@ -66,13 +66,13 @@ export function Ball({ currentItem }) {
   const [spheres, setSpheres] = useState([]);
   return (
     <>
-      <ObejctSpawner
-        objects={spheres}
-        setObjects={setSpheres}
+      <ItemSpawner
+        items={spheres}
+        setItems={setSpheres}
         model={"ball"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={spheres} setCubes={setSpheres} />
+      <ItemSelector items={spheres} setItems={setSpheres} />
       {currentItem === "ball" && (
         <RemoveLastItem items={spheres} setItems={setSpheres} />
       )}

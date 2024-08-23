@@ -6,7 +6,7 @@ Command: npx gltfjsx@6.4.1 public/party_cannon.glb
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
@@ -77,21 +77,21 @@ export function PartyCannonn(onRef, position, rotation) {
 export default function Cannon({ nodes, _geometry, currentItem }) {
   // console.log(_geometry);
   // console.log(nodes);
-  const [objects, setObjects] = useState([]);
+  const [items, setItems] = useState([]);
 
   return (
     <>
-      <ObejctSpawner
-        objects={objects}
-        setObjects={setObjects}
+      <ItemSpawner
+        items={items}
+        setItems={setItems}
         nodes={nodes}
         _geometry={_geometry}
         model={"cannon"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      <ItemSelector items={items} setItems={setItems} isGLTF={true} />
       {currentItem === "cannon" && (
-        <RemoveLastItem items={objects} setItems={setObjects} />
+        <RemoveLastItem items={items} setItems={setItems} />
       )}
     </>
   );

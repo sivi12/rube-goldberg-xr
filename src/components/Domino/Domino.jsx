@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useBox } from "@react-three/cannon";
 import { ItemSelector } from "../../helpers/item-selcetor";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import { useController, useXREvent } from "@react-three/xr";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
@@ -47,9 +47,9 @@ function Domino({ cubes, setCubes, currentItem }) {
   console.log(currentItem);
   return (
     <>
-      <ObejctSpawner
-        objects={cubes}
-        setObjects={setCubes}
+      <ItemSpawner
+        items={cubes}
+        setItems={setCubes}
         model={"domino"}
         currentItem={currentItem}
       />

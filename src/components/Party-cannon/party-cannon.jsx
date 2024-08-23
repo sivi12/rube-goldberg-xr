@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
 export default function Cannon({ currentItem }) {
-  const [objects, setObjects] = useState([]);
+  const [items, setItems] = useState([]);
 
   return (
     <>
-      <ObejctSpawner
-        objects={objects}
-        setObjects={setObjects}
+      <ItemSpawner
+        items={items}
+        setItems={setItems}
         model={"cannon"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      <ItemSelector items={items} setItems={setItems} isGLTF={true} />
       {currentItem === "cannon" && (
-        <RemoveLastItem items={objects} setItems={setObjects} />
+        <RemoveLastItem items={items} setItems={setItems} />
       )}
     </>
   );

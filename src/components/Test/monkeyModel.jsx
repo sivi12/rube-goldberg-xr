@@ -2,7 +2,7 @@ import { useTrimesh } from "@react-three/cannon";
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { MeshNormalMaterial } from "three";
-import { ObjectSpawner } from "../../helpers/model-spawner";
+import { ObjectSpawner } from "../../helpers/gltf-model-spawner";
 
 export default function MonkeyModel({
   position,

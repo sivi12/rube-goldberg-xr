@@ -2,7 +2,7 @@ import * as THREE from "three";
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useBox, useSphere, useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
 import { ArrowHelper } from "three";
@@ -170,13 +170,13 @@ export default function Cannon({ currentItem }) {
 
   return (
     <>
-      <ObejctSpawner
+      <ItemSpawner
         objects={objects}
         setObjects={setObjects}
         model={"cannon"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      <ItemSelector items={objects} setItems={setObjects} isGLTF={true} />
       {currentItem === "cannon" && (
         <RemoveLastItem items={objects} setItems={setObjects} />
       )}

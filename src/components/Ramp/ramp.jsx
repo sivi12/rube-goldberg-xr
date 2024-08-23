@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ItemSelector } from "../../helpers/item-selcetor";
-import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSpawner } from "../../helpers/item-spwaner";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function RampModel({ position, rotation, color, onRef }) {
@@ -38,13 +38,13 @@ function Ramp({ currentItem }) {
   const [ramps, setRamps] = useState([]);
   return (
     <>
-      <ObejctSpawner
-        objects={ramps}
-        setObjects={setRamps}
+      <ItemSpawner
+        items={ramps}
+        setItems={setRamps}
         model={"ramp"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={ramps} setCubes={setRamps} />
+      <ItemSelector items={ramps} setItems={setRamps} />
       {currentItem === "ramp" && (
         <RemoveLastItem items={ramps} setItems={setRamps} />
       )}

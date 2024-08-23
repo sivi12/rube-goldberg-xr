@@ -21,7 +21,7 @@ export function GameBox({
         arduinoButtonPressed={arduinoButtonPressed}
         size={size}
       />
-      <ItemSelector cubes={gameBoxItem} setCubes={setGameBoxItem} />
+      <ItemSelector items={gameBoxItem} setItems={setGameBoxItem} />
     </>
   );
 }

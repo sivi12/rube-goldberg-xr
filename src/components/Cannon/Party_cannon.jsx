@@ -6,15 +6,15 @@ Command: npx gltfjsx@6.4.1 public/party_cannon.glb
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function PartyCannonn(onRef, position, rotation) {
   const ref = useRef();
   const { nodes, materials } = useGLTF("/party_cannon.glb");
 
-  const wheelGeometry = nodes.Object_4.geometry;
+  const wheelGeometry = nodes.item_4.geometry;
   const bodyGeometry = nodes.Object_5.geometry;
 
   const data1 = nodes.Object_4.geometry.attributes.position.array;
@@ -74,7 +74,7 @@ export function PartyCannonn(onRef, position, rotation) {
   );
 }
 
-export default function Cannon({ nodes, _geometry, showObject }) {
+export default function Cannon({ nodes, _geometry, currentItem }) {
   // console.log(_geometry);
   // console.log(nodes);
   const [objects, setObjects] = useState([]);
@@ -87,10 +87,10 @@ export default function Cannon({ nodes, _geometry, showObject }) {
         nodes={nodes}
         _geometry={_geometry}
         model={"cannon"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
-      {showObject === "cannon" && (
+      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      {currentItem === "cannon" && (
         <RemoveLastItem items={objects} setItems={setObjects} />
       )}
     </>

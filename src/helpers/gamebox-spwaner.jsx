@@ -4,7 +4,7 @@ import GameBoxModel from "../components/physical-game-box/game-box-model";
 
 function GameBoxSpawner({
   model,
-  showObject,
+  currentItem,
   gameBoxItem,
   setGameBoxItem,
   arduinoButtonPressed,
@@ -23,7 +23,7 @@ function GameBoxSpawner({
 
         if (
           model != "" &&
-          showObject === "startAnimation" &&
+          currentItem === "startAnimation" &&
           gameBoxItem.length < 3
         ) {
           setGameBoxItem((prevObjects) => [

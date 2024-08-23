@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function RampModel({ position, rotation, color, onRef }) {
   const [ref, api] = useBox(() => ({
@@ -34,7 +34,7 @@ export function RampModel({ position, rotation, color, onRef }) {
   );
 }
 
-function Ramp({ showObject }) {
+function Ramp({ currentItem }) {
   const [ramps, setRamps] = useState([]);
   return (
     <>
@@ -42,10 +42,10 @@ function Ramp({ showObject }) {
         objects={ramps}
         setObjects={setRamps}
         model={"ramp"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={ramps} setCubes={setRamps} />
-      {showObject === "ramp" && (
+      <ItemSelector cubes={ramps} setCubes={setRamps} />
+      {currentItem === "ramp" && (
         <RemoveLastItem items={ramps} setItems={setRamps} />
       )}
     </>

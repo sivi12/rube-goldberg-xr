@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ObjectSelector } from "../../helpers/object-selcetor";
+import { ItemSelector } from "../../helpers/item-selcetor";
 import GameBoxSpawner from "../../helpers/gamebox-spwaner";
 
 export function GameBox({
-  showObject,
+  currentItem,
   arduinoButtonPressed,
   model = "",
   size = [0.215, 0.115, 0.22],
@@ -17,11 +17,11 @@ export function GameBox({
         model={model}
         gameBoxItem={gameBoxItem}
         setGameBoxItem={setGameBoxItem}
-        showObject={showObject}
+        currentItem={currentItem}
         arduinoButtonPressed={arduinoButtonPressed}
         size={size}
       />
-      <ObjectSelector cubes={gameBoxItem} setCubes={setGameBoxItem} />
+      <ItemSelector cubes={gameBoxItem} setCubes={setGameBoxItem} />
     </>
   );
 }

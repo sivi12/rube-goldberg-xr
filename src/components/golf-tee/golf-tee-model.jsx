@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useCylinder, useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function GolfTeeModel({ position, color, onRef }) {
   const { nodes, materials } = useGLTF("/golf_tee.glb");

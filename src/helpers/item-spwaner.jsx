@@ -12,7 +12,7 @@ export function ObejctSpawner({
   objects,
   setObjects,
   model, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
-  showObject,
+  currentItem,
 }) {
   const rightController = useController("right");
   useXREvent(
@@ -26,7 +26,7 @@ export function ObejctSpawner({
         const rotation = [rotationX, rotationY, rotationZ];
         const color = getRandomColor();
 
-        if (model === "domino" && showObject === "domino") {
+        if (model === "domino" && currentItem === "domino") {
           const mass = 10;
           const type = "Dynamic";
           setObjects((prevObjects) => [
@@ -35,7 +35,7 @@ export function ObejctSpawner({
           ]);
         }
 
-        if (model === "ball" && showObject === "ball") {
+        if (model === "ball" && currentItem === "ball") {
           let mass = 0;
           setObjects((prevObjects) => [
             ...prevObjects,
@@ -43,7 +43,7 @@ export function ObejctSpawner({
           ]);
         }
 
-        if (model === "ramp" && showObject === "ramp") {
+        if (model === "ramp" && currentItem === "ramp") {
           //const rampRotation = [0, rotation[1], Math.PI / 2];
           const type = "Static";
           setObjects((prevObjects) => [
@@ -53,26 +53,26 @@ export function ObejctSpawner({
           ]);
         }
 
-        if (model === "startBox" && showObject === "startBox") {
+        if (model === "startBox" && currentItem === "startBox") {
           setObjects((prevObjects) => [...prevObjects, { position, rotation }]);
         }
 
-        if (model === "pipe" && showObject === "pipe") {
+        if (model === "pipe" && currentItem === "pipe") {
           setObjects((prevObjects) => [
             ...prevObjects,
             { position, rotation, color },
           ]);
         }
 
-        if (model === "cannon" && showObject === "cannon") {
+        if (model === "cannon" && currentItem === "cannon") {
           setObjects((prevObjects) => [...prevObjects, { position, rotation }]);
         }
 
-        if (model === "golfTee" && showObject === "golfTee") {
+        if (model === "golfTee" && currentItem === "golfTee") {
           setObjects((prevObjects) => [...prevObjects, { position, color }]);
         }
 
-        if (model === "trampoline" && showObject === "trampoline") {
+        if (model === "trampoline" && currentItem === "trampoline") {
           setObjects((prevObjects) => [
             ...prevObjects,
             { position, rotation, color },

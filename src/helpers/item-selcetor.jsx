@@ -1,10 +1,10 @@
 import { useController, useXREvent } from "@react-three/xr";
 import * as THREE from "three";
-import { updatePosition, updateType } from "./update-object-position";
+import { updatePosition, updateType } from "./update-item-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
-export function ObjectSelector({ cubes, setCubes, isGLTF }) {
+export function ItemSelector({ cubes, setCubes, isGLTF }) {
   const rightController = useController("right");
   const [selectedObject, setSelectedObject] = useState(null);
 

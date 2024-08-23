@@ -2,9 +2,9 @@ import * as THREE from "three";
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useBox, useSphere, useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import RemoveLastItem from "../../helpers/delete-last-item";
 import { ArrowHelper } from "three";
 import { ButtonModel } from "../physical-game-box/Button";
 import { useButton } from "../../helpers/buttons";
@@ -165,7 +165,7 @@ export function CannonModel({ onRef, position, rotation }) {
   );
 }
 
-export default function Cannon({ showObject }) {
+export default function Cannon({ currentItem }) {
   const [objects, setObjects] = useState([]);
 
   return (
@@ -174,10 +174,10 @@ export default function Cannon({ showObject }) {
         objects={objects}
         setObjects={setObjects}
         model={"cannon"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
-      {showObject === "cannon" && (
+      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      {currentItem === "cannon" && (
         <RemoveLastItem items={objects} setItems={setObjects} />
       )}
     </>

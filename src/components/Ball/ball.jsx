@@ -1,13 +1,13 @@
 import { useXREvent, useController } from "@react-three/xr";
 import { useSphere } from "@react-three/cannon";
 import { useEffect, useState } from "react";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function SphereModel({ position, color, mass, onRef }) {
   const [ref, api] = useSphere(() => ({
-    mass: mass,
+    mass: 1,
     position,
     type: "Dynamic",
     args: [0.04],
@@ -41,13 +41,13 @@ export function SphereModel({ position, color, mass, onRef }) {
   );
 }
 
-// function StartGame({ spheres, setSpheres, showObject }) {
+// function StartGame({ spheres, setSpheres, currentItem }) {
 //   const leftController = useController("left");
 
 //   useXREvent(
 //     "squeeze",
 //     () => {
-//       if (leftController && showObject === "ball" && spheres.length > 0) {
+//       if (leftController && currentItem === "ball" && spheres.length > 0) {
 //         // setSpheres((prevSpheres) => {
 //         //   return prevSpheres.map((sphere) => ({
 //         //     ...sphere,
@@ -62,17 +62,18 @@ export function SphereModel({ position, color, mass, onRef }) {
 //   );
 // }
 
-export function Ball({ spheres, setSpheres, showObject }) {
+export function Ball({ currentItem }) {
+  const [spheres, setSpheres] = useState([]);
   return (
     <>
       <ObejctSpawner
         objects={spheres}
         setObjects={setSpheres}
         model={"ball"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={spheres} setCubes={setSpheres} />
-      {showObject === "ball" && (
+      <ItemSelector cubes={spheres} setCubes={setSpheres} />
+      {currentItem === "ball" && (
         <RemoveLastItem items={spheres} setItems={setSpheres} />
       )}
     </>

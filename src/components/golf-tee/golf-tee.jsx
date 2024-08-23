@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useCylinder, useTrimesh } from "@react-three/cannon";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
-export default function GolfTee({ showObject }) {
+export default function GolfTee({ currentItem }) {
   const [objects, setObjects] = useState([]);
 
   return (
@@ -14,10 +14,10 @@ export default function GolfTee({ showObject }) {
         objects={objects}
         setObjects={setObjects}
         model={"golfTee"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
-      {showObject === "golfTee" && (
+      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      {currentItem === "golfTee" && (
         <RemoveLastItem items={objects} setItems={setObjects} />
       )}
     </>

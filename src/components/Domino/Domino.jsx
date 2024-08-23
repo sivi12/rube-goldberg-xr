@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useBox } from "@react-three/cannon";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
 import { useController, useXREvent } from "@react-three/xr";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   //können eigentlich die position nach dem landen speichern. Unnötig dafür game dominos zu erstellen
@@ -43,18 +43,18 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   );
 }
 
-function Domino({ cubes, setCubes, showObject }) {
-  console.log(showObject);
+function Domino({ cubes, setCubes, currentItem }) {
+  console.log(currentItem);
   return (
     <>
       <ObejctSpawner
         objects={cubes}
         setObjects={setCubes}
         model={"domino"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={cubes} setCubes={setCubes} />
-      {showObject === "domino" && (
+      <ItemSelector cubes={cubes} setCubes={setCubes} />
+      {currentItem === "domino" && (
         <RemoveLastItem items={cubes} setItems={setCubes} />
       )}
     </>

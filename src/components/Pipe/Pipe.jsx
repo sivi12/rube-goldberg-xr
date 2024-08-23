@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTrimesh } from "@react-three/cannon";
-import { ObjectSelector } from "../../helpers/object-selcetor";
-import { ObejctSpawner } from "../../helpers/object-spwaner";
-import RemoveLastItem from "../../helpers/delete-last-object";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import { ObejctSpawner } from "../../helpers/item-spwaner";
+import RemoveLastItem from "../../helpers/delete-last-item";
 import { useGLTF } from "@react-three/drei";
 
 export function PipeModel({ position, rotation, color, onRef, materials }) {
@@ -54,7 +54,7 @@ export function PipeModel({ position, rotation, color, onRef, materials }) {
   );
 }
 
-export default function Pipe({ showObject }) {
+export default function Pipe({ currentItem }) {
   const [objects, setObjects] = useState([]); //wird nicht wie bei den anderen Objekten im Menü definiert. Grund dafür ist scale
 
   return (
@@ -63,10 +63,10 @@ export default function Pipe({ showObject }) {
         objects={objects}
         setObjects={setObjects}
         model={"pipe"}
-        showObject={showObject}
+        currentItem={currentItem}
       />
-      <ObjectSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
-      {showObject === "pipe" && (
+      <ItemSelector cubes={objects} setCubes={setObjects} isGLTF={true} />
+      {currentItem === "pipe" && (
         <RemoveLastItem items={objects} setItems={setObjects} />
       )}
     </>

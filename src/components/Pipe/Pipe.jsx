@@ -6,7 +6,7 @@ import RemoveLastItem from "../../helpers/delete-last-item";
 import { useGLTF } from "@react-three/drei";
 
 export function PipeModel({ position, rotation, color, onRef, materials }) {
-  const { nodes } = useGLTF("/pipe.glb");
+  const { nodes } = useGLTF("/Models/pipe.glb");
   const geometry =
     nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry;
   const data1 =

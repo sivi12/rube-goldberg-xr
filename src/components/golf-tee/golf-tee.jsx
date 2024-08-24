@@ -24,4 +24,4 @@ export default function GolfTee({ currentItem }) {
   );
 }
 
-useGLTF.preload("/golf_tee.glb");
+useGLTF.preload("/Models/golf_tee.glb");

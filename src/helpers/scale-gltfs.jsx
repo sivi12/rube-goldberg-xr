@@ -2,9 +2,11 @@ import { useGLTF } from "@react-three/drei";
 import { useState } from "react";
 
 export function ScaleGltfs({ setScaledAlready }) {
-  const { nodes } = useGLTF("/pipe.glb");
-  const { nodes: partyCannonNodes, materials } = useGLTF("/party_cannon.glb");
-  const { nodes: golfTeeNodes } = useGLTF("/golf_tee.glb");
+  const { nodes } = useGLTF("/Models/pipe.glb");
+  const { nodes: partyCannonNodes, materials } = useGLTF(
+    "/Models/party_cannon.glb"
+  );
+  const { nodes: golfTeeNodes } = useGLTF("/Models/golf_tee.glb");
 
   const geometry =
     nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0.geometry.scale(

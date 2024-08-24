@@ -6,7 +6,7 @@ import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function GolfTeeModel({ position, color, onRef }) {
-  const { nodes, materials } = useGLTF("/golf_tee.glb");
+  const { nodes, materials } = useGLTF("/Models/golf_tee.glb");
   const data1 = nodes.Object_2.geometry.attributes.position.array;
   const data2 = nodes.Object_2.geometry.index.array;
   const [ref, api] = useCylinder(
@@ -53,4 +53,4 @@ export function GolfTeeModel({ position, color, onRef }) {
   );
 }
 
-useGLTF.preload("/golf_tee.glb");
+useGLTF.preload("/Models/golf_tee.glb");

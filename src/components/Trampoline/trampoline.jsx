@@ -32,4 +32,4 @@ export default function Trampoline({ currentItem }) {
   );
 }
 
-useGLTF.preload("/trampoline.glb");
+useGLTF.preload("/Models/trampoline.glb");

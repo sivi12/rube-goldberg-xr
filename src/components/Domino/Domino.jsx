@@ -43,19 +43,19 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   );
 }
 
-function Domino({ cubes, setCubes, currentItem }) {
+function Domino({ items, setItems, currentItem }) {
   console.log(currentItem);
   return (
     <>
       <ItemSpawner
-        items={cubes}
-        setItems={setCubes}
+        items={items}
+        setItems={setItems}
         model={"domino"}
         currentItem={currentItem}
       />
-      <ItemSelector cubes={cubes} setCubes={setCubes} />
+      <ItemSelector items={items} setItems={setItems} />
       {currentItem === "domino" && (
-        <RemoveLastItem items={cubes} setItems={setCubes} />
+        <RemoveLastItem items={items} setItems={setItems} />
       )}
     </>
   );

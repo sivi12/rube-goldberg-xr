@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { useCylinder } from "@react-three/cannon";
 
 export function TrampolineModel({ position, rotation, onRef }) {
-  const { nodes, materials } = useGLTF("/trampoline.glb");
+  const { nodes, materials } = useGLTF("/Models/trampoline.glb");
 
   const [ref, api] = useCylinder(
     () => ({

@@ -1,7 +1,8 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import getRandomColor from "../RandomColor";
 import { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
+import { TextureLoader } from "three";
 
 export function MiniPipe(props) {
   const { nodes, materials } = useGLTF("/Models/pipe.glb");
@@ -20,14 +21,14 @@ export function MiniPipe(props) {
             .geometry
         }
         //material={materials.M_TrackModularHalfPipe_LOW}
-        scale={0.000016}
+        scale={0.7}
       />
     </group>
   );
 }
 
 export function MiniModel(props) {
-  const { nodes } = useGLTF("/marker-man.glb");
+  const { nodes } = useGLTF("/Models/marker-man.glb");
   const ref = useRef();
   useFrame((state, delta) => {
     ref.current.rotation.y += delta;
@@ -48,7 +49,7 @@ export function MiniModel(props) {
 }
 
 export function ButtonModelAnimated(props) {
-  const { nodes, materials } = useGLTF("/button.glb");
+  const { nodes, materials } = useGLTF("/Models/button.glb");
   const ref = useRef();
   useFrame((state, delta) => {
     ref.current.rotation.y += delta;
@@ -68,6 +69,7 @@ export function ButtonModelAnimated(props) {
 }
 
 export const AnimatedCube = ({ size }) => {
+  const texture = useLoader(TextureLoader, "/Textures/1.png");
   const ref = useRef();
   useFrame((state, delta) => {
     ref.current.rotation.y += delta;
@@ -75,7 +77,7 @@ export const AnimatedCube = ({ size }) => {
   return (
     <mesh ref={ref}>
       <boxGeometry args={size} />
-      <meshStandardMaterial color={"white"} />
+      <meshStandardMaterial map={texture} />
     </mesh>
   );
 };

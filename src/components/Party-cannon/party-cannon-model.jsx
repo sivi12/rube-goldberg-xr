@@ -11,7 +11,7 @@ export function CannonModel({ onRef, position, rotation }) {
   const leftController = useController("left");
   const ref = useRef();
   const [hasColided, setHasColided] = useState(false);
-  const { nodes, materials } = useGLTF("/party_cannon.glb");
+  const { nodes, materials } = useGLTF("/Models/party_cannon.glb");
 
   const wheelGeometry = nodes.Object_4.geometry;
   const bodyGeometry = nodes.Object_5.geometry;
@@ -122,4 +122,4 @@ export function CannonModel({ onRef, position, rotation }) {
   );
 }
 
-useGLTF.preload("/party_cannon.glb");
+useGLTF.preload("/Models/party_cannon.glb");

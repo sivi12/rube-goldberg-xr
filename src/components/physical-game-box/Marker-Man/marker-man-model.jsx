@@ -14,7 +14,9 @@ export function MarkerManModel({ arduinoButtonPressed }) {
   const group = React.useRef();
 
   const hipRef = React.useRef();
-  const { scene, animations: loadedAnimations } = useGLTF("/marker-man.glb");
+  const { scene, animations: loadedAnimations } = useGLTF(
+    "/Models/marker-man.glb"
+  );
   //console.log("Loaded animations:", loadedAnimations);
 
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
@@ -113,4 +115,4 @@ export function MarkerManModel({ arduinoButtonPressed }) {
   );
 }
 
-useGLTF.preload("/markerMan.glb");
+useGLTF.preload("/Models/markerMan.glb");

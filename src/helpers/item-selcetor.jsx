@@ -15,7 +15,7 @@ export function ItemSelector({ items, setItems, isGLTF }) {
     "squeezestart",
     () => {
       console.log("items", items);
-      items.map((cube) => console.log(cube.api.current));
+      //items.map((cube) => console.log(cube.api.current));
 
       if (rightController && rightController.controller && items) {
         const tempMatrix = new THREE.Matrix4().extractRotation(

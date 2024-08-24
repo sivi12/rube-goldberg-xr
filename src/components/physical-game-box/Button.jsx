@@ -11,7 +11,7 @@ export function ButtonModel({
   scale = 0.023,
   rotation = [Math.PI / 2, 0, 0],
 }) {
-  const { nodes, materials } = useGLTF("/button.glb");
+  const { nodes, materials } = useGLTF("/Models/button.glb");
   return (
     <group dispose={null}>
       <group scale={scale} position={position} rotation={rotation}>
@@ -24,4 +24,4 @@ export function ButtonModel({
   );
 }
 
-useGLTF.preload("/button.glb");
+useGLTF.preload("/Models/button.glb");

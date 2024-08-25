@@ -1,9 +1,18 @@
+/*
+Author: Hamza.006 (https://sketchfab.com/Hamza.006)
+License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+Source: https://sketchfab.com/3d-models/book-c5be32eebbdd4cfe94ef9ebbb21e09cf
+Title: Book
+*/
+
 import React, { useEffect, useState, useRef } from "react";
 import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import { ItemSpawner } from "../../helpers/item-spwaner";
 import RemoveLastItem from "../../helpers/delete-last-item";
+import { Notebook } from "./Notebook";
+import { useGLTF } from "@react-three/drei";
 
 export function RampModel({ position, rotation, color, onRef }) {
   const [ref, api] = useBox(() => ({
@@ -11,7 +20,7 @@ export function RampModel({ position, rotation, color, onRef }) {
     position,
     type: "Static",
     rotation: rotation,
-    args: [0.015, 0.3, 0.17],
+    args: [0.025, 0.265, 0.2],
   }));
 
   useEffect(() => {
@@ -26,11 +35,22 @@ export function RampModel({ position, rotation, color, onRef }) {
       api.rotation.set(0, rotation[1], Math.PI / 2);
     }
   }, [position, api.position, api]);
+  const { nodes, materials } = useGLTF("/notebook2.glb");
   return (
-    <mesh ref={ref}>
-      <boxGeometry args={[0.015, 0.3, 0.17]} />
-      <meshStandardMaterial color={color} />
-    </mesh>
+    <>
+      <mesh ref={ref}>
+        <boxGeometry args={[0.025, 0.265, 0.2]} />
+        <meshStandardMaterial color={color} transparent={true} opacity={0} />
+      </mesh>
+      <group dispose={null} position={position} rotation={[0, rotation[1], 0]}>
+        <mesh
+          geometry={nodes.pCube1_lambert2_0.geometry}
+          material={materials.lambert2}
+          rotation={[-Math.PI, 0, 0]}
+          scale={[0.1, 0.05, 0.1]}
+        />
+      </group>
+    </>
   );
 }
 

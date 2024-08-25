@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { XR } from "@react-three/xr";
 import { Box, RoundedBox, Text } from "@react-three/drei";
-import { AnimatedSphere } from "./animated-mini-models";
+import { BallMiniModel } from "./animated-mini-models";
 
 function MenuItem({
   ref,

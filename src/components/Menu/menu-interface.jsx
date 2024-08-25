@@ -1,17 +1,19 @@
 import React from "react";
+
+import { Text, useGLTF } from "@react-three/drei";
 import {
   AnimatedCube,
-  AnimatedSphere,
-  MiniPipe,
-  MiniModel,
+  BallMiniModel,
   ButtonModelAnimated,
+  MiniBook,
+  MiniModel,
+  MiniPipe,
 } from "./animated-mini-models";
-import { Text, useGLTF } from "@react-three/drei";
 
 export default function MenuInterface({ refObjects }) {
   return (
     <group position={[0, 1.5, -1]} rotation={[0, 0, 0]}>
-      <mesh name="background" ref={refObjects.menuRef}>
+      <mesh name="background">
         <boxGeometry args={[0.6, 0.9, 0.02]} />
         <meshStandardMaterial color="royalblue" />
         <Text
@@ -39,7 +41,7 @@ export default function MenuInterface({ refObjects }) {
       </mesh>
 
       <mesh position={[0.13, 0.27, 0.1]} ref={refObjects.ballRef}>
-        <AnimatedSphere size={[]} />
+        <BallMiniModel size={[]} />
         <Text
           position={[0, 0.08, 0.0]}
           fontSize={0.03}
@@ -65,7 +67,7 @@ export default function MenuInterface({ refObjects }) {
       </mesh>
 
       <mesh position={[0.13, 0.11, 0.1]} ref={refObjects.rampRef}>
-        <AnimatedCube size={[0.06, 0.1, 0.015]} />
+        <MiniBook />
         <Text
           position={[0, 0.08, 0.0]}
           fontSize={0.03}
@@ -103,11 +105,7 @@ export default function MenuInterface({ refObjects }) {
         </Text>
       </mesh>
 
-      <mesh
-        position={[-0.15, -0.375, 0.0]}
-        name="grabPoint"
-        ref={refObjects.startButtonRef}
-      >
+      <mesh position={[-0.15, -0.375, 0.0]} ref={refObjects.startButtonRef}>
         <boxGeometry args={[0.3, 0.15, 0.025]} />
         <meshStandardMaterial color="green" />
         <Text
@@ -120,11 +118,7 @@ export default function MenuInterface({ refObjects }) {
           Start Game
         </Text>
       </mesh>
-      <mesh
-        position={[0.15, -0.375, 0.0]}
-        name="grabPoint"
-        ref={refObjects.buildButtonRef}
-      >
+      <mesh position={[0.15, -0.375, 0.0]} ref={refObjects.buildButtonRef}>
         <boxGeometry args={[0.3, 0.15, 0.025]} />
         <meshStandardMaterial color="red" />
         <Text

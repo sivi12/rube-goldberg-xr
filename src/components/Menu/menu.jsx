@@ -14,8 +14,9 @@ import GolfTee from "../Golf-tee/golf-tee";
 import { menuItemSelector } from "./menu-item-selector";
 import MenuInterface from "./menu-interface";
 import MenuTest from "./menu-item";
-import { AnimatedSphere } from "./animated-mini-models";
+import { BallMiniModel } from "./animated-mini-models";
 import MenuInterfacee from "./menu-interfacee";
+import MenuInterfaceee from "./menu-interfaceee";
 
 export default function MenuButton({}) {
   const leftController = useController("left");

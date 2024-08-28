@@ -1,16 +1,17 @@
 import { useController, useXREvent } from "@react-three/xr";
 import { MarkerManModel } from "../components/physical-game-box/Marker-Man/marker-man-model";
 import GameBoxModel from "../components/physical-game-box/game-box-model";
+import { useState } from "react";
 
 function GameBoxSpawner({
   model,
   currentItem,
   gameBoxItem,
   setGameBoxItem,
-  arduinoButtonPressed,
-  size,
+  size = [0.215, 0.115, 0.22],
 }) {
   const rightController = useController("right");
+  const [arduinoButtonPressed, setArduinoButtonPressed] = useState(false);
   useXREvent(
     "selectstart",
     () => {
@@ -23,7 +24,7 @@ function GameBoxSpawner({
 
         if (
           model != "" &&
-          currentItem === "startAnimation" &&
+          currentItem === "arduinoBox" &&
           gameBoxItem.length < 3
         ) {
           setGameBoxItem((prevItems) => [...prevItems, { position, rotation }]);

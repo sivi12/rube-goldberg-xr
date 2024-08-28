@@ -68,8 +68,8 @@ export function menuItemSelector(
       true
     );
     if (intersectsStartAnimation.length > 0) {
-      console.log("Start Animation ausgewählt");
-      setCurrentItem("startAnimation");
+      console.log("Arduino Box ausgewählt");
+      setCurrentItem("arduinoBox");
     }
   }
 

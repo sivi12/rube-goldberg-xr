@@ -28,7 +28,6 @@ export default function MenuButton({}) {
   const [startGame, setStartGame] = useState(false);
   const [saveCubes, setSaveCubes] = useState(false);
   const [newCubes, setNewCubes] = useState([]);
-  const [arduinoButtonPressed, setArduinoButtonPressed] = useState(false);
 
   const menuRef = useRef();
   const dominoRef = useRef();
@@ -141,12 +140,11 @@ export default function MenuButton({}) {
         <GolfTee currentItem={currentItem} startGame={startGame} />
         <Trampoline currentItem={currentItem} startGame={startGame} />
         */}
-        <GameBox
+        {/* <GameBox
           currentItem={currentItem}
           character={"markerMan"}
-          arduinoButtonPressed={arduinoButtonPressed}
           startGame={startGame}
-        />
+        /> */}
         <ItemSpawner
           items={items}
           currentItem={currentItem}

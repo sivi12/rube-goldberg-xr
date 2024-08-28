@@ -14,7 +14,7 @@ import GameDominos, {
 
 export function ItemSpawner({
   items,
-  character, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
+  character = "markerMan", // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
   currentItem,
   startGame,
 }) {
@@ -57,14 +57,14 @@ export function ItemSpawner({
           ]);
         }
 
-        // if (currentItem === "arduinoBox" && character != "") {
-        //   if (items.arduinoBox.length < 3) {
-        //     items.setArduinoBox((prevItems) => [
-        //       ...prevItems,
-        //       { position, rotation },
-        //     ]);
-        //   }
-        // }
+        if (currentItem === "arduinoBox" && character != "") {
+          if (items.arduinoBox.length < 1) {
+            items.setArduinoBox((prevItems) => [
+              ...prevItems,
+              { position, rotation },
+            ]);
+          }
+        }
 
         if (currentItem === "pipe") {
           items.setPipe((prevItems) => [
@@ -201,17 +201,18 @@ export function ItemSpawner({
           />
         ))}
       </>
-      {/* <>
+      <>
         {items.arduinoBox.map((objekt, index) => (
           <GameBoxModel
             key={index}
             position={objekt.position}
             rotation={objekt.rotation}
             character={character}
+            size={[0.215, 0.115, 0.22]}
             onRef={(ref) => (objekt.api = ref)}
           />
         ))}
-      </> */}
+      </>
     </>
   );
 }

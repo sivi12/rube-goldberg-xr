@@ -4,7 +4,6 @@ import GameBoxSpawner from "../../helpers/gamebox-spwaner";
 
 export function GameBox({
   currentItem,
-  arduinoButtonPressed,
   model = "",
   size = [0.215, 0.115, 0.22],
 }) {
@@ -18,7 +17,6 @@ export function GameBox({
         gameBoxItem={gameBoxItem}
         setGameBoxItem={setGameBoxItem}
         currentItem={currentItem}
-        arduinoButtonPressed={arduinoButtonPressed}
         size={size}
       />
       <ItemSelector items={gameBoxItem} setItems={setGameBoxItem} />

@@ -1,9 +1,13 @@
+/*
+Author: TYYK (https://sketchfab.com/TYYK)
+License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+Source: https://sketchfab.com/3d-models/golf-tee-d2041884d220442bb5ff484164f94485
+Title: Golf Tee
+*/
+
 import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useCylinder, useTrimesh } from "@react-three/cannon";
-import { ItemSpawner } from "../../helpers/item-spwaner";
-import { ItemSelector } from "../../helpers/item-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function GolfTeeModel({ position, color, onRef }) {
   const { nodes, materials } = useGLTF("/Models/golf_tee.glb");
@@ -47,8 +51,11 @@ export function GolfTeeModel({ position, color, onRef }) {
 
   return (
     <group dispose={null} ref={ref}>
-      <mesh geometry={nodes.Object_2.geometry} rotation={[0, 0, 0]} />
-      <meshStandardMaterial color={color} />
+      <mesh
+        geometry={nodes.Object_2.geometry}
+        material={materials["Scene_-_Root"]}
+        rotation={[0, 0, 0]}
+      />
     </group>
   );
 }

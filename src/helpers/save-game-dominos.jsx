@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // Extra Funktion zum setzen der neuen Dominos
 // Wird im Menu aufgerufen, da der zugriff auf cube.api nicht möglich nachdem Die Domino Komponente nicht aktiv ist
 // cube.api ist wichtig für die aktuelle Position der Cubes und ni
-export default function SaveGameObjects({ cubes, newCubes, setNewCubes }) {
+export default function SaveGameObjects({ cubes, setNewCubes }) {
   //const [newCubes, setNewCubes] = useState([]);
   useEffect(() => {
     cubes.map((cube) => {

@@ -9,8 +9,6 @@ import { Text, useGLTF } from "@react-three/drei";
 
 import MenuButton from "./components/Menu/menu";
 import { ScaleGltfs } from "./helpers/scale-gltfs";
-import { Notebook } from "./components/Ramp/Notebook";
-import { Notebook2 } from "./components/Ramp/Notebook2";
 
 function App() {
   const [scaledAlready, setScaledAlready] = useState("true");
@@ -28,7 +26,6 @@ function App() {
             <Debug>
               <MenuButton />
             </Debug>
-            <Notebook2 />
 
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Physics>

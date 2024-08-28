@@ -2,13 +2,13 @@ import React from "react";
 
 import { Text, useGLTF } from "@react-three/drei";
 import {
-  AnimatedCube,
+  DominoMiniModel,
   BallMiniModel,
-  ButtonModelAnimated,
+  CannonMiniModel,
   MiniBook,
-  MiniModel,
   MiniPipe,
-} from "./animated-mini-models";
+  ButtonModelAnimated,
+} from "./helpers/animated-mini-models";
 
 export default function MenuInterface({ refObjects }) {
   return (
@@ -28,7 +28,7 @@ export default function MenuInterface({ refObjects }) {
       </mesh>
 
       <mesh position={[-0.13, 0.27, 0.1]} ref={refObjects.dominoRef}>
-        <AnimatedCube size={[0.06, 0.1, 0.015]} />
+        <DominoMiniModel size={[0.06, 0.1, 0.015]} />
         <Text
           position={[0, 0.08, 0.0]}
           fontSize={0.03}
@@ -66,7 +66,7 @@ export default function MenuInterface({ refObjects }) {
         </Text>
       </mesh>
 
-      <mesh position={[0.13, 0.11, 0.1]} ref={refObjects.rampRef}>
+      {/* <mesh position={[0.13, 0.11, 0.1]} ref={refObjects.rampRef}>
         <MiniBook />
         <Text
           position={[0, 0.08, 0.0]}
@@ -77,10 +77,11 @@ export default function MenuInterface({ refObjects }) {
         >
           Ramp
         </Text>
-      </mesh>
+      </mesh> */}
 
-      <mesh position={[-0.13, -0.05, 0.1]} ref={refObjects.startAnimationRef}>
-        <MiniModel />
+      {/* <mesh position={[-0.13, -0.05, 0.1]} ref={refObjects.startAnimationRef}>
+        <MarkerManMiniModel />
+
         <Text
           position={[0, 0.08, 0.0]}
           fontSize={0.03}
@@ -90,10 +91,11 @@ export default function MenuInterface({ refObjects }) {
         >
           Start Animation
         </Text>
-      </mesh>
+      </mesh> */}
 
-      <mesh position={[0.13, -0.05, 0.1]} ref={refObjects.cannonRef}>
-        <ButtonModelAnimated size={[0.06, 0.1, 0.015]} />
+      {/* <mesh position={[0.13, -0.05, 0.1]} ref={refObjects.cannonRef}>
+        <CannonMiniModel size={[0.06, 0.1, 0.015]} />
+        <ButtonModelAnimated />
         <Text
           position={[0, 0.08, 0.0]}
           fontSize={0.03}
@@ -103,7 +105,7 @@ export default function MenuInterface({ refObjects }) {
         >
           Cannon
         </Text>
-      </mesh>
+      </mesh> */}
 
       <mesh position={[-0.15, -0.375, 0.0]} ref={refObjects.startButtonRef}>
         <boxGeometry args={[0.3, 0.15, 0.025]} />

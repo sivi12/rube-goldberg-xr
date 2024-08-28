@@ -1,6 +1,10 @@
 import React from "react";
 import MenuItem from "./menu-item";
-import { AnimatedCube, BallMiniModel, MiniPipe } from "./animated-mini-models";
+import {
+  DominoMiniModel,
+  BallMiniModel,
+  MiniPipe,
+} from "./helpers/animated-mini-models";
 
 export default function MenuInterfacee(refObjects) {
   const xPos = 0;
@@ -20,7 +24,7 @@ export default function MenuInterfacee(refObjects) {
         position={[xPos + 0, yPos + 0.23, -1.5]}
         color={"#A3FF33"}
         label={"Domino"}
-        AnimatedMiniModel={AnimatedCube}
+        AnimatedMiniModel={DominoMiniModel}
       />
       <MenuItem
         ref={refObjects.ballRef}
@@ -41,7 +45,7 @@ export default function MenuInterfacee(refObjects) {
         position={[xPos + 0, yPos - 0.23, -1.5]}
         color={"#3375FF"}
         label={"Domino"}
-        AnimatedMiniModel={AnimatedCube}
+        AnimatedMiniModel={DominoMiniModel}
       />
       <MenuItem
         ref={refObjects.ballRef}
@@ -62,7 +66,7 @@ export default function MenuInterfacee(refObjects) {
         position={[xPos + 0, yPos, -1.5]}
         color={"#FF33C4"}
         label={"Domino"}
-        AnimatedMiniModel={AnimatedCube}
+        AnimatedMiniModel={DominoMiniModel}
       />
       <MenuItem
         ref={refObjects.ballRef}

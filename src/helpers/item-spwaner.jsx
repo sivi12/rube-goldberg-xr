@@ -13,6 +13,7 @@ export function ItemSpawner({
   setItems,
   model, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
   currentItem,
+  startGame,
 }) {
   const rightController = useController("right");
   useXREvent(
@@ -37,7 +38,10 @@ export function ItemSpawner({
 
         if (model === "ball" && currentItem === "ball") {
           let mass = 0;
-          setItems((prevItems) => [...prevItems, { position, mass, color }]);
+          setItems((prevItems) => [
+            ...prevItems,
+            { position, mass, color, startGame },
+          ]);
         }
 
         if (model === "ramp" && currentItem === "ramp") {
@@ -108,6 +112,7 @@ export function ItemSpawner({
             position={object.position}
             mass={object.mass}
             color={object.color}
+            startGame={startGame}
             onRef={(ref) => (object.api = ref)}
           />
         ))}

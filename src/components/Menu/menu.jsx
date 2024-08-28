@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Domino from "../Domino/Domino";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
-import SaveGameObjects from "../../helpers/save-game-dominos";
+import updateDominoPosition from "../../helpers/save-game-dominos";
 import Ramp from "../Ramp/ramp";
 import Pipe from "../Pipe/Pipe";
 import { Ball } from "../Ball/ball";
@@ -13,10 +13,9 @@ import Trampoline from "../Trampoline/trampoline";
 import GolfTee from "../Golf-tee/golf-tee";
 import { menuItemSelector } from "./menu-item-selector";
 import MenuInterface from "./menu-interface";
-import MenuTest from "./menu-item";
-import { BallMiniModel } from "./animated-mini-models";
 import MenuInterfacee from "./menu-interfacee";
-import MenuInterfaceee from "./menu-interfaceee";
+import ShelfInterface from "./shelf-interface/shelf-interface";
+import Tooltips from "./helpers/tooltips";
 
 export default function MenuButton({}) {
   const leftController = useController("left");
@@ -29,15 +28,6 @@ export default function MenuButton({}) {
   const [newCubes, setNewCubes] = useState([]);
   const [arduinoButtonPressed, setArduinoButtonPressed] = useState(false);
 
-  const stateObject = {
-    currentItem: { value: currentItem, setter: setCurrentItem },
-    startGame: { value: startGame, setter: setStartGame },
-    saveCubes: { value: saveCubes, setter: setSaveCubes },
-    cubes: { value: cubes, setter: setCubes },
-    newCubes: { value: newCubes, setter: setNewCubes },
-    arduinoButtonPressed: { value: false, setter: setArduinoButtonPressed },
-  };
-
   const menuRef = useRef();
   const dominoRef = useRef();
   const ballRef = useRef();
@@ -47,6 +37,8 @@ export default function MenuButton({}) {
   const pipeRef = useRef();
   const cannonRef = useRef();
   const startAnimationRef = useRef();
+  const trampolineRef = useRef();
+  const golfTeeRef = useRef();
 
   const refObjects = {
     menuRef,
@@ -58,6 +50,8 @@ export default function MenuButton({}) {
     pipeRef,
     cannonRef,
     startAnimationRef,
+    trampolineRef,
+    golfTeeRef,
   };
 
   useXREvent(
@@ -93,46 +87,34 @@ export default function MenuButton({}) {
 
   return (
     <>
-      <MenuInterface refObjects={refObjects} />
+      <ShelfInterface refObjects={refObjects} />
+      <Tooltips currentItem={currentItem} />
       <group>
         {/* <ConnectToArduino
           arduinoButtonPressed={arduinoButtonPressed}
           setArduinoButtonPressed={setArduinoButtonPressed}
         /> */}
         {!startGame && (
-          <>
-            <Domino
-              items={cubes}
-              setItems={setCubes}
-              currentItem={currentItem}
-            />{" "}
-          </>
+          <Domino items={cubes} setItems={setCubes} currentItem={currentItem} />
         )}
 
         {saveCubes && (
-          <SaveGameObjects
-            cubes={cubes}
-            newCubes={newCubes}
-            setNewCubes={setNewCubes}
-            saveCubes={saveCubes}
-          />
+          <updateDominoPosition cubes={cubes} setNewCubes={setNewCubes} />
         )}
 
-        {startGame && (
-          <>
-            <GameDominos newCubes={newCubes} />
-          </>
-        )}
-        <Ball currentItem={currentItem} />
-        <Ramp currentItem={currentItem} />
-        <Pipe currentItem={currentItem} />
-        <Cannon currentItem={currentItem} />
-        <GolfTee currentItem={currentItem} />
-        <Trampoline currentItem={currentItem} />
+        {startGame && <GameDominos newCubes={newCubes} />}
+
+        <Ball currentItem={currentItem} startGame={startGame} />
+        <Ramp currentItem={currentItem} startGame={startGame} />
+        <Pipe currentItem={currentItem} startGame={startGame} />
+        <Cannon currentItem={currentItem} startGame={startGame} />
+        <GolfTee currentItem={currentItem} startGame={startGame} />
+        <Trampoline currentItem={currentItem} startGame={startGame} />
         <GameBox
           currentItem={currentItem}
           model={"markerMan"}
           arduinoButtonPressed={arduinoButtonPressed}
+          startGame={startGame}
         />
       </group>
     </>

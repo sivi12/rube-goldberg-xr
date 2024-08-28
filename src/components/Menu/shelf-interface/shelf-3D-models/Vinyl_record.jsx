@@ -10,10 +10,10 @@ Title: 12" Vinyl Record
 import React from "react";
 import { useGLTF } from "@react-three/drei";
 
-export function VinylRecord(props) {
+export function VinylRecord({ position = [-0.17, -0.307, 0] }) {
   const { nodes, materials } = useGLTF("/vinyl_record.glb");
   return (
-    <group position={[-0.17, 0.66, 0]} dispose={null}>
+    <group position={position} dispose={null}>
       <mesh
         geometry={
           nodes["#REC0002_33_Highway_To_Hell_#REC0002_Textures_0"].geometry

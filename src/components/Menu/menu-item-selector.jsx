@@ -62,6 +62,7 @@ export function menuItemSelector(
   }
 
   if (refObjects.startAnimationRef.current) {
+    console.log(refObjects.startAnimationRef.current);
     const intersectsStartAnimation = raycaster.intersectObject(
       refObjects.startAnimationRef.current,
       true
@@ -73,12 +74,34 @@ export function menuItemSelector(
   }
 
   if (refObjects.cannonRef.current) {
+    console.log(refObjects.cannonRef.current.parent);
     const intersectsCannon = raycaster.intersectObject(
-      refObjects.cannonRef.current,
+      refObjects.cannonRef.current.parent,
       true
     );
     if (intersectsCannon.length > 0) {
       console.log("Cannon ausgewählt");
+      setCurrentItem("cannon");
+    }
+  }
+
+  if (refObjects.trampolineRef.current) {
+    const intersectsTrampoline = raycaster.intersectObject(
+      refObjects.trampolineRef.current.parent,
+      true
+    );
+    if (intersectsTrampoline.length > 0) {
+      console.log("trampoline ausgewählt");
+      setCurrentItem("trampoline");
+    }
+  }
+  if (refObjects.golfTeeRef.current) {
+    const intersectsGolfTee = raycaster.intersectObject(
+      refObjects.golfTeeRef.current.parent,
+      true
+    );
+    if (intersectsGolfTee.length > 0) {
+      console.log("Golf Tee ausgewählt");
       setCurrentItem("golfTee");
     }
   }

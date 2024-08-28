@@ -14,7 +14,7 @@ export function Books(props) {
   const { nodes, materials } = useGLTF("/books.glb");
   return (
     <group position={[0.18, 0.325, -0.1]} dispose={null}>
-      <group scale={0.01}>
+      <group scale={0.0095}>
         <mesh
           geometry={nodes.Cube_books_0.geometry}
           material={materials.books}

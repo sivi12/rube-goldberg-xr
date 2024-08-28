@@ -13,7 +13,7 @@ import { useBox } from "@react-three/cannon";
 import * as THREE from "three";
 export function Shelf() {
   // Laden der Textur
-  const newTexture = useTexture("/Textures/wood.png");
+  const newTexture = useTexture("/Textures/metal.jpg");
 
   // Erstellen eines neuen Materials mit der Textur
   const woodMaterial = new THREE.MeshStandardMaterial({ map: newTexture });
@@ -24,7 +24,13 @@ export function Shelf() {
       <group scale={0.01}>
         <mesh
           geometry={nodes.Cube_White_0.geometry}
-          material={woodMaterial}
+          material={
+            new THREE.MeshStandardMaterial({
+              color: "#4169E1",
+              roughness: 0.7,
+              metalness: 0.3,
+            })
+          }
           position={[0, 0, 0]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={100}

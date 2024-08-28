@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Domino from "../Domino/Domino";
 import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
-import updateDominoPosition from "../../helpers/save-game-dominos";
+import SaveGameObjects from "../../helpers/save-game-dominos";
 import Ramp from "../Ramp/ramp";
 import Pipe from "../Pipe/Pipe";
 import { Ball } from "../Ball/ball";
@@ -99,7 +99,7 @@ export default function MenuButton({}) {
         )}
 
         {saveCubes && (
-          <updateDominoPosition cubes={cubes} setNewCubes={setNewCubes} />
+          <SaveGameObjects cubes={cubes} setNewCubes={setNewCubes} />
         )}
 
         {startGame && <GameDominos newCubes={newCubes} />}

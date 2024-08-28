@@ -11,20 +11,22 @@ import { GameBox } from "../physical-game-box/game-box";
 import Cannon from "../Party-cannon/party-cannon";
 import Trampoline from "../Trampoline/trampoline";
 import GolfTee from "../Golf-tee/golf-tee";
-import { menuItemSelector } from "./menu-item-selector";
+import { menuItemSelector } from "./helpers/menu-item-selector";
 import MenuInterface from "./menu-interface";
 import MenuInterfacee from "./menu-interfacee";
 import ShelfInterface from "./shelf-interface/shelf-interface";
 import Tooltips from "./helpers/tooltips";
+import { ItemSpawner } from "../../helpers/item-spwaner";
+import { ItemSelector } from "../../helpers/item-selcetor";
+import RemoveLastItem from "../../helpers/delete-last-item";
 
 export default function MenuButton({}) {
   const leftController = useController("left");
   const rightController = useController("right");
 
-  const [currentItem, setCurrentItem] = useState(""); //Umbenennen in currentObjekt, da showObjekt nicht passend ist
+  const [currentItem, setCurrentItem] = useState("trampoline");
   const [startGame, setStartGame] = useState(false);
   const [saveCubes, setSaveCubes] = useState(false);
-  const [cubes, setCubes] = useState([]);
   const [newCubes, setNewCubes] = useState([]);
   const [arduinoButtonPressed, setArduinoButtonPressed] = useState(false);
 
@@ -39,6 +41,34 @@ export default function MenuButton({}) {
   const startAnimationRef = useRef();
   const trampolineRef = useRef();
   const golfTeeRef = useRef();
+
+  const [domino, setDomino] = useState([]);
+  const [ball, setBall] = useState([]);
+  const [book, setBook] = useState([]);
+  const [pipe, setPipe] = useState([]);
+  const [cannon, setCannon] = useState([]);
+  const [golfTee, setGolfTee] = useState([]);
+  const [trampoline, setTrampoline] = useState([]);
+  const [arduinoBox, setArduinoBox] = useState([]);
+
+  const items = {
+    domino: domino,
+    setDomino: setDomino,
+    ball: ball,
+    setBall: setBall,
+    book: book,
+    setBook: setBook,
+    pipe: pipe,
+    setPipe: setPipe,
+    cannon: cannon,
+    setCannon: setCannon,
+    golfTee: golfTee,
+    setGolfTee: setGolfTee,
+    trampoline: trampoline,
+    setTrampoline: setTrampoline,
+    arduinoBox: arduinoBox,
+    setArduinoBox: setArduinoBox,
+  };
 
   const refObjects = {
     menuRef,
@@ -73,7 +103,7 @@ export default function MenuButton({}) {
 
   useButton(rightController, "a", () => {
     setSaveCubes(true);
-    setArduinoButtonPressed(true);
+
     setTimeout(() => {
       setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
     }, 200);
@@ -94,7 +124,7 @@ export default function MenuButton({}) {
           arduinoButtonPressed={arduinoButtonPressed}
           setArduinoButtonPressed={setArduinoButtonPressed}
         /> */}
-        {!startGame && (
+        {/* {!startGame && (
           <Domino items={cubes} setItems={setCubes} currentItem={currentItem} />
         )}
 
@@ -102,9 +132,9 @@ export default function MenuButton({}) {
           <SaveGameObjects cubes={cubes} setNewCubes={setNewCubes} />
         )}
 
-        {startGame && <GameDominos newCubes={newCubes} />}
+        {startGame && <GameDominos newCubes={newCubes} />} */}
 
-        <Ball currentItem={currentItem} startGame={startGame} />
+        {/* <Ball currentItem={currentItem} startGame={startGame} />
         <Ramp currentItem={currentItem} startGame={startGame} />
         <Pipe currentItem={currentItem} startGame={startGame} />
         <Cannon currentItem={currentItem} startGame={startGame} />
@@ -115,7 +145,15 @@ export default function MenuButton({}) {
           model={"markerMan"}
           arduinoButtonPressed={arduinoButtonPressed}
           startGame={startGame}
+        /> */}
+        <ItemSpawner
+          items={items}
+          currentItem={currentItem}
+          startGame={startGame}
+          character={"markerMan"}
         />
+        <ItemSelector items={items} currentItem={currentItem} />
+        <RemoveLastItem items={items} currentItem={currentItem} />
       </group>
     </>
   );

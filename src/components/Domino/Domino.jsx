@@ -51,7 +51,7 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   );
 }
 
-function Domino({ items, setItems, currentItem }) {
+function Domino({ items, setItems, currentItem, startGame }) {
   console.log(currentItem);
   return (
     <>
@@ -60,6 +60,7 @@ function Domino({ items, setItems, currentItem }) {
         setItems={setItems}
         model={"domino"}
         currentItem={currentItem}
+        startGame={startGame}
       />
       <ItemSelector items={items} setItems={setItems} />
       {currentItem === "domino" && (

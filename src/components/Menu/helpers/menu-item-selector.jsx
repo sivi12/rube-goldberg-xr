@@ -46,7 +46,7 @@ export function menuItemSelector(
     );
     if (intersectsRamp.length > 0) {
       console.log("Rampe ausgewählt");
-      setCurrentItem("ramp");
+      setCurrentItem("book");
     }
   }
 

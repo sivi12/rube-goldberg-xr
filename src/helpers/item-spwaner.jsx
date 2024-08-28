@@ -7,11 +7,11 @@ import { SphereModel } from "../components/Ball/ball";
 import { CannonModel } from "../components/Party-cannon/party-cannon-model";
 import { GolfTeeModel } from "../components/Golf-tee/golf-tee-model";
 import { TrampolineModel } from "../components/Trampoline/trampoline-model";
+import GameBoxModel from "../components/physical-game-box/game-box-model";
 
 export function ItemSpawner({
   items,
-  setItems,
-  model, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
+  character, // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
   currentItem,
   startGame,
 }) {
@@ -27,54 +27,62 @@ export function ItemSpawner({
         const rotation = [rotationX, rotationY, rotationZ];
         const color = getRandomColor();
 
-        if (model === "domino" && currentItem === "domino") {
+        if (currentItem === "domino") {
           const mass = 10;
           const type = "Dynamic";
-          setItems((prevItems) => [
+          items.setDomino((prevItems) => [
             ...prevItems,
             { position, mass, type, rotation, color },
           ]);
         }
 
-        if (model === "ball" && currentItem === "ball") {
+        if (currentItem === "ball") {
           let mass = 0;
-          setItems((prevItems) => [
+          items.setBall((prevItems) => [
             ...prevItems,
             { position, mass, color, startGame },
           ]);
         }
 
-        if (model === "ramp" && currentItem === "ramp") {
+        if (currentItem === "book") {
           //const rampRotation = [0, rotation[1], Math.PI / 2];
           const type = "Static";
-          setItems((prevItems) => [
+          items.setBook((prevItems) => [
             ...prevItems,
             //------------------------------------------type rauslöschen
-            { position, type, rotation, color },
+            { position, rotation, color },
           ]);
         }
 
-        if (model === "startBox" && currentItem === "startBox") {
-          setItems((prevItems) => [...prevItems, { position, rotation }]);
+        if (currentItem === "arduinoBox" && character != "") {
+          if (items.arduinoBox.length < 3) {
+            items.setArduinoBox((prevItems) => [
+              ...prevItems,
+              { position, rotation },
+            ]);
+          }
         }
 
-        if (model === "pipe" && currentItem === "pipe") {
-          setItems((prevItems) => [
+        if (currentItem === "pipe") {
+          items.setPipe((prevItems) => [
             ...prevItems,
             { position, rotation, color },
           ]);
         }
 
-        if (model === "cannon" && currentItem === "cannon") {
-          setItems((prevItems) => [...prevItems, { position, rotation }]);
+        if (currentItem === "cannon") {
+          items.setCannon((prevItems) => [
+            ...prevItems,
+            { position, rotation },
+          ]);
         }
 
-        if (model === "golfTee" && currentItem === "golfTee") {
-          setItems((prevItems) => [...prevItems, { position, color }]);
+        if (currentItem === "golfTee") {
+          items.setGolfTee((prevItems) => [...prevItems, { position, color }]);
         }
 
-        if (model === "trampoline" && currentItem === "trampoline") {
-          setItems((prevItems) => [
+        if (currentItem === "trampoline") {
+          items.setTrampoline((prevItems) => [
             ...prevItems,
             { position, rotation, color },
           ]);
@@ -84,10 +92,10 @@ export function ItemSpawner({
     { handedness: "right" }
   );
 
-  if (model === "domino") {
+  if (items.domino.length > 0) {
     return (
       <>
-        {items.map((object, index) => (
+        {items.domino.map((object, index) => (
           <DominoModel
             key={index}
             position={object.position}
@@ -103,10 +111,11 @@ export function ItemSpawner({
     );
   }
 
-  if (model === "ball") {
-    return (
+  return (
+    <>
+      {" "}
       <>
-        {items.map((object, index) => (
+        {items.ball.map((object, index) => (
           <SphereModel
             key={index}
             position={object.position}
@@ -117,13 +126,8 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
-
-  if (model === "ramp") {
-    return (
       <>
-        {items.map((object, index) => (
+        {items.book.map((object, index) => (
           <RampModel
             key={index}
             position={object.position}
@@ -133,14 +137,9 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
-
-  if (model === "pipe") {
-    return (
       <>
         {" "}
-        {items.map((pipe, index) => (
+        {items.pipe.map((pipe, index) => (
           <PipeModel
             index={index}
             position={pipe.position}
@@ -150,14 +149,9 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
-
-  if (model === "cannon") {
-    return (
       <>
         {" "}
-        {items.map((cannon, index) => (
+        {items.cannon.map((cannon, index) => (
           <CannonModel
             index={index}
             position={cannon.position}
@@ -166,14 +160,9 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
-
-  if (model === "golfTee") {
-    return (
       <>
         {" "}
-        {items.map((golfTee, index) => (
+        {items.golfTee.map((golfTee, index) => (
           <GolfTeeModel
             index={index}
             position={golfTee.position}
@@ -182,14 +171,9 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
-
-  if (model === "trampoline") {
-    return (
       <>
         {" "}
-        {items.map((golfTee, index) => (
+        {items.trampoline.map((golfTee, index) => (
           <TrampolineModel
             index={index}
             position={golfTee.position}
@@ -198,6 +182,17 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
+      <>
+        {items.arduinoBox.map((objekt, index) => (
+          <GameBoxModel
+            key={index}
+            position={objekt.position}
+            rotation={objekt.rotation}
+            character={character}
+            onRef={(ref) => (objekt.api = ref)}
+          />
+        ))}
+      </>
+    </>
+  );
 }

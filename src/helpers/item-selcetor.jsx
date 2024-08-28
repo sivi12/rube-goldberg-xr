@@ -4,9 +4,32 @@ import { updatePosition, updateType } from "./update-item-position";
 import { useState } from "react";
 import { useFrame } from "@react-three/fiber";
 
-export function ItemSelector({ items, setItems, isGLTF }) {
+export function ItemSelector({ items, currentItem }) {
   const rightController = useController("right");
   const [selectedObject, setSelectedObject] = useState(null);
+
+  function getItem() {
+    switch (currentItem) {
+      case "cubes":
+        return { item: items.cubes, setItem: items.setCubes };
+      case "ball":
+        return { item: items.ball, setItem: items.setBall };
+      case "book":
+        return { item: items.book, setItem: items.setBook };
+      case "pipe":
+        return { item: items.pipe, setItem: items.setPipe };
+      case "cannon":
+        return { item: items.cannon, setItem: items.setCannon };
+      case "golfTee":
+        return { item: items.golfTee, setItem: items.setGolfTee };
+      case "trampoline":
+        return { item: items.trampoline, setItem: items.setTrampoline };
+      case "arduinoBox":
+        return { item: items.arduinoBox, setItem: items.setArduinoBox };
+      default:
+        return { item: null, setState: () => {} }; // Standardfall, falls currentItem keinen gültigen Wert hat
+    }
+  }
 
   //eine ItemSelector Methode anstatt es in jedem Objekt neu zu übergeben?
   //
@@ -29,19 +52,23 @@ export function ItemSelector({ items, setItems, isGLTF }) {
         // items.map((cube) => console.log(cube.api.current));
         //schaue durch alle objekte des gerade auswählten items, ob der strahl einen dieser objekte trifft
         const intersects = raycaster.intersectObjects(
-          items.map((cube) => cube.api.current),
+          getItem().item.map((cube) => cube.api.current),
           true
         );
         console.log("intersects", intersects);
         let firstIntersectedObject;
         if (intersects.length > 0) {
-          if (isGLTF) {
+          if (
+            getItem().item === "pipe" ||
+            getItem().item === "golfTee" ||
+            getItem().item === "cannon"
+          ) {
             firstIntersectedObject = intersects[0].object.parent;
           } else {
             firstIntersectedObject = intersects[0].object;
           }
 
-          const index = items.findIndex(
+          const index = getItem().item.findIndex(
             (cube) => cube.api.current === firstIntersectedObject
           );
           setSelectedObject(index);
@@ -72,7 +99,9 @@ export function ItemSelector({ items, setItems, isGLTF }) {
       const newPosition = [newPositionX, newPositionY, newPositionZ];
       const newRoation = rightController.controller.rotation.toArray();
 
-      setItems(updatePosition(items, selectedObject, newPosition, newRoation));
+      getItem().setItem(
+        updatePosition(getItem().item, selectedObject, newPosition, newRoation)
+      );
     }
   });
 

@@ -10,9 +10,9 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
   //können eigentlich die position nach dem landen speichern. Unnötig dafür game dominos zu erstellen
   //
   const [ref, api] = useBox(() => ({
-    mass: mass,
+    mass: 1,
     position,
-    type: type,
+    type: "Dynamic",
     material: {
       friction: 0.001, // Weniger Reibung
       restitution: 0.3, // Mehr Sprungkraft
@@ -36,6 +36,18 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
       api.rotation.set(...[0, rotation[1], 0]);
     }
   }, [position, api.position, api]);
+
+  //apiWakeUp() after reposition
+  const timeoutRef = useRef();
+  useEffect(() => {
+    // Wenn die Position geändert wird, setze den Timer zurück
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      api.wakeUp();
+    }, 50);
+  }, [position]);
 
   const { nodes, materials } = useGLTF("/Models/domino.glb");
   return (

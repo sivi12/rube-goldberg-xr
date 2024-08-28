@@ -1,7 +1,7 @@
 import { useBox } from "@react-three/cannon";
 import { useEffect, useState } from "react";
 
-function DominoModel({ position, mass, type, rotation, color }) {
+export function GameDominoModel({ position, mass, type, rotation, color }) {
   const [ref, api] = useBox(() => ({
     mass: 3,
     position,
@@ -9,18 +9,10 @@ function DominoModel({ position, mass, type, rotation, color }) {
     rotation: [0, rotation[1], 0],
     args: [0.02, 0.2, 0.1],
 
-    // ccdSpeedThreshold: 0.1, // Geschwindigkeitsschwelle für die Aktivierung von CCD
-    // ccdSweptSphereRadius: 0.1, // Radius für den CCD-Algorithmus
-    // onCollide: (e) =>
-    //   e.contact.impactVelocity > 0.01
-    //     ? setTimeout(() => {
-    //         api.angularVelocity.set(0.5, 0.5, -10.75);
-    //       }, 500)
-    //     : null,
-    linearDamping: 0.1,
-    linearFactor: [1, 1, 0],
-    sleepSpeedLimit: 0.1,
-    angularFactor: [0.5, 0.5, 1.75],
+    // linearDamping: 0.1,
+    // linearFactor: [1, 1, 0],
+    // sleepSpeedLimit: 0.1,
+    // angularFactor: [0.5, 0.5, 1.75],
   }));
 
   return (
@@ -31,18 +23,22 @@ function DominoModel({ position, mass, type, rotation, color }) {
   );
 }
 
-export default function GameDominos({ newCubes }) {
+export default function GameDominos({ dominos }) {
   return (
     <>
-      {newCubes.map((cube, index) => (
+      {dominos.map((domino, index) => (
         <>
-          <DominoModel
+          <GameDominoModel
             key={index}
-            position={cube.newPosition}
-            rotation={cube.rotation}
-            mass={cube.mass}
-            color={cube.color}
-            onRef={(ref) => (cube.api = ref)}
+            position={[
+              domino.api.current.matrixWorld.elements[12],
+              domino.api.current.matrixWorld.elements[13],
+              domino.api.current.matrixWorld.elements[14],
+            ]}
+            rotation={domino.rotation}
+            mass={domino.mass}
+            color={domino.color}
+            onRef={(ref) => (domino.api = ref)}
           />
         </>
       ))}

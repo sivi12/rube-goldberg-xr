@@ -8,6 +8,9 @@ import { CannonModel } from "../components/Party-cannon/party-cannon-model";
 import { GolfTeeModel } from "../components/Golf-tee/golf-tee-model";
 import { TrampolineModel } from "../components/Trampoline/trampoline-model";
 import GameBoxModel from "../components/physical-game-box/game-box-model";
+import GameDominos, {
+  GameDominoModel,
+} from "../components/Domino/game-dominos";
 
 export function ItemSpawner({
   items,
@@ -54,14 +57,14 @@ export function ItemSpawner({
           ]);
         }
 
-        if (currentItem === "arduinoBox" && character != "") {
-          if (items.arduinoBox.length < 3) {
-            items.setArduinoBox((prevItems) => [
-              ...prevItems,
-              { position, rotation },
-            ]);
-          }
-        }
+        // if (currentItem === "arduinoBox" && character != "") {
+        //   if (items.arduinoBox.length < 3) {
+        //     items.setArduinoBox((prevItems) => [
+        //       ...prevItems,
+        //       { position, rotation },
+        //     ]);
+        //   }
+        // }
 
         if (currentItem === "pipe") {
           items.setPipe((prevItems) => [
@@ -94,21 +97,42 @@ export function ItemSpawner({
 
   return (
     <>
-      <>
-        {items.domino.map((object, index) => (
-          <DominoModel
-            key={index}
-            position={object.position}
-            mass={object.mass}
-            type={object.type}
-            color={object.color}
-            rotation={object.rotation}
-            controller={rightController}
-            startGame={startGame}
-            onRef={(ref) => (object.api = ref)}
-          />
-        ))}
-      </>
+      {!startGame ? (
+        <>
+          {items.domino.map((object, index) => (
+            <DominoModel
+              key={index}
+              position={object.position}
+              mass={object.mass}
+              type={object.type}
+              color={object.color}
+              rotation={object.rotation}
+              controller={rightController}
+              startGame={startGame}
+              onRef={(ref) => (object.api = ref)}
+            />
+          ))}
+        </>
+      ) : (
+        <>
+          {items.domino.map((domino, index) => (
+            <>
+              <GameDominoModel
+                key={index}
+                position={[
+                  domino.api.current.matrixWorld.elements[12],
+                  domino.api.current.matrixWorld.elements[13],
+                  domino.api.current.matrixWorld.elements[14],
+                ]}
+                rotation={domino.rotation}
+                mass={domino.mass}
+                color={domino.color}
+                onRef={(ref) => (domino.api = ref)}
+              />
+            </>
+          ))}
+        </>
+      )}
       <>
         {items.ball.map((object, index) => (
           <SphereModel
@@ -177,7 +201,7 @@ export function ItemSpawner({
           />
         ))}
       </>
-      <>
+      {/* <>
         {items.arduinoBox.map((objekt, index) => (
           <GameBoxModel
             key={index}
@@ -187,7 +211,7 @@ export function ItemSpawner({
             onRef={(ref) => (objekt.api = ref)}
           />
         ))}
-      </>
+      </> */}
     </>
   );
 }

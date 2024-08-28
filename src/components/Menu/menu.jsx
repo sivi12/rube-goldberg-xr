@@ -126,10 +126,10 @@ export default function MenuButton({}) {
         /> */}
         {/* {!startGame && (
           <Domino items={cubes} setItems={setCubes} currentItem={currentItem} />
-        )}
+        )} */}
 
-        {saveCubes && (
-          <SaveGameObjects cubes={cubes} setNewCubes={setNewCubes} />
+        {/* {saveCubes && (
+          <SaveGameObjects dominos={domino} setDominos={setDomino} />
         )}
 
         {startGame && <GameDominos newCubes={newCubes} />} */}
@@ -140,12 +140,13 @@ export default function MenuButton({}) {
         <Cannon currentItem={currentItem} startGame={startGame} />
         <GolfTee currentItem={currentItem} startGame={startGame} />
         <Trampoline currentItem={currentItem} startGame={startGame} />
+        */}
         <GameBox
           currentItem={currentItem}
-          model={"markerMan"}
+          character={"markerMan"}
           arduinoButtonPressed={arduinoButtonPressed}
           startGame={startGame}
-        /> */}
+        />
         <ItemSpawner
           items={items}
           currentItem={currentItem}

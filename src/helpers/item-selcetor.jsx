@@ -59,9 +59,9 @@ export function ItemSelector({ items, currentItem }) {
         let firstIntersectedObject;
         if (intersects.length > 0) {
           if (
-            getItem().item === "pipe" ||
-            getItem().item === "golfTee" ||
-            getItem().item === "cannon"
+            currentItem === "pipe" ||
+            currentItem === "golfTee" ||
+            currentItem === "cannon"
           ) {
             firstIntersectedObject = intersects[0].object.parent;
           } else {

@@ -92,8 +92,8 @@ export function ItemSpawner({
     { handedness: "right" }
   );
 
-  if (items.domino.length > 0) {
-    return (
+  return (
+    <>
       <>
         {items.domino.map((object, index) => (
           <DominoModel
@@ -108,12 +108,6 @@ export function ItemSpawner({
           />
         ))}
       </>
-    );
-  }
-
-  return (
-    <>
-      {" "}
       <>
         {items.ball.map((object, index) => (
           <SphereModel

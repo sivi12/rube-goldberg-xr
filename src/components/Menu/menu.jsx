@@ -24,7 +24,7 @@ export default function MenuButton({}) {
   const leftController = useController("left");
   const rightController = useController("right");
 
-  const [currentItem, setCurrentItem] = useState("trampoline");
+  const [currentItem, setCurrentItem] = useState("");
   const [startGame, setStartGame] = useState(false);
   const [saveCubes, setSaveCubes] = useState(false);
   const [newCubes, setNewCubes] = useState([]);
@@ -152,8 +152,10 @@ export default function MenuButton({}) {
           startGame={startGame}
           character={"markerMan"}
         />
-        <ItemSelector items={items} currentItem={currentItem} />
-        <RemoveLastItem items={items} currentItem={currentItem} />
+        {!startGame && <ItemSelector items={items} currentItem={currentItem} />}
+        {!startGame && (
+          <RemoveLastItem items={items} currentItem={currentItem} />
+        )}
       </group>
     </>
   );

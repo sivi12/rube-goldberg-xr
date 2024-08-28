@@ -6,8 +6,8 @@ export default function RemoveLastItem({ items, currentItem }) {
 
   function getItem() {
     switch (currentItem) {
-      case "cubes":
-        return { item: items.cubes, setItem: items.setCubes };
+      case "domino":
+        return { item: items.domino, setItem: items.setDomino };
       case "ball":
         return { item: items.ball, setItem: items.setBall };
       case "book":
@@ -31,7 +31,6 @@ export default function RemoveLastItem({ items, currentItem }) {
     leftController,
     "y",
     () => {
-      console.log(getItem().item.length);
       if (leftController && getItem().item.length > 0) {
         getItem().setItem(getItem().item.slice(0, -1));
       }

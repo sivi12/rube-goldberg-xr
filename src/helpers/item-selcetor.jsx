@@ -10,8 +10,8 @@ export function ItemSelector({ items, currentItem }) {
 
   function getItem() {
     switch (currentItem) {
-      case "cubes":
-        return { item: items.cubes, setItem: items.setCubes };
+      case "domino":
+        return { item: items.domino, setItem: items.setDomino };
       case "ball":
         return { item: items.ball, setItem: items.setBall };
       case "book":
@@ -52,7 +52,7 @@ export function ItemSelector({ items, currentItem }) {
         // items.map((cube) => console.log(cube.api.current));
         //schaue durch alle objekte des gerade auswählten items, ob der strahl einen dieser objekte trifft
         const intersects = raycaster.intersectObjects(
-          getItem().item.map((cube) => cube.api.current),
+          getItem().item.map((_item) => _item.api.current),
           true
         );
         console.log("intersects", intersects);
@@ -61,6 +61,7 @@ export function ItemSelector({ items, currentItem }) {
           if (
             currentItem === "pipe" ||
             currentItem === "golfTee" ||
+            currentItem === "domino" ||
             currentItem === "cannon"
           ) {
             firstIntersectedObject = intersects[0].object.parent;
@@ -69,10 +70,10 @@ export function ItemSelector({ items, currentItem }) {
           }
 
           const index = getItem().item.findIndex(
-            (cube) => cube.api.current === firstIntersectedObject
+            (_item) => _item.api.current === firstIntersectedObject
           );
+
           setSelectedObject(index);
-          console.log(index, " index");
         }
       }
     },

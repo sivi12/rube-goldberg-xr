@@ -19,7 +19,7 @@ export function ItemSpawner({
   useXREvent(
     "selectstart",
     () => {
-      if (rightController && rightController.controller) {
+      if (rightController && rightController.controller && !startGame) {
         const position = rightController.controller.position.toArray();
         const rotationX = rightController.controller.rotation.toArray()[0];
         const rotationY = rightController.controller.rotation.toArray()[1];
@@ -104,6 +104,7 @@ export function ItemSpawner({
             color={object.color}
             rotation={object.rotation}
             controller={rightController}
+            startGame={startGame}
             onRef={(ref) => (object.api = ref)}
           />
         ))}

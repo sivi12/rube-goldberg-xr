@@ -16,7 +16,6 @@ export function MarkerManMiniModel({ scale = 0.1 }) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(loadedAnimations, group);
-  console.log("ksdhuliasnlxknsxklnlsanxlak:", loadedAnimations);
 
   React.useEffect(() => {
     if (actions) {

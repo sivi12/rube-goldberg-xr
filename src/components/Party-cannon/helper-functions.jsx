@@ -30,7 +30,7 @@ export function applyOffset(position, rotation, x, y, z) {
   return newPosition;
 }
 
-export function shoot(rotation, api) {
+export function shoot(rotation, api, startGame) {
   const direction = new THREE.Vector3(
     1,
     Math.tan(THREE.MathUtils.degToRad(20)),
@@ -38,6 +38,8 @@ export function shoot(rotation, api) {
   );
   direction.applyEuler(new THREE.Euler(...rotation));
   direction.normalize();
-  api.mass.set(10);
-  api.velocity.set(direction.x * 5, direction.y * 5, direction.z * 5);
+  if (startGame) {
+    api.wakeUp();
+    api.velocity.set(direction.x * 5, direction.y * 5, direction.z * 5);
+  }
 }

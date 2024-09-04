@@ -21,12 +21,12 @@ import Tooltips from "../helpers/tooltips";
 
 export default function ShelfInterface({ refObjects }) {
   const [ref, api] = useBox(() => ({
-    position: [0, 1, -1.5],
+    position: [0, 0.67, -1.5],
     rotation: [0, 0, 0],
     args: [0.7, 1.31, 0.4],
   }));
   return (
-    <group position={[0, 1, -1.5]}>
+    <group position={[0, 0.67, -1.5]}>
       <Shelf />
       <Plant />
       <Radio />

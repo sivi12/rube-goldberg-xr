@@ -8,7 +8,7 @@ import Ramp from "../Ramp/ramp";
 import Pipe from "../Pipe/Pipe";
 import { Ball } from "../Ball/ball";
 import { GameBox } from "../physical-game-box/game-box";
-import Cannon from "../Party-cannon/party-cannon";
+import Cannon from "../Party-cannon/cannon";
 import Trampoline from "../Trampoline/trampoline";
 import GolfTee from "../Golf-tee/golf-tee";
 import { menuItemSelector } from "./helpers/menu-item-selector";

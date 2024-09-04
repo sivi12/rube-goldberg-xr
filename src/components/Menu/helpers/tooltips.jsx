@@ -15,7 +15,7 @@ export default function Tooltips({ currentItem }) {
   // });
 
   return (
-    <group position={[0, 2.4, -1.5]}>
+    <group position={[0, 2.1, -1.5]}>
       <mesh>
         <RoundedBox args={[0.8, 1, 0.1]} radius={0.08} smoothness={2}>
           <meshStandardMaterial

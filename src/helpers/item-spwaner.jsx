@@ -4,13 +4,14 @@ import { DominoModel } from "../components/Domino/Domino";
 import { RampModel } from "../components/Ramp/ramp";
 import { PipeModel } from "../components/Pipe/Pipe";
 import { SphereModel } from "../components/Ball/ball";
-import { CannonModel } from "../components/Party-cannon/party-cannon-model";
+import { CannonModel } from "../components/Party-cannon/cannon-model";
 import { GolfTeeModel } from "../components/Golf-tee/golf-tee-model";
 import { TrampolineModel } from "../components/Trampoline/trampoline-model";
 import GameBoxModel from "../components/physical-game-box/game-box-model";
 import GameDominos, {
   GameDominoModel,
 } from "../components/Domino/game-dominos";
+import Cannon from "../components/Party-cannon/cannon";
 
 export function ItemSpawner({
   items,
@@ -171,10 +172,11 @@ export function ItemSpawner({
       <>
         {" "}
         {items.cannon.map((cannon, index) => (
-          <CannonModel
+          <Cannon
             index={index}
             position={cannon.position}
             rotation={cannon.rotation}
+            startGame={startGame}
             onRef={(ref) => (cannon.api = ref)}
           />
         ))}

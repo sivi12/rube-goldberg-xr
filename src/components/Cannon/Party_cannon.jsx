@@ -12,34 +12,35 @@ import RemoveLastItem from "../../helpers/delete-last-item";
 
 export function PartyCannonn(onRef, position, rotation) {
   const ref = useRef();
-  const { nodes, materials } = useGLTF("/party_cannon.glb");
+  console.log(position, "hjsbdkjlankndölxamölxmölasmölxmxölmxaölmxölsmöl");
+  const { nodes, materials } = useGLTF("/Models/party_cannon.glb");
 
-  const wheelGeometry = nodes.item_4.geometry;
-  const bodyGeometry = nodes.Object_5.geometry;
+  //const wheelGeometry = nodes.item_4.geometry;
+  // const bodyGeometry = nodes.Object_5.geometry;
 
-  const data1 = nodes.Object_4.geometry.attributes.position.array;
-  const data2 = nodes.Object_4.geometry.index.array;
-  const data3 = nodes.Object_5.geometry.attributes.position.array;
-  const data4 = nodes.Object_5.geometry.index.array;
+  // const data1 = nodes.Object_4.geometry.attributes.position.array;
+  // const data2 = nodes.Object_4.geometry.index.array;
+  // const data3 = nodes.Object_5.geometry.attributes.position.array;
+  // const data4 = nodes.Object_5.geometry.index.array;
 
-  const [wheelRef, wheelApi] = useTrimesh(
-    () => ({
-      type: "Static",
-      mass: 2,
-      rotation: [0, 0, -3.133],
-      args: [data1, data2],
-    }),
-    useRef()
-  );
-  const [bodyRef, bodyApi] = useTrimesh(
-    () => ({
-      type: "Static",
-      mass: 2,
-      rotation: [0, 0, -3.133],
-      args: [data3, data4],
-    }),
-    useRef()
-  );
+  // const [wheelRef, wheelApi] = useTrimesh(
+  //   () => ({
+  //     type: "Static",
+  //     mass: 2,
+  //     rotation: [0, 0, -3.133],
+  //     args: [data1, data2],
+  //   }),
+  //   useRef()
+  // );
+  // const [bodyRef, bodyApi] = useTrimesh(
+  //   () => ({
+  //     type: "Static",
+  //     mass: 2,
+  //     rotation: [0, 0, -3.133],
+  //     args: [data3, data4],
+  //   }),
+  //   useRef()
+  // );
 
   // useEffect(() => {
   //   if (bodyApi.position) {
@@ -55,46 +56,50 @@ export function PartyCannonn(onRef, position, rotation) {
   // }, [ref, onRef]);
 
   return (
-    <group dispose={null}>
-      <group ref={ref}>
-        <mesh
-          geometry={wheelGeometry}
-          material={materials.Cannon_Wheels}
-          position={[-2.128, -0.528, 0.047]}
-          ref={wheelRef}
-        />
-        <mesh
-          geometry={bodyGeometry}
-          material={materials.Cannon_Body}
-          position={[-2.128, -0.528, 0.047]}
-          ref={bodyRef}
-        />
-      </group>
-    </group>
+    // <group dispose={null}>
+    //   <group ref={ref}>
+    //     <mesh
+    //       geometry={wheelGeometry}
+    //       material={materials.Cannon_Wheels}
+    //       position={[-2.128, -0.528, 0.047]}
+    //       ref={wheelRef}
+    //     />
+    //     <mesh
+    //       geometry={bodyGeometry}
+    //       material={materials.Cannon_Body}
+    //       position={[-2.128, -0.528, 0.047]}
+    //       ref={bodyRef}
+    //     />
+    //   </group>
+    // </group>
+    <mesh position={position}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={"red"} />
+    </mesh>
   );
 }
 
-export default function Cannon({ nodes, _geometry, currentItem }) {
-  // console.log(_geometry);
-  // console.log(nodes);
-  const [items, setItems] = useState([]);
+// export default function Cannon({ nodes, _geometry, currentItem }) {
+//   // console.log(_geometry);
+//   // console.log(nodes);
+//   const [items, setItems] = useState([]);
 
-  return (
-    <>
-      <ItemSpawner
-        items={items}
-        setItems={setItems}
-        nodes={nodes}
-        _geometry={_geometry}
-        model={"cannon"}
-        currentItem={currentItem}
-      />
-      <ItemSelector items={items} setItems={setItems} isGLTF={true} />
-      {currentItem === "cannon" && (
-        <RemoveLastItem items={items} setItems={setItems} />
-      )}
-    </>
-  );
-}
+//   return (
+//     <>
+//       <ItemSpawner
+//         items={items}
+//         setItems={setItems}
+//         nodes={nodes}
+//         _geometry={_geometry}
+//         model={"cannon"}
+//         currentItem={currentItem}
+//       />
+//       <ItemSelector items={items} setItems={setItems} isGLTF={true} />
+//       {currentItem === "cannon" && (
+//         <RemoveLastItem items={items} setItems={setItems} />
+//       )}
+//     </>
+//   );
+// }
 
-useGLTF.preload("/party_cannon.glb");
+useGLTF.preload("/Models/party_cannon.glb");

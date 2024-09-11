@@ -4,8 +4,6 @@ export function menuItemSelector(
   refObjects,
   setCurrentItem,
   setStartGame,
-  setSaveCubes,
-  setNewCubes,
   leftController
 ) {
   const tempMatrix = new THREE.Matrix4();
@@ -113,10 +111,8 @@ export function menuItemSelector(
     );
     if (intersectsStartButton.length > 0) {
       console.log("start ausgewählt");
-      setSaveCubes(true);
-      setTimeout(() => {
-        setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
-      }, 200);
+
+      setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
     }
   }
 
@@ -128,8 +124,6 @@ export function menuItemSelector(
     if (intersectsBuildButton.length > 0) {
       console.log("Build-Mode ausgewählt");
       setStartGame(false);
-      setSaveCubes(false);
-      setNewCubes([]);
     }
   }
 }

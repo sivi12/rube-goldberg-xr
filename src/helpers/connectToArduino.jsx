@@ -7,7 +7,7 @@ const ConnectToArduino = ({
 }) => {
   const { lastMessage, sendMessage } = useWebSocket("wss://192.168.1.136:8080");
 
-  sendMessage("huansooohn");
+  sendMessage("huhuh");
 
   useEffect(() => {
     if (lastMessage !== null) {

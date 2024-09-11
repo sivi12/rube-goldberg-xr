@@ -1,7 +1,3 @@
-import { useState } from "react";
-import { ItemSpawner } from "../../helpers/item-spwaner";
-import { ItemSelector } from "../../helpers/item-selcetor";
-import RemoveLastItem from "../../helpers/delete-last-item";
 import { CannonModel } from "./cannon-model";
 import CannonBall from "./cannon-ball";
 

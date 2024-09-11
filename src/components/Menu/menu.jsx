@@ -1,19 +1,7 @@
 import { useController, useXREvent } from "@react-three/xr";
 import { useRef, useState } from "react";
-import Domino from "../Domino/Domino";
-import GameDominos from "../Domino/game-dominos";
 import { useButton } from "../../helpers/buttons";
-import SaveGameObjects from "../../helpers/save-game-dominos";
-import Ramp from "../Ramp/ramp";
-import Pipe from "../Pipe/Pipe";
-import { Ball } from "../Ball/ball";
-import { GameBox } from "../physical-game-box/game-box";
-import Cannon from "../Party-cannon/cannon";
-import Trampoline from "../Trampoline/trampoline";
-import GolfTee from "../Golf-tee/golf-tee";
 import { menuItemSelector } from "./helpers/menu-item-selector";
-import MenuInterface from "./menu-interface";
-import MenuInterfacee from "./menu-interfacee";
 import ShelfInterface from "./shelf-interface/shelf-interface";
 import Tooltips from "./helpers/tooltips";
 import { ItemSpawner } from "../../helpers/item-spwaner";
@@ -26,8 +14,6 @@ export default function MenuButton({}) {
 
   const [currentItem, setCurrentItem] = useState("");
   const [startGame, setStartGame] = useState(false);
-  const [saveCubes, setSaveCubes] = useState(false);
-  const [newCubes, setNewCubes] = useState([]);
 
   const menuRef = useRef();
   const dominoRef = useRef();
@@ -91,8 +77,6 @@ export default function MenuButton({}) {
           refObjects,
           setCurrentItem,
           setStartGame,
-          setSaveCubes,
-          setNewCubes,
           leftController
         );
       }
@@ -101,17 +85,11 @@ export default function MenuButton({}) {
   );
 
   useButton(rightController, "a", () => {
-    setSaveCubes(true);
-
-    setTimeout(() => {
-      setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
-    }, 200);
+    setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
   });
 
   useButton(rightController, "b", () => {
     setStartGame(false);
-    setSaveCubes(false);
-    setNewCubes([]);
   });
 
   return (

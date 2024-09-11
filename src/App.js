@@ -23,8 +23,10 @@ function App() {
         <XR>
           <Controllers />
           <Physics stepSize={1 / 180} gravity={[0, -9.81, 0]}>
-            <Debug></Debug>
-            <MenuButton />
+            <Debug>
+              <MenuButton />
+            </Debug>
+
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Physics>
         </XR>

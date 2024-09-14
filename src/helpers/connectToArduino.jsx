@@ -5,7 +5,9 @@ const ConnectToArduino = ({
   arduinoButtonPressed,
   setArduinoButtonPressed,
 }) => {
-  const { lastMessage, sendMessage } = useWebSocket("wss://192.168.1.136:8080");
+  const { lastMessage, sendMessage } = useWebSocket(
+    "https://192.168.1.136:8087"
+  );
 
   sendMessage("huhuh");
 

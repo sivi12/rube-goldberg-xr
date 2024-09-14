@@ -158,7 +158,6 @@ export function ItemSpawner({
         ))}
       </>
       <>
-        {" "}
         {items.pipe.map((pipe, index) => (
           <PipeModel
             index={index}
@@ -170,7 +169,6 @@ export function ItemSpawner({
         ))}
       </>
       <>
-        {" "}
         {items.cannon.map((cannon, index) => (
           <Cannon
             index={index}
@@ -182,7 +180,6 @@ export function ItemSpawner({
         ))}
       </>
       <>
-        {" "}
         {items.golfTee.map((golfTee, index) => (
           <GolfTeeModel
             index={index}
@@ -193,7 +190,6 @@ export function ItemSpawner({
         ))}
       </>
       <>
-        {" "}
         {items.trampoline.map((golfTee, index) => (
           <TrampolineModel
             index={index}

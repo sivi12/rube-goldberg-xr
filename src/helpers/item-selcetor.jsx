@@ -27,7 +27,7 @@ export function ItemSelector({ items, currentItem }) {
       case "arduinoBox":
         return { item: items.arduinoBox, setItem: items.setArduinoBox };
       default:
-        return { item: null, setState: () => {} }; // Standardfall, falls currentItem keinen gültigen Wert hat
+        return { item: null, setState: () => {} };
     }
   }
 
@@ -40,7 +40,7 @@ export function ItemSelector({ items, currentItem }) {
       console.log("items", items);
       //items.map((cube) => console.log(cube.api.current));
 
-      if (rightController && rightController.controller && items) {
+      if (rightController && currentItem != "" && items) {
         const tempMatrix = new THREE.Matrix4().extractRotation(
           rightController.controller.matrixWorld
         );

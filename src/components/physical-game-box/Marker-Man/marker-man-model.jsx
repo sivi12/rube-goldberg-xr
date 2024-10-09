@@ -10,7 +10,7 @@ import { SkeletonUtils } from "three-stdlib";
 import { useBox } from "@react-three/cannon";
 import { markerManAnimations } from "./maker-man-animations";
 
-export function MarkerManModel({ arduinoButtonPressed }) {
+export function MarkerManModel({ currentAnimation, startGame }) {
   const group = React.useRef();
 
   const hipRef = React.useRef();
@@ -19,12 +19,16 @@ export function MarkerManModel({ arduinoButtonPressed }) {
 
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
-  const { actions } = useAnimations(loadedAnimations, group);
+  const { actions, mixer } = useAnimations(loadedAnimations, group);
   console.log("Loaded animations:", loadedAnimations);
 
   useEffect(() => {
-    markerManAnimations(actions, arduinoButtonPressed);
-  }, [actions, arduinoButtonPressed]);
+    markerManAnimations(actions, currentAnimation, mixer);
+    console.log(
+      currentAnimation,
+      "----------------------------------------------------"
+    );
+  }, [currentAnimation]);
 
   // Box for the character
   const [hitBoxRef, hitBoxApi] = useBox(() => ({

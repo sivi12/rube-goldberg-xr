@@ -48,27 +48,6 @@ export function SphereModel({ position, color, mass, onRef, startGame }) {
   );
 }
 
-// function StartGame({ spheres, setSpheres, currentItem }) {
-//   const leftController = useController("left");
-
-//   useXREvent(
-//     "squeeze",
-//     () => {
-//       if (leftController && currentItem === "ball" && spheres.length > 0) {
-//         // setSpheres((prevSpheres) => {
-//         //   return prevSpheres.map((sphere) => ({
-//         //     ...sphere,
-//         //     mass: 100,
-//         //   }));
-//         // });
-
-//         setSpheres(spheres.slice(0, -1));
-//       }
-//     },
-//     { handedness: "left" }
-//   );
-// }
-
 export function Ball({ currentItem, startGame }) {
   const [spheres, setSpheres] = useState([]);
   return (

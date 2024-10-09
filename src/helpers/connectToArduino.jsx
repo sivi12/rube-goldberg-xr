@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
-const ConnectToArduino = ({
-  arduinoButtonPressed,
-  setArduinoButtonPressed,
-}) => {
+const ConnectToArduino = ({ setCurrentAnimation, startGame }) => {
   const { lastMessage, sendMessage } = useWebSocket(
-    "https://192.168.1.136:8087"
+    "https://192.168.1.136:8080"
   );
 
   sendMessage("huhuh");
 
   useEffect(() => {
-    if (lastMessage !== null) {
+    if (lastMessage !== null && startGame) {
       //alert(`Message from server: ${lastMessage.data}`);
-      setArduinoButtonPressed(true);
+      setCurrentAnimation("startAnimation");
     }
   }, [lastMessage]);
 };

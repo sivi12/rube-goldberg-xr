@@ -1,9 +1,10 @@
 import { useBox, useSphere } from "@react-three/cannon";
 import React, { useEffect, useState } from "react";
-import { applyOffset, shoot } from "./helper-functions";
+import { shoot } from "./helper-functions";
 import { useButton } from "../../helpers/buttons";
 import { useController } from "@react-three/xr";
 import { ButtonModel } from "../physical-game-box/Button";
+import { applyOffset } from "../../helpers/apply-offset";
 
 export default function CannonBall({ position, rotation, startGame }) {
   const [hasColided, setHasColided] = useState(false);
@@ -62,7 +63,7 @@ export default function CannonBall({ position, rotation, startGame }) {
         <ButtonModel
           scale={0.01}
           rotation={[0, 0, (105 * Math.PI) / 180]}
-          position={(0, 0, 0)}
+          position={(0, 1, 0)}
         />
       </mesh>
     </>

@@ -4,21 +4,13 @@ import { DominoModel } from "../components/Domino/Domino";
 import { RampModel } from "../components/Ramp/ramp";
 import { PipeModel } from "../components/Pipe/Pipe";
 import { SphereModel } from "../components/Ball/ball";
-import { CannonModel } from "../components/Party-cannon/cannon-model";
 import { GolfTeeModel } from "../components/Golf-tee/golf-tee-model";
 import { TrampolineModel } from "../components/Trampoline/trampoline-model";
-import GameBoxModel from "../components/physical-game-box/game-box-model";
-import GameDominos, {
-  GameDominoModel,
-} from "../components/Domino/game-dominos";
 import Cannon from "../components/Party-cannon/cannon";
+import GameBoxModel from "../components/physical-game-box/game-box-model";
+import { GameDominoModel } from "../components/Domino/game-dominos";
 
-export function ItemSpawner({
-  items,
-  character = "markerMan", // Eigentlich unnötig oder? showObejkt reicht doch aus um zu wissen welches model
-  currentItem,
-  startGame,
-}) {
+export function ItemSpawner({ items, currentItem, startGame }) {
   const rightController = useController("right");
   useXREvent(
     "selectstart",
@@ -58,7 +50,7 @@ export function ItemSpawner({
           ]);
         }
 
-        if (currentItem === "arduinoBox" && character != "") {
+        if (currentItem === "arduinoBox") {
           if (items.arduinoBox.length < 1) {
             items.setArduinoBox((prevItems) => [
               ...prevItems,
@@ -104,12 +96,8 @@ export function ItemSpawner({
             <DominoModel
               key={index}
               position={object.position}
-              mass={object.mass}
-              type={object.type}
               color={object.color}
               rotation={object.rotation}
-              controller={rightController}
-              startGame={startGame}
               onRef={(ref) => (object.api = ref)}
             />
           ))}
@@ -126,7 +114,6 @@ export function ItemSpawner({
                   domino.api.current.matrixWorld.elements[14],
                 ]}
                 rotation={domino.rotation}
-                mass={domino.mass}
                 color={domino.color}
                 onRef={(ref) => (domino.api = ref)}
               />
@@ -202,10 +189,11 @@ export function ItemSpawner({
       <>
         {items.arduinoBox.map((objekt, index) => (
           <GameBoxModel
+            startGame={startGame}
             key={index}
             position={objekt.position}
             rotation={objekt.rotation}
-            character={character}
+            character={"markerMan"}
             size={[0.215, 0.115, 0.22]}
             onRef={(ref) => (objekt.api = ref)}
           />

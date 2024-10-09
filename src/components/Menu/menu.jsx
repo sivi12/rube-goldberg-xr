@@ -97,32 +97,6 @@ export default function MenuButton({}) {
       <ShelfInterface refObjects={refObjects} />
       <Tooltips currentItem={currentItem} />
       <group>
-        {/* <ConnectToArduino
-          arduinoButtonPressed={arduinoButtonPressed}
-          setArduinoButtonPressed={setArduinoButtonPressed}
-        /> */}
-        {/* {!startGame && (
-          <Domino items={cubes} setItems={setCubes} currentItem={currentItem} />
-        )} */}
-
-        {/* {saveCubes && (
-          <SaveGameObjects dominos={domino} setDominos={setDomino} />
-        )}
-
-        {startGame && <GameDominos newCubes={newCubes} />} */}
-
-        {/* <Ball currentItem={currentItem} startGame={startGame} />
-        <Ramp currentItem={currentItem} startGame={startGame} />
-        <Pipe currentItem={currentItem} startGame={startGame} />
-        <Cannon currentItem={currentItem} startGame={startGame} />
-        <GolfTee currentItem={currentItem} startGame={startGame} />
-        <Trampoline currentItem={currentItem} startGame={startGame} />
-        */}
-        {/* <GameBox
-          currentItem={currentItem}
-          character={"markerMan"}
-          startGame={startGame}
-        /> */}
         <ItemSpawner
           items={items}
           currentItem={currentItem}

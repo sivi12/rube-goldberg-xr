@@ -32,7 +32,6 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
       api.position.set(...position);
     }
     if (api.rotation) {
-      console.log(rotation);
       api.rotation.set(...[0, rotation[1], 0]);
     }
   }, [position, api.position, api]);
@@ -64,7 +63,6 @@ export function DominoModel({ position, mass, type, rotation, color, onRef }) {
 }
 
 function Domino({ items, setItems, currentItem, startGame }) {
-  console.log(currentItem);
   return (
     <>
       <ItemSpawner

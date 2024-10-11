@@ -3,7 +3,7 @@ import CannonBall from "./cannon-ball";
 
 export default function Cannon({ onRef, position, rotation, startGame }) {
   return (
-    <>
+    <group>
       <CannonModel
         onRef={onRef}
         position={position}
@@ -17,6 +17,6 @@ export default function Cannon({ onRef, position, rotation, startGame }) {
           startGame={startGame}
         />
       }
-    </>
+    </group>
   );
 }

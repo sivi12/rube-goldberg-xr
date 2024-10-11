@@ -32,62 +32,70 @@ export function ItemSpawner({ items, currentItem, startGame }) {
 
         if (currentItem === "domino") {
           const mass = 10;
+          const name = currentItem;
           const type = "Dynamic";
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, mass, type, rotation, color },
+            { position, mass, type, rotation, name, color },
           ]);
         }
 
         if (currentItem === "ball") {
           const mass = 0;
+          const name = currentItem;
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, mass, color, startGame },
+            { position, mass, color, name, startGame },
           ]);
         }
 
         if (currentItem === "book") {
+          const name = currentItem;
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, rotation, color },
+            { position, rotation, name, color },
           ]);
         }
 
         if (currentItem === "arduinoBox") {
+          const name = currentItem;
           if (currentItemObject.item.length < 1) {
             currentItemObject.setItem((prevItems) => [
               ...prevItems,
-              { position, rotation },
+              { position, rotation, name },
             ]);
           }
         }
 
         if (currentItem === "pipe") {
+          const name = currentItem;
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, rotation, color },
+            { position, rotation, name, color },
           ]);
         }
 
         if (currentItem === "cannon") {
+          const name = currentItem;
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, rotation },
+            { position, rotation, name },
           ]);
         }
 
         if (currentItem === "golfTee") {
+          const name = currentItem;
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, color },
+            { position, name, color },
           ]);
         }
 
         if (currentItem === "trampoline") {
+          const name = currentItem;
           currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            { position, rotation, color },
+            { position, rotation, name, color },
           ]);
         }
       }
@@ -102,6 +110,7 @@ export function ItemSpawner({ items, currentItem, startGame }) {
           {getItemObject("domino").item.map((object, index) => (
             <DominoModel
               key={index}
+              name={"domino"}
               position={object.position}
               color={object.color}
               rotation={object.rotation}
@@ -114,6 +123,7 @@ export function ItemSpawner({ items, currentItem, startGame }) {
           {getItemObject("domino").item.map((domino, index) => (
             <GameDominoModel
               key={index}
+              name={"gameDomino"}
               position={[
                 domino.api.current.matrixWorld.elements[12],
                 domino.api.current.matrixWorld.elements[13],

@@ -37,10 +37,12 @@ export function PipeModel({ position, rotation, color, onRef, materials }) {
     if (api.rotation) {
       api.rotation.set(...rotation);
     }
-  }, [position, api.position, api]);
+  }, [api.position, api.rotation, position, rotation]);
+
   useEffect(() => {
     onRef(ref);
   }, [ref, onRef]);
+
   return (
     <group ref={ref} position={position} dispose={null}>
       <mesh
@@ -48,27 +50,8 @@ export function PipeModel({ position, rotation, color, onRef, materials }) {
         geometry={geometry}
         // material={materials.M_TrackModularHalfPipe_LOW}
       >
-        <meshStandardMaterial color={color} />{" "}
+        <meshStandardMaterial color={color} />
       </mesh>
     </group>
-  );
-}
-
-export default function Pipe({ currentItem }) {
-  const [items, setItems] = useState([]); //wird nicht wie bei den anderen Objekten im Menü definiert. Grund dafür ist scale
-
-  return (
-    <>
-      <ItemSpawner
-        items={items}
-        setItems={setItems}
-        model={"pipe"}
-        currentItem={currentItem}
-      />
-      <ItemSelector items={items} setItems={setItems} isGLTF={true} />
-      {currentItem === "pipe" && (
-        <RemoveLastItem items={items} setItems={setItems} />
-      )}
-    </>
   );
 }

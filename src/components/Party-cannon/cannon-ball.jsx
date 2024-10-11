@@ -54,11 +54,10 @@ export default function CannonBall({ position, rotation, startGame }) {
 
   return (
     <>
-      {" "}
       <mesh ref={sphereRef}>
         <sphereGeometry args={[0.015, 16, 16]} />
         <meshStandardMaterial color={"yellow"} />
-      </mesh>{" "}
+      </mesh>
       <mesh ref={buttonRef}>
         <ButtonModel
           scale={0.01}

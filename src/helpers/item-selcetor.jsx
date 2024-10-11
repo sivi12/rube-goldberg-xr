@@ -9,6 +9,7 @@ export function ItemSelector({ items, currentItem }) {
   const [selectedObject, setSelectedObject] = useState(null);
 
   const allItems = items.flatMap((obj) => obj.item);
+  const itemType = items.flatMap((obj) => obj.name);
 
   useXREvent(
     "squeezestart",
@@ -30,22 +31,15 @@ export function ItemSelector({ items, currentItem }) {
           allItems.map((_item) => _item.api.current)
         );
         console.log("intersects", intersects);
-        let firstIntersectedObject;
-        if (intersects.length > 0) {
-          if (
-            currentItem === "pipe" ||
-            currentItem === "golfTee" ||
-            currentItem === "domino" ||
-            currentItem === "cannon"
-          ) {
-            firstIntersectedObject = intersects[0].object.parent;
-          } else {
-            firstIntersectedObject = intersects[0].object;
-          }
 
+        if (intersects.length > 0) {
           const intersectedItem = allItems.find(
-            (_item) => _item.api.current === firstIntersectedObject
+            (_item) =>
+              _item.api.current === intersects[0].object ||
+              _item.api.current === intersects[0].object.parent
           );
+
+          console.log(intersectedItem);
 
           const itemParentObject = items.find((obj) =>
             obj.item.includes(intersectedItem)
@@ -57,8 +51,8 @@ export function ItemSelector({ items, currentItem }) {
 
           setSelectedObject({
             index: index,
-            item: itemParentObject.item,
-            setItem: itemParentObject.setItem,
+            item: itemParentObject?.item,
+            setItem: itemParentObject?.setItem,
           });
         }
       }
@@ -86,14 +80,16 @@ export function ItemSelector({ items, currentItem }) {
       const newPosition = [newPositionX, newPositionY, newPositionZ];
       const newRoation = rightController.controller.rotation.toArray();
 
-      selectedObject?.setItem(
-        updatePosition(
-          selectedObject.item,
-          selectedObject.index,
-          newPosition,
-          newRoation
-        )
-      );
+      if (selectedObject.setItem) {
+        selectedObject.setItem(
+          updatePosition(
+            selectedObject.item,
+            selectedObject.index,
+            newPosition,
+            newRoation
+          )
+        );
+      }
     }
   });
 

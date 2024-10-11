@@ -34,7 +34,6 @@ export function TrampolineModel({ position, rotation, onRef }) {
 
   return (
     <>
-      {" "}
       <group
         dispose={null}
         scale={0.001}
@@ -53,7 +52,7 @@ export function TrampolineModel({ position, rotation, onRef }) {
           />
           <mesh geometry={nodes.Object_4.geometry} material={materials.metal} />
         </group>
-      </group>{" "}
+      </group>
       <mesh ref={ref}>
         <cylinderGeometry args={[0.17, 0.17, 0.025]} />
         <meshStandardMaterial color="yellow" transparent={true} opacity={0.0} />

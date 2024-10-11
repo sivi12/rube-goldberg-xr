@@ -27,41 +27,39 @@ export function MiniPipe() {
   );
 }
 
-export function MarkerManMiniModell(props) {
-  const { nodes, materials } = useGLTF("/marker-man.glb");
-
-  return <></>;
-}
-
-export function CannonMiniModel(props) {
-  const { nodes, materials } = useGLTF("/Models/party_cannon.glb");
-
-  return (
-    <group dispose={null} scale={1.2} rotation={[Math.PI, -1.4, 0]}>
-      <mesh
-        geometry={nodes.Object_4.geometry}
-        material={materials.Cannon_Wheels}
-      />
-      <mesh
-        geometry={nodes.Object_5.geometry}
-        material={materials.Cannon_Body}
-      />
-    </group>
-  );
-}
-
-export function TrampolineMiniModel({ scale = [0.001, 0.001, 0.001] }) {
+export function TrampolineMiniModel({
+  scale = [0.001, 0.001, 0.001],
+  currentItem,
+  position = [0, 0, 0],
+  refObjects,
+}) {
   const { nodes, materials } = useGLTF("/Models/trampoline.glb");
+  // const ref = useRef();
+  // useFrame((state, delta) => {
+  //   const scaleFactor = 1 + Math.sin(state.clock.getElapsedTime() * 3) * 0.1; // Schwingung zwischen 0.9 und 1.1
+  //   ref.current.scale.set(
+  //     scale[0] * scaleFactor,
+  //     scale[1] * scaleFactor,
+  //     scale[2] * scaleFactor
+  //   );
+  // });
 
   return (
-    <group rotation={[-Math.PI / 2, 0, 0]} scale={scale}>
+    <group rotation={[-Math.PI / 2, 0, 0]} scale={scale} position={position}>
       <mesh
         geometry={nodes.Object_2.geometry}
         material={materials["black-rubber"]}
+        material-emissive={"white"}
+        material-emissiveIntensity={currentItem === "trampoline" ? 0.08 : 0}
+        ref={refObjects.trampolineRef}
       />
+
       <mesh
         geometry={nodes.Object_3.geometry}
         material={materials["blue-plastic"]}
+        material-emissive={"white"}
+        material-emissiveIntensity={currentItem === "trampoline" ? 0.08 : 0}
+        ref={refObjects.trampolineRef}
       />
       <mesh geometry={nodes.Object_4.geometry} material={materials.metal} />
     </group>
@@ -134,18 +132,42 @@ export const BallMiniModel = ({ size, position }) => {
   );
 };
 
-export const GolfTeeMiniModel = ({ scale, position, rotation }) => {
-  const texture = useLoader(TextureLoader, "/Textures/basketball.png");
-
+export const GolfTeeMiniModel = ({ scale, position, rotation, refObjects }) => {
   const { nodes, materials } = useGLTF("/Models/golf_tee.glb");
 
   return (
-    <group position={position} rotation={rotation} scale={scale}>
+    <>
       <mesh
         geometry={nodes.Object_2.geometry}
         material={materials["Scene_-_Root"]}
-        rotation={[Math.PI / 2, 0, 0]}
+        position={position}
+        rotation={rotation}
+        ref={refObjects.golfTeeRef}
+      />
+    </>
+  );
+};
+
+export function CannonMiniModel({ position = [0, 0, 0], refObjects }) {
+  const { nodes, materials } = useGLTF("/Models/party_cannon.glb");
+
+  return (
+    <group
+      dispose={null}
+      scale={1.2}
+      rotation={[Math.PI, -1.4, 0]}
+      position={position}
+    >
+      <mesh
+        geometry={nodes.Object_4.geometry}
+        material={materials.Cannon_Wheels}
+        ref={refObjects.cannonRef}
+      />
+      <mesh
+        geometry={nodes.Object_5.geometry}
+        material={materials.Cannon_Body}
+        ref={refObjects.cannonRef}
       />
     </group>
   );
-};
+}

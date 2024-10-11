@@ -5,26 +5,10 @@ export default function RemoveLastItem({ items, currentItem }) {
   const leftController = useController("left");
 
   function getItem() {
-    switch (currentItem) {
-      case "domino":
-        return { item: items.domino, setItem: items.setDomino };
-      case "ball":
-        return { item: items.ball, setItem: items.setBall };
-      case "book":
-        return { item: items.book, setItem: items.setBook };
-      case "pipe":
-        return { item: items.pipe, setItem: items.setPipe };
-      case "cannon":
-        return { item: items.cannon, setItem: items.setCannon };
-      case "golfTee":
-        return { item: items.golfTee, setItem: items.setGolfTee };
-      case "trampoline":
-        return { item: items.trampoline, setItem: items.setTrampoline };
-      case "arduinoBox":
-        return { item: items.arduinoBox, setItem: items.setArduinoBox };
-      default:
-        return { item: null, setState: () => {} }; // Standardfall, falls currentItem keinen gültigen Wert hat
-    }
+    const foundItem = items.find((obj) => obj.name === currentItem);
+    return foundItem
+      ? { item: foundItem.item, setItem: foundItem.setItem }
+      : { item: null, setItem: () => {} };
   }
 
   useButton(

@@ -15,6 +15,7 @@ export function menuItemSelector(
   );
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
 
+  //if abfrage eigentlich unnötig -> sag chat gpt er soll es mit switch case machen
   if (refObjects.dominoRef.current) {
     const intersectsDomino = raycaster.intersectObject(
       refObjects.dominoRef.current,
@@ -60,7 +61,6 @@ export function menuItemSelector(
   }
 
   if (refObjects.startAnimationRef.current) {
-    console.log(refObjects.startAnimationRef.current);
     const intersectsStartAnimation = raycaster.intersectObject(
       refObjects.startAnimationRef.current,
       true
@@ -72,7 +72,7 @@ export function menuItemSelector(
   }
 
   if (refObjects.cannonRef.current) {
-    console.log(refObjects.cannonRef.current.parent);
+    console.log(refObjects.cannonRef.current);
     const intersectsCannon = raycaster.intersectObject(
       refObjects.cannonRef.current.parent,
       true
@@ -94,11 +94,13 @@ export function menuItemSelector(
     }
   }
   if (refObjects.golfTeeRef.current) {
+    console.log(refObjects.golfTeeRef.current);
     const intersectsGolfTee = raycaster.intersectObject(
-      refObjects.golfTeeRef.current.parent,
+      refObjects.golfTeeRef.current,
       true
     );
     if (intersectsGolfTee.length > 0) {
+      console.log(intersectsGolfTee, " intersects");
       console.log("Golf Tee ausgewählt");
       setCurrentItem("golfTee");
     }
@@ -112,7 +114,7 @@ export function menuItemSelector(
     if (intersectsStartButton.length > 0) {
       console.log("start ausgewählt");
 
-      setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
+      setStartGame(true);
     }
   }
 

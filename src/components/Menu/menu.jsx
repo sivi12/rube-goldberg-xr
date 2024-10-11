@@ -36,24 +36,24 @@ export default function MenuButton({}) {
   const [trampoline, setTrampoline] = useState([]);
   const [arduinoBox, setArduinoBox] = useState([]);
 
-  const items = {
-    domino: domino,
-    setDomino: setDomino,
-    ball: ball,
-    setBall: setBall,
-    book: book,
-    setBook: setBook,
-    pipe: pipe,
-    setPipe: setPipe,
-    cannon: cannon,
-    setCannon: setCannon,
-    golfTee: golfTee,
-    setGolfTee: setGolfTee,
-    trampoline: trampoline,
-    setTrampoline: setTrampoline,
-    arduinoBox: arduinoBox,
-    setArduinoBox: setArduinoBox,
-  };
+  // TODO-------<-------<----- items in extra file packen und nur getItem statt Items in die Funktion übergeben
+  const items = [
+    { name: "domino", item: domino, setItem: setDomino },
+    { name: "ball", item: ball, setItem: setBall },
+    { name: "book", item: book, setItem: setBook },
+    { name: "pipe", item: pipe, setItem: setPipe },
+    { name: "cannon", item: cannon, setItem: setCannon },
+    { name: "golfTee", item: golfTee, setItem: setGolfTee },
+    { name: "trampoline", item: trampoline, setItem: setTrampoline },
+    { name: "arduinoBox", item: arduinoBox, setItem: setArduinoBox },
+  ];
+
+  // function getItem() {
+  //   const foundItem = items.find((obj) => obj.name === currentItem);
+  //   return foundItem
+  //     ? { item: foundItem.item, setItem: foundItem.setItem }
+  //     : { item: null, setItem: () => {} };
+  // }
 
   const refObjects = {
     menuRef,
@@ -94,7 +94,7 @@ export default function MenuButton({}) {
 
   return (
     <>
-      <ShelfInterface refObjects={refObjects} />
+      <ShelfInterface refObjects={refObjects} currentItem={currentItem} />
       <Tooltips currentItem={currentItem} />
       <group>
         <ItemSpawner

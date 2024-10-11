@@ -12,6 +12,10 @@ import { GameDominoModel } from "../components/Domino/game-dominos";
 
 export function ItemSpawner({ items, currentItem, startGame }) {
   const rightController = useController("right");
+
+  // Hilfsfunktion, um das aktuelle Item-Objekt aus `items` zu holen
+  const getItemObject = (name) => items.find((obj) => obj.name === name);
+
   useXREvent(
     "selectstart",
     () => {
@@ -23,36 +27,36 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         const rotation = [rotationX, rotationY, rotationZ];
         const color = getRandomColor();
 
+        // Aktuelles Item-Objekt und Set-Funktion erhalten
+        const currentItemObject = getItemObject(currentItem);
+
         if (currentItem === "domino") {
           const mass = 10;
           const type = "Dynamic";
-          items.setDomino((prevItems) => [
+          currentItemObject.setItem((prevItems) => [
             ...prevItems,
             { position, mass, type, rotation, color },
           ]);
         }
 
         if (currentItem === "ball") {
-          let mass = 0;
-          items.setBall((prevItems) => [
+          const mass = 0;
+          currentItemObject.setItem((prevItems) => [
             ...prevItems,
             { position, mass, color, startGame },
           ]);
         }
 
         if (currentItem === "book") {
-          //const rampRotation = [0, rotation[1], Math.PI / 2];
-          const type = "Static";
-          items.setBook((prevItems) => [
+          currentItemObject.setItem((prevItems) => [
             ...prevItems,
-            //------------------------------------------type rauslöschen
             { position, rotation, color },
           ]);
         }
 
         if (currentItem === "arduinoBox") {
-          if (items.arduinoBox.length < 1) {
-            items.setArduinoBox((prevItems) => [
+          if (currentItemObject.item.length < 1) {
+            currentItemObject.setItem((prevItems) => [
               ...prevItems,
               { position, rotation },
             ]);
@@ -60,25 +64,28 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         }
 
         if (currentItem === "pipe") {
-          items.setPipe((prevItems) => [
+          currentItemObject.setItem((prevItems) => [
             ...prevItems,
             { position, rotation, color },
           ]);
         }
 
         if (currentItem === "cannon") {
-          items.setCannon((prevItems) => [
+          currentItemObject.setItem((prevItems) => [
             ...prevItems,
             { position, rotation },
           ]);
         }
 
         if (currentItem === "golfTee") {
-          items.setGolfTee((prevItems) => [...prevItems, { position, color }]);
+          currentItemObject.setItem((prevItems) => [
+            ...prevItems,
+            { position, color },
+          ]);
         }
 
         if (currentItem === "trampoline") {
-          items.setTrampoline((prevItems) => [
+          currentItemObject.setItem((prevItems) => [
             ...prevItems,
             { position, rotation, color },
           ]);
@@ -92,7 +99,7 @@ export function ItemSpawner({ items, currentItem, startGame }) {
     <>
       {!startGame ? (
         <>
-          {items.domino.map((object, index) => (
+          {getItemObject("domino").item.map((object, index) => (
             <DominoModel
               key={index}
               position={object.position}
@@ -104,25 +111,23 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         </>
       ) : (
         <>
-          {items.domino.map((domino, index) => (
-            <>
-              <GameDominoModel
-                key={index}
-                position={[
-                  domino.api.current.matrixWorld.elements[12],
-                  domino.api.current.matrixWorld.elements[13],
-                  domino.api.current.matrixWorld.elements[14],
-                ]}
-                rotation={domino.rotation}
-                color={domino.color}
-                onRef={(ref) => (domino.api = ref)}
-              />
-            </>
+          {getItemObject("domino").item.map((domino, index) => (
+            <GameDominoModel
+              key={index}
+              position={[
+                domino.api.current.matrixWorld.elements[12],
+                domino.api.current.matrixWorld.elements[13],
+                domino.api.current.matrixWorld.elements[14],
+              ]}
+              rotation={domino.rotation}
+              color={domino.color}
+              onRef={(ref) => (domino.api = ref)}
+            />
           ))}
         </>
       )}
       <>
-        {items.ball.map((object, index) => (
+        {getItemObject("ball").item.map((object, index) => (
           <SphereModel
             key={index}
             position={object.position}
@@ -134,7 +139,7 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         ))}
       </>
       <>
-        {items.book.map((object, index) => (
+        {getItemObject("book").item.map((object, index) => (
           <RampModel
             key={index}
             position={object.position}
@@ -145,9 +150,9 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         ))}
       </>
       <>
-        {items.pipe.map((pipe, index) => (
+        {getItemObject("pipe").item.map((pipe, index) => (
           <PipeModel
-            index={index}
+            key={index}
             position={pipe.position}
             rotation={pipe.rotation}
             color={pipe.color}
@@ -156,9 +161,9 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         ))}
       </>
       <>
-        {items.cannon.map((cannon, index) => (
+        {getItemObject("cannon").item.map((cannon, index) => (
           <Cannon
-            index={index}
+            key={index}
             position={cannon.position}
             rotation={cannon.rotation}
             startGame={startGame}
@@ -167,9 +172,9 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         ))}
       </>
       <>
-        {items.golfTee.map((golfTee, index) => (
+        {getItemObject("golfTee").item.map((golfTee, index) => (
           <GolfTeeModel
-            index={index}
+            key={index}
             position={golfTee.position}
             color={golfTee.color}
             onRef={(ref) => (golfTee.api = ref)}
@@ -177,17 +182,17 @@ export function ItemSpawner({ items, currentItem, startGame }) {
         ))}
       </>
       <>
-        {items.trampoline.map((golfTee, index) => (
+        {getItemObject("trampoline").item.map((trampoline, index) => (
           <TrampolineModel
-            index={index}
-            position={golfTee.position}
-            rotation={golfTee.rotation}
-            onRef={(ref) => (golfTee.api = ref)}
+            key={index}
+            position={trampoline.position}
+            rotation={trampoline.rotation}
+            onRef={(ref) => (trampoline.api = ref)}
           />
         ))}
       </>
       <>
-        {items.arduinoBox.map((objekt, index) => (
+        {getItemObject("arduinoBox").item.map((objekt, index) => (
           <GameBoxModel
             startGame={startGame}
             key={index}

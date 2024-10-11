@@ -8,38 +8,11 @@ export function ItemSelector({ items, currentItem }) {
   const rightController = useController("right");
   const [selectedObject, setSelectedObject] = useState(null);
 
-  function getItem() {
-    switch (currentItem) {
-      case "domino":
-        return { item: items.domino, setItem: items.setDomino };
-      case "ball":
-        return { item: items.ball, setItem: items.setBall };
-      case "book":
-        return { item: items.book, setItem: items.setBook };
-      case "pipe":
-        return { item: items.pipe, setItem: items.setPipe };
-      case "cannon":
-        return { item: items.cannon, setItem: items.setCannon };
-      case "golfTee":
-        return { item: items.golfTee, setItem: items.setGolfTee };
-      case "trampoline":
-        return { item: items.trampoline, setItem: items.setTrampoline };
-      case "arduinoBox":
-        return { item: items.arduinoBox, setItem: items.setArduinoBox };
-      default:
-        return { item: null, setState: () => {} };
-    }
-  }
-
-  //eine ItemSelector Methode anstatt es in jedem Objekt neu zu übergeben?
-  //
+  const allItems = items.flatMap((obj) => obj.item);
 
   useXREvent(
     "squeezestart",
     () => {
-      console.log("items", items);
-      //items.map((cube) => console.log(cube.api.current));
-
       if (rightController && currentItem != "" && items) {
         const tempMatrix = new THREE.Matrix4().extractRotation(
           rightController.controller.matrixWorld
@@ -51,9 +24,10 @@ export function ItemSelector({ items, currentItem }) {
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
         // items.map((cube) => console.log(cube.api.current));
         //schaue durch alle objekte des gerade auswählten items, ob der strahl einen dieser objekte trifft
+
+        //todo er soll nichz nur durch currentItem sondern durch alle schauen
         const intersects = raycaster.intersectObjects(
-          getItem().item.map((_item) => _item.api.current),
-          true
+          allItems.map((_item) => _item.api.current)
         );
         console.log("intersects", intersects);
         let firstIntersectedObject;
@@ -69,11 +43,23 @@ export function ItemSelector({ items, currentItem }) {
             firstIntersectedObject = intersects[0].object;
           }
 
-          const index = getItem().item.findIndex(
+          const intersectedItem = allItems.find(
             (_item) => _item.api.current === firstIntersectedObject
           );
 
-          setSelectedObject(index);
+          const itemParentObject = items.find((obj) =>
+            obj.item.includes(intersectedItem)
+          );
+
+          const index = itemParentObject?.item.findIndex(
+            (_item) => _item === intersectedItem
+          );
+
+          setSelectedObject({
+            index: index,
+            item: itemParentObject.item,
+            setItem: itemParentObject.setItem,
+          });
         }
       }
     },
@@ -100,8 +86,13 @@ export function ItemSelector({ items, currentItem }) {
       const newPosition = [newPositionX, newPositionY, newPositionZ];
       const newRoation = rightController.controller.rotation.toArray();
 
-      getItem().setItem(
-        updatePosition(getItem().item, selectedObject, newPosition, newRoation)
+      selectedObject?.setItem(
+        updatePosition(
+          selectedObject.item,
+          selectedObject.index,
+          newPosition,
+          newRoation
+        )
       );
     }
   });

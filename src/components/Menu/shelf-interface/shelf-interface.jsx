@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import MenuItem from "../menu-item";
 import { Shelf } from "./shelf-3D-models/Kallax_shelf";
 import { Plant } from "./shelf-3D-models/Plant";
@@ -15,16 +15,17 @@ import {
   TrampolineMiniModel,
   GolfTeeMiniModel,
 } from "../helpers/animated-mini-models";
-import { CylinderGeometry } from "three";
 import { MarkerManMiniModel } from "../mini-marker-man";
 import Tooltips from "../helpers/tooltips";
+import { useFrame } from "@react-three/fiber";
 
-export default function ShelfInterface({ refObjects }) {
+export default function ShelfInterface({ refObjects, currentItem }) {
   const [ref, api] = useBox(() => ({
     position: [0, 0.67, -1.5],
     rotation: [0, 0, 0],
     args: [0.7, 1.31, 0.4],
   }));
+
   return (
     <group position={[0, 0.67, -1.5]}>
       <Shelf />
@@ -64,41 +65,32 @@ export default function ShelfInterface({ refObjects }) {
         <MiniPipe />
       </mesh>
 
-      {/* Cannon */}
-      <group position={[-0.13, -0.575, 0.15]}>
-        <mesh position={[0.02, 0.08, 0]} ref={refObjects.cannonRef}>
-          <boxGeometry args={[0.15, 0.12, 0.28]} />
-          <meshStandardMaterial color="red" transparent={true} opacity={0} />
-        </mesh>
-        <CannonMiniModel />
-      </group>
+      <CannonMiniModel
+        position={[-0.13, -0.575, 0.15]}
+        refObjects={refObjects}
+      />
 
-      {/* Trampoline */}
-      <group position={[0.1571, 0.057, 0.03]}>
-        <mesh ref={refObjects.trampolineRef}>
-          <cylinderGeometry args={[0.14, 0.14, 0.035]} />
-          <meshStandardMaterial color="red" transparent={true} opacity={0} />
-        </mesh>
-        <TrampolineMiniModel />
-      </group>
+      <TrampolineMiniModel
+        currentItem={currentItem}
+        position={[0.1571, 0.057, 0.03]}
+        refObjects={refObjects}
+      />
 
-      {/* golfTee */}
-      <group position={[-0.1571, -0.278, 0.03]}>
-        <mesh
-          ref={refObjects.golfTeeRef}
-          rotation={[Math.PI / 2, 0, 0]}
-          position={[0.03, 0, 0]}
-        >
-          <boxGeometry args={[0.23, 0.17, 0.1]} />
-          <meshStandardMaterial color="red" transparent={true} opacity={0} />
-        </mesh>
-        <GolfTeeMiniModel />
-        <GolfTeeMiniModel position={[0.1, 0, 0]} rotation={[0, 0.3, 0]} />
-        <GolfTeeMiniModel
-          position={[-0.04, 0.015, 0]}
-          rotation={[0.2, -0.7, 0]}
-        />
-      </group>
+      {/* <group position={[-0.1571, -0.278, 0.03]} refObjects={refObjects}> */}
+      <GolfTeeMiniModel
+        position={[-0.1571, -0.278, 0.03]}
+        refObjects={refObjects}
+      />
+      <GolfTeeMiniModel
+        position={[-0.0571, -0.278, 0.03]}
+        rotation={[0, 0.3, 0]}
+        refObjects={refObjects}
+      />
+      <GolfTeeMiniModel
+        position={[-0.1971, -0.263, 0.03]}
+        rotation={[0.2, -0.7, 0]}
+        refObjects={refObjects}
+      />
     </group>
   );
 }

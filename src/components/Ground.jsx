@@ -19,7 +19,7 @@ function Ground(props) {
   return (
     <mesh ref={ref} receiveShadow>
       <planeGeometry args={[25, 25]} />
-      <meshStandardMaterial color={"green"} visible={false} />
+      <meshStandardMaterial color={"green"} visible={true} />
     </mesh>
   );
 }

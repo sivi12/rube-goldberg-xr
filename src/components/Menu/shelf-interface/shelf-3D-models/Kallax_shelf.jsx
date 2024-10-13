@@ -34,6 +34,7 @@ export function Shelf() {
           position={[0, 0, 0]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={100}
+          receiveShadow
         />
       </group>
     </group>

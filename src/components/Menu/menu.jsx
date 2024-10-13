@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useButton } from "../../helpers/buttons";
 import { menuItemSelector } from "./helpers/menu-item-selector";
 import ShelfInterface from "./shelf-interface/shelf-interface";
-import Tooltips from "./helpers/tooltips";
+import GameManual from "./helpers/game-manual";
 import { ItemSpawner } from "../../helpers/item-spwaner";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
@@ -95,7 +95,7 @@ export default function MenuButton({}) {
   return (
     <>
       <ShelfInterface refObjects={refObjects} currentItem={currentItem} />
-      <Tooltips currentItem={currentItem} />
+
       <group>
         <ItemSpawner
           items={items}

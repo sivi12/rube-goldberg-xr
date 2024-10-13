@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox, Text } from "@react-three/drei";
 
-export default function Tooltips({ currentItem }) {
+export default function GameManual({ currentItem, position }) {
   const groupRef = useRef();
   const { camera } = useThree();
   const fontUrl = "/Fonts/RobotoSlab.ttf";
@@ -15,7 +15,7 @@ export default function Tooltips({ currentItem }) {
   // });
 
   return (
-    <group position={[0, 2.1, -1.5]}>
+    <group position={position}>
       <mesh>
         <RoundedBox args={[0.8, 1, 0.1]} radius={0.08} smoothness={2}>
           <meshStandardMaterial

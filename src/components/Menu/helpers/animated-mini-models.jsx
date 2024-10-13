@@ -14,8 +14,6 @@ export function MiniPipe() {
   return (
     <group rotation={[0, 0.6, 0]}>
       <mesh
-        castShadow
-        receiveShadow
         geometry={
           nodes.SM_TrackModularHalfPipe_LOW_M_TrackModularHalfPipe_LOW_0
             .geometry
@@ -28,43 +26,48 @@ export function MiniPipe() {
 }
 
 export function TrampolineMiniModel({
-  scale = [0.001, 0.001, 0.001],
+  scale = [0.00055, 0.00055, 0.00055],
   currentItem,
   position = [0, 0, 0],
   refObjects,
 }) {
   const { nodes, materials } = useGLTF("/Models/trampoline.glb");
-  // const ref = useRef();
+  const ref = useRef();
+
   // useFrame((state, delta) => {
-  //   const scaleFactor = 1 + Math.sin(state.clock.getElapsedTime() * 3) * 0.1; // Schwingung zwischen 0.9 und 1.1
-  //   ref.current.scale.set(
-  //     scale[0] * scaleFactor,
-  //     scale[1] * scaleFactor,
-  //     scale[2] * scaleFactor
-  //   );
+  //   if (currentItem === "trampoline") {
+  //     const scaleFactor = 1 + Math.sin(state.clock.getElapsedTime() * 3) * 0.1; // Schwingung zwischen 0.9 und 1.1
+  //     ref.current.scale.set(
+  //       scale[0] * scaleFactor,
+  //       scale[1] * scaleFactor,
+  //       scale[2] * scaleFactor
+  //     );
+  //   }
   // });
 
   return (
-    <group rotation={[-Math.PI / 2, 0, 0]} scale={scale} position={position}>
+    <group
+      rotation={[-Math.PI / 2, 0, 0]}
+      scale={scale}
+      position={position}
+      ref={ref}
+    >
       <mesh
         geometry={nodes.Object_2.geometry}
         material={materials["black-rubber"]}
-        material-emissive={"white"}
-        material-emissiveIntensity={currentItem === "trampoline" ? 0.08 : 0}
         ref={refObjects.trampolineRef}
       />
 
       <mesh
         geometry={nodes.Object_3.geometry}
         material={materials["blue-plastic"]}
-        material-emissive={"white"}
-        material-emissiveIntensity={currentItem === "trampoline" ? 0.08 : 0}
         ref={refObjects.trampolineRef}
       />
       <mesh geometry={nodes.Object_4.geometry} material={materials.metal} />
     </group>
   );
 }
+
 export function ButtonModelAnimated(props) {
   const { nodes, materials } = useGLTF("/Models/button.glb");
   const ref = useRef();
@@ -89,10 +92,23 @@ export const DominoMiniModel = ({
   scale = 0.015,
   position = [0, -0.045, 0],
   rotation,
+  currentItem,
 }) => {
   const { nodes, materials } = useGLTF("/Models/domino.glb");
+  const ref = useRef();
+
+  // useFrame((state, delta) => {
+  //   if (currentItem && currentItem === "domino") {
+  //     const scaleFactor = 1 + Math.sin(state.clock.getElapsedTime() * 3) * 0.1; // Schwingung zwischen 0.9 und 1.1
+  //     ref.current.scale.set(
+  //       scale * scaleFactor,
+  //       scale * scaleFactor,
+  //       scale * scaleFactor
+  //     );
+  //   }
+  // });
   return (
-    <group scale={scale} position={position} rotation={rotation}>
+    <group scale={scale} position={position} rotation={rotation} ref={ref}>
       <mesh
         geometry={nodes.Low_Domino_0.geometry}
         material={materials.Domino}
@@ -104,7 +120,7 @@ export const DominoMiniModel = ({
 };
 
 export const MiniBook = ({
-  scale = [0.1, 0.05, 0.1],
+  scale = [0.06, 0.06, 0.06],
   rotation = [0, 0, 0],
 }) => {
   const { nodes, materials } = useGLTF("/notebook2.glb");

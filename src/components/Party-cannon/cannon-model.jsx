@@ -5,7 +5,13 @@ import { useTrimesh } from "@react-three/cannon";
 
 import { arrowHelper } from "./helper-functions";
 
-export function CannonModel({ onRef, position, rotation }) {
+export function CannonModel({
+  onRef,
+  position,
+  rotation,
+  currentItem,
+  startGame,
+}) {
   const ref = useRef();
   const { nodes, materials } = useGLTF("/Models/party_cannon.glb");
   const wheelGeometry = nodes.Object_4.geometry;
@@ -48,7 +54,12 @@ export function CannonModel({ onRef, position, rotation }) {
     }
     const direction = [-1, Math.tan(THREE.MathUtils.degToRad(-18)), 0];
     const arrowPosition = [0, -0.055, 0];
-    bodyRef.current.add(arrowHelper(direction, arrowPosition));
+    const arrow = arrowHelper(direction, arrowPosition);
+    bodyRef.current.add(arrow);
+
+    const timer = setTimeout(() => {
+      bodyRef.current.remove(arrow);
+    }, 100);
   }, [position, rotation]);
 
   useEffect(() => {

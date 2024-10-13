@@ -15,7 +15,7 @@ export default function RemoveLastItem({ items, currentItem }) {
     leftController,
     "y",
     () => {
-      if (leftController && getItem().item.length > 0) {
+      if (leftController && getItem().item?.length > 0) {
         getItem().setItem(getItem().item.slice(0, -1));
       }
     },

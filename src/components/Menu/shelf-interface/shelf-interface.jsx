@@ -77,7 +77,7 @@ export default function ShelfInterface({ refObjects, currentItem }) {
       </mesh>
 
       <CannonMiniModel
-        position={[-0.13, -0.575, 0.15]}
+        position={[-0.17, -0.575, 0.14]}
         refObjects={refObjects}
       />
 
@@ -88,20 +88,12 @@ export default function ShelfInterface({ refObjects, currentItem }) {
       />
 
       {/* <group position={[-0.1571, -0.278, 0.03]} refObjects={refObjects}> */}
-      <GolfTeeMiniModel
-        position={[-0.1571, -0.258, 0.09]}
-        refObjects={refObjects}
-      />
-      <GolfTeeMiniModel
-        position={[-0.0871, -0.258, 0.07]}
-        rotation={[0, 0.3, 0]}
-        refObjects={refObjects}
-      />
-      <GolfTeeMiniModel
-        position={[-0.1971, -0.253, 0.03]}
-        rotation={[0, -0.7, 0]}
-        refObjects={refObjects}
-      />
+
+      <mesh ref={refObjects.golfTeeRef}>
+        <GolfTeeMiniModel position={[-0.1571, -0.258, 0.09]} />
+        <GolfTeeMiniModel position={[-0.0871, -0.258, 0.07]} />
+        <GolfTeeMiniModel position={[-0.1971, -0.253, 0.03]} />
+      </mesh>
     </group>
   );
 }

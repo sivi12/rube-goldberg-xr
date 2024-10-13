@@ -12,21 +12,20 @@ export default function SelectedItemSpolight({ currentItem, refObjects }) {
 
   const spotlight = useMemo(() => new SpotLight("#fff"), []);
   useEffect(() => {
+    if (currentItem !== "") {
+      setLightPosition([0, -0.1, 0.017]);
+    }
     if (currentItem === "domino") {
       setPosition([-0.16, 0.563, 0]);
-      setLightPosition([0, -0.1, 0.017]);
     }
     if (currentItem === "book") {
       setPosition([0.16, 0.563, 0]);
-      setLightPosition([0, -0.1, 0.017]);
     }
     if (currentItem === "ball") {
       setPosition([-0.16, 0.25, 0]);
-      setLightPosition([0, -0.1, 0.017]);
     }
     if (currentItem === "trampoline") {
       setPosition([0.16, 0.25, 0]);
-      setLightPosition([0.0, -0.1, 0.017]);
     }
     if (currentItem === "golfTee") {
       setPosition([-0.16, -0.063, 0]);
@@ -48,10 +47,10 @@ export default function SelectedItemSpolight({ currentItem, refObjects }) {
         <group>
           <primitive
             object={spotlight}
-            position={[-0, 0, 0]}
-            intensity={0.15}
+            position={[0, 0, 0]}
+            intensity={0.2}
             penumbra={1.9}
-            distance={0.5}
+            distance={0.4}
             angle={0.5}
             color={"#FFF5E1"}
             castShadow

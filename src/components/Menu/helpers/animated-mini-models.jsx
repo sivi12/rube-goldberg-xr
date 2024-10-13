@@ -148,7 +148,7 @@ export const BallMiniModel = ({ size, position }) => {
   );
 };
 
-export const GolfTeeMiniModel = ({ scale, position, rotation, refObjects }) => {
+export const GolfTeeMiniModel = ({ scale, position, rotation }) => {
   const { nodes, materials } = useGLTF("/Models/golf_tee.glb");
 
   return (
@@ -158,9 +158,12 @@ export const GolfTeeMiniModel = ({ scale, position, rotation, refObjects }) => {
         material={materials["Scene_-_Root"]}
         position={position}
         rotation={rotation}
-        ref={refObjects.golfTeeRef}
       />
     </>
+    // <mesh position={position}>
+    //   <cylinderGeometry args={[0.035, 0.035, 0.15]} />
+    //   <meshStandardMaterial color="yellow" transparent={true} opacity={0.8} />
+    // </mesh>
   );
 };
 
@@ -170,8 +173,8 @@ export function CannonMiniModel({ position = [0, 0, 0], refObjects }) {
   return (
     <group
       dispose={null}
-      scale={1.2}
-      rotation={[Math.PI, -1.4, 0]}
+      scale={0.8}
+      rotation={[Math.PI, -1.2, 0]}
       position={position}
     >
       <mesh

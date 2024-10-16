@@ -4,7 +4,7 @@ import { RoundedBox, Text } from "@react-three/drei";
 import { Spotlight } from "../shelf-interface/shelf-3D-models/Spotlight";
 import { SpotLight } from "three";
 
-export default function SelectedItemSpolight({ currentItem, refObjects }) {
+export default function SelectedItemSpolight({ currentItem }) {
   const fontUrl = "/Fonts/RobotoSlab.ttf";
 
   const [position, setPosition] = useState([0, 0, 0]);
@@ -36,6 +36,9 @@ export default function SelectedItemSpolight({ currentItem, refObjects }) {
 
     if (currentItem === "cannon") {
       setPosition([-0.16, -0.38, 0]);
+    }
+    if (currentItem === "arduinoBox") {
+      setPosition([-0, 0.88, 0.1]);
     }
   }, [currentItem]);
 

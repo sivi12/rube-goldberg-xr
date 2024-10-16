@@ -27,12 +27,10 @@ export function MiniPipe() {
 
 export function TrampolineMiniModel({
   scale = [0.00055, 0.00055, 0.00055],
-  currentItem,
+
   position = [0, 0, 0],
-  refObjects,
 }) {
   const { nodes, materials } = useGLTF("/Models/trampoline.glb");
-  const ref = useRef();
 
   // useFrame((state, delta) => {
   //   if (currentItem === "trampoline") {
@@ -46,22 +44,15 @@ export function TrampolineMiniModel({
   // });
 
   return (
-    <group
-      rotation={[-Math.PI / 2, 0, 0]}
-      scale={scale}
-      position={position}
-      ref={ref}
-    >
+    <group rotation={[-Math.PI / 2, 0, 0]} scale={scale} position={position}>
       <mesh
         geometry={nodes.Object_2.geometry}
         material={materials["black-rubber"]}
-        ref={refObjects.trampolineRef}
       />
 
       <mesh
         geometry={nodes.Object_3.geometry}
         material={materials["blue-plastic"]}
-        ref={refObjects.trampolineRef}
       />
       <mesh geometry={nodes.Object_4.geometry} material={materials.metal} />
     </group>
@@ -148,7 +139,7 @@ export const BallMiniModel = ({ size, position }) => {
   );
 };
 
-export const GolfTeeMiniModel = ({ scale, position, rotation }) => {
+export const GolfTeeMiniModel = ({ scale, position = [0, 0, 0], rotation }) => {
   const { nodes, materials } = useGLTF("/Models/golf_tee.glb");
 
   return (
@@ -167,7 +158,7 @@ export const GolfTeeMiniModel = ({ scale, position, rotation }) => {
   );
 };
 
-export function CannonMiniModel({ position = [0, 0, 0], refObjects }) {
+export function CannonMiniModel({ position = [0, 0, 0] }) {
   const { nodes, materials } = useGLTF("/Models/party_cannon.glb");
 
   return (
@@ -180,12 +171,10 @@ export function CannonMiniModel({ position = [0, 0, 0], refObjects }) {
       <mesh
         geometry={nodes.Object_4.geometry}
         material={materials.Cannon_Wheels}
-        ref={refObjects.cannonRef}
       />
       <mesh
         geometry={nodes.Object_5.geometry}
         material={materials.Cannon_Body}
-        ref={refObjects.cannonRef}
       />
     </group>
   );

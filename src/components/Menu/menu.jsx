@@ -9,23 +9,10 @@ import { ItemSelector } from "../../helpers/item-selcetor";
 import RemoveLastItem from "../../helpers/delete-last-item";
 
 export default function MenuButton({}) {
-  const leftController = useController("left");
   const rightController = useController("right");
 
   const [currentItem, setCurrentItem] = useState("");
   const [startGame, setStartGame] = useState(false);
-
-  const menuRef = useRef();
-  const dominoRef = useRef();
-  const ballRef = useRef();
-  const startButtonRef = useRef();
-  const buildButtonRef = useRef();
-  const rampRef = useRef();
-  const pipeRef = useRef();
-  const cannonRef = useRef();
-  const startAnimationRef = useRef();
-  const trampolineRef = useRef();
-  const golfTeeRef = useRef();
 
   const [domino, setDomino] = useState([]);
   const [ball, setBall] = useState([]);
@@ -55,35 +42,6 @@ export default function MenuButton({}) {
   //     : { item: null, setItem: () => {} };
   // }
 
-  const refObjects = {
-    menuRef,
-    dominoRef,
-    ballRef,
-    startButtonRef,
-    buildButtonRef,
-    rampRef,
-    pipeRef,
-    cannonRef,
-    startAnimationRef,
-    trampolineRef,
-    golfTeeRef,
-  };
-
-  useXREvent(
-    "selectstart",
-    () => {
-      if (leftController) {
-        menuItemSelector(
-          refObjects,
-          setCurrentItem,
-          setStartGame,
-          leftController
-        );
-      }
-    },
-    { handedness: "left" }
-  );
-
   useButton(rightController, "a", () => {
     setStartGame(true); // wird erst nach 0.2 sekunden gesetzt damit
   });
@@ -94,7 +52,11 @@ export default function MenuButton({}) {
 
   return (
     <>
-      <ShelfInterface refObjects={refObjects} currentItem={currentItem} />
+      <ShelfInterface
+        currentItem={currentItem}
+        setCurrentItem={setCurrentItem}
+        setStartGame={setStartGame}
+      />
 
       <group>
         <ItemSpawner

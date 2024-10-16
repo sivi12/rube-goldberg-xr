@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       {scaledAlready && <ScaleGltfs setScaledAlready={setScaledAlready} />}
-      <ARButton />
+      <ARButton position={[0, 2, 0]} />
       <Canvas>
         <directionalLight position={[0, 1, 2]} intensity={1.7} />
         <ambientLight position={[0, 0, 2]} intensity={0.4} />

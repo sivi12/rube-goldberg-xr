@@ -59,11 +59,11 @@ export default function CannonBall({ position, rotation, startGame }) {
         <meshStandardMaterial color={"yellow"} />
       </mesh>
       <mesh ref={buttonRef}>
-        <ButtonModel
+        {/* <ButtonModel
           scale={0.01}
           rotation={[0, 0, (105 * Math.PI) / 180]}
           position={(0, 1, 0)}
-        />
+        /> */}
       </mesh>
     </>
   );

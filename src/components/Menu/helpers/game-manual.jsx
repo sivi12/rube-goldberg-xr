@@ -17,7 +17,7 @@ export default function GameManual({ currentItem, position }) {
   return (
     <group position={position}>
       <mesh>
-        <RoundedBox args={[0.8, 1, 0.1]} radius={0.08} smoothness={2}>
+        <RoundedBox args={[1, 0.9, 0.1]} radius={0.08} smoothness={2}>
           <meshStandardMaterial
             color={"#4169E1"}
             opacity={0.7}
@@ -28,7 +28,7 @@ export default function GameManual({ currentItem, position }) {
       </mesh>
       <Text
         position={[0, 0, 0]} // 1 unit in front of the camera
-        fontSize={0.035}
+        fontSize={0.045}
         color="white"
         font={fontUrl}
         anchorX="center" // Horizontale Zentrierung
@@ -42,7 +42,6 @@ export default function GameManual({ currentItem, position }) {
           "Press A to start the game\n \n" +
           "Press B to go back to build mode\n" +
           " \n"}
-        {currentItem ? `${currentItem} selected` : "Choose an item"}
       </Text>
     </group>
   );

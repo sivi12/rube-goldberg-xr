@@ -1,12 +1,15 @@
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 export function menuItemSelector(
   refObjects,
   setCurrentItem,
   setStartGame,
+  setCurrentInfo,
   leftController
 ) {
   const tempMatrix = new THREE.Matrix4();
+
   // Raycaster Setup
   const raycaster = new THREE.Raycaster();
   tempMatrix.identity().extractRotation(leftController.controller.matrixWorld);
@@ -15,117 +18,73 @@ export function menuItemSelector(
   );
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
 
-  //if abfrage eigentlich unnötig -> sag chat gpt er soll es mit switch case machen
-  if (refObjects.dominoRef.current) {
-    const intersectsDomino = raycaster.intersectObject(
-      refObjects.dominoRef.current,
-      true
-    );
-    if (intersectsDomino.length > 0) {
-      console.log("Domino ausgewählt");
-      setCurrentItem("domino");
-    }
-  }
+  // Alle Objektreferenzen in ein Array mit Namen umwandeln
+  const objectsToCheck = [
+    {
+      ref: refObjects.dominoRef,
+      name: "domino",
+      action: () => setCurrentItem("domino"),
+    },
+    {
+      ref: refObjects.ballRef,
+      name: "ball",
+      action: () => setCurrentItem("ball"),
+    },
+    {
+      ref: refObjects.rampRef,
+      name: "book",
+      action: () => setCurrentItem("book"),
+    },
+    {
+      ref: refObjects.pipeRef,
+      name: "pipe",
+      action: () => setCurrentItem("pipe"),
+    },
+    {
+      ref: refObjects.startAnimationRef,
+      name: "arduinoBox",
+      action: () => setCurrentItem("arduinoBox"),
+    },
+    {
+      ref: refObjects.cannonRef,
+      name: "cannon",
+      action: () => setCurrentItem("cannon"),
+    },
+    {
+      ref: refObjects.trampolineRef,
+      name: "trampoline",
+      action: () => setCurrentItem("trampoline"),
+    },
+    {
+      ref: refObjects.golfTeeRef,
+      name: "golfTee",
+      action: () => setCurrentItem("golfTee"),
+    },
+    {
+      ref: refObjects.startButtonRef,
+      name: "start",
+      action: () => setStartGame(true),
+    },
+    {
+      ref: refObjects.buildButtonRef,
+      name: "build",
+      action: () => setStartGame(false),
+    },
+  ];
 
-  if (refObjects.ballRef.current) {
-    const intersectsBall = raycaster.intersectObject(
-      refObjects.ballRef.current,
-      true
-    );
-    if (intersectsBall.length > 0) {
-      console.log("Ball ausgewählt");
-      setCurrentItem("ball");
+  // Prüfe für jedes Objekt, ob es mit dem Raycaster kollidiert
+  objectsToCheck.forEach(({ ref, name, action }) => {
+    if (ref.current) {
+      const intersects = raycaster.intersectObject(ref.current, true);
+      if (intersects.length > 0 && intersects[0].object.name !== "info") {
+        console.log(intersects);
+        console.log(`${name} ausgewählt`);
+        action(); // Führt die spezifische Aktion für das Objekt aus
+        setCurrentInfo("gameManual");
+      }
+      if (intersects[0]?.object.name.slice(-4) === "Info") {
+        setCurrentInfo(intersects[0]?.object.name);
+      }
     }
-  }
-
-  if (refObjects.rampRef.current) {
-    const intersectsRamp = raycaster.intersectObject(
-      refObjects.rampRef.current,
-      true
-    );
-    if (intersectsRamp.length > 0) {
-      console.log("Rampe ausgewählt");
-      setCurrentItem("book");
-    }
-  }
-
-  if (refObjects.pipeRef.current) {
-    const intersectsPipe = raycaster.intersectObject(
-      refObjects.pipeRef.current,
-      true
-    );
-    if (intersectsPipe.length > 0) {
-      console.log("Pipe ausgewählt");
-      setCurrentItem("pipe");
-    }
-  }
-
-  if (refObjects.startAnimationRef.current) {
-    const intersectsStartAnimation = raycaster.intersectObject(
-      refObjects.startAnimationRef.current,
-      true
-    );
-    if (intersectsStartAnimation.length > 0) {
-      console.log("Arduino Box ausgewählt");
-      setCurrentItem("arduinoBox");
-    }
-  }
-
-  if (refObjects.cannonRef.current) {
-    console.log(refObjects.cannonRef.current);
-    const intersectsCannon = raycaster.intersectObject(
-      refObjects.cannonRef.current.parent,
-      true
-    );
-    if (intersectsCannon.length > 0) {
-      console.log("Cannon ausgewählt");
-      setCurrentItem("cannon");
-    }
-  }
-
-  if (refObjects.trampolineRef.current) {
-    const intersectsTrampoline = raycaster.intersectObject(
-      refObjects.trampolineRef.current.parent,
-      true
-    );
-    if (intersectsTrampoline.length > 0) {
-      console.log("trampoline ausgewählt");
-      setCurrentItem("trampoline");
-    }
-  }
-  if (refObjects.golfTeeRef.current) {
-    console.log(refObjects.golfTeeRef.current);
-    const intersectsGolfTee = raycaster.intersectObject(
-      refObjects.golfTeeRef.current,
-      true
-    );
-    if (intersectsGolfTee.length > 0) {
-      console.log(intersectsGolfTee, " intersects");
-      console.log("Golf Tee ausgewählt");
-      setCurrentItem("golfTee");
-    }
-  }
-
-  if (refObjects.startButtonRef.current) {
-    const intersectsStartButton = raycaster.intersectObject(
-      refObjects.startButtonRef.current,
-      true
-    );
-    if (intersectsStartButton.length > 0) {
-      console.log("start ausgewählt");
-
-      setStartGame(true);
-    }
-  }
-
-  if (refObjects.buildButtonRef.current) {
-    const intersectsBuildButton = raycaster.intersectObject(
-      refObjects.buildButtonRef.current,
-      true
-    );
-    if (intersectsBuildButton.length > 0) {
-      console.log("Build-Mode ausgewählt");
-      setStartGame(false);
-    }
-  }
+  });
 }

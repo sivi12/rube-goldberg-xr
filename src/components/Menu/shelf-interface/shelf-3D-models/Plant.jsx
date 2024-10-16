@@ -13,7 +13,7 @@ import { useGLTF } from "@react-three/drei";
 export function Plant(props) {
   const { nodes, materials } = useGLTF("/plant.glb");
   return (
-    <group position={[0.23, 0.65, 0.05]} dispose={null}>
+    <group position={[0.23, 0.65, -0.09]} dispose={null}>
       <group scale={0.01}>
         <mesh
           geometry={nodes.ivy_2_lambert7_0.geometry}

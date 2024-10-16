@@ -7,7 +7,7 @@ import { SphereModel } from "../components/Ball/ball";
 import { GolfTeeModel } from "../components/Golf-tee/golf-tee-model";
 import { TrampolineModel } from "../components/Trampoline/trampoline-model";
 import Cannon from "../components/Party-cannon/cannon";
-import GameBoxModel from "../components/physical-game-box/game-box-model";
+import ArduinoBoxModel from "../components/arduino-box/arduino-box-model";
 import { GameDominoModel } from "../components/Domino/game-dominos";
 
 export function ItemSpawner({ items, currentItem, startGame }) {
@@ -203,12 +203,11 @@ export function ItemSpawner({ items, currentItem, startGame }) {
       </>
       <>
         {getItemObject("arduinoBox").item.map((objekt, index) => (
-          <GameBoxModel
+          <ArduinoBoxModel
             startGame={startGame}
             key={index}
             position={objekt.position}
             rotation={objekt.rotation}
-            character={"markerMan"}
             size={[0.215, 0.115, 0.22]}
             onRef={(ref) => (objekt.api = ref)}
           />

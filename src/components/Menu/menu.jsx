@@ -63,7 +63,6 @@ export default function MenuButton({}) {
           items={items}
           currentItem={currentItem}
           startGame={startGame}
-          character={"markerMan"}
         />
         {!startGame && <ItemSelector items={items} currentItem={currentItem} />}
         {!startGame && (

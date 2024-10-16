@@ -6,14 +6,7 @@ import { useController } from "@react-three/xr";
 import { useBox } from "@react-three/cannon";
 import { ButtonModel } from "./Button";
 
-function GameBoxModel({
-  startGame,
-  position,
-  rotation,
-  character = "markerMan",
-  onRef,
-  size,
-}) {
+function ArduinoBoxModel({ startGame, position, rotation, onRef, size }) {
   const [currentAnimation, setCurrentAnimation] = useState("sittingIdle");
   const ref = React.useRef();
 
@@ -53,12 +46,12 @@ function GameBoxModel({
           <boxGeometry args={size} />
           <meshStandardMaterial color="red" transparent={true} opacity={0.3} />
         </mesh>
-        {character === "markerMan" && (
-          <MarkerManModel
-            currentAnimation={currentAnimation}
-            startGame={startGame}
-          />
-        )}
+
+        <MarkerManModel
+          currentAnimation={currentAnimation}
+          startGame={startGame}
+        />
+
         <ButtonModel
           position={position}
           rotation={rotation}
@@ -75,4 +68,4 @@ function GameBoxModel({
   );
 }
 
-export default GameBoxModel;
+export default ArduinoBoxModel;

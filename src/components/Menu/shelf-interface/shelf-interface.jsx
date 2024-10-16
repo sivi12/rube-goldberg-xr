@@ -1,27 +1,27 @@
 import React, { useRef, useState } from "react";
-import MenuItem from "../menu-item";
 import { Shelf } from "./shelf-3D-models/Kallax_shelf";
 import { Plant } from "./shelf-3D-models/Plant";
 import { Radio } from "./shelf-3D-models/Old_radio";
 import { VinylRecord } from "./shelf-3D-models/Vinyl_record";
 import { Books } from "./shelf-3D-models/Books";
 import { useBox } from "@react-three/cannon";
-import {
-  DominoMiniModel,
-  BallMiniModel,
-  CannonMiniModel,
-  MiniBook,
-  MiniPipe,
-  TrampolineMiniModel,
-  GolfTeeMiniModel,
-} from "../helpers/animated-mini-models";
-import { MarkerManMiniModel } from "../mini-marker-man";
+
+import { MarkerManMiniModel } from "./shelf-3D-models/mini-marker-man";
 
 import SelectedItemSpolight from "../helpers/selected-item-spotlight";
 import { InfoIcon } from "../helpers/info-icon";
 import { useController, useXREvent } from "@react-three/xr";
 import { menuItemSelector } from "../helpers/menu-item-selector";
 import SelectedItemText from "../helpers/selected-item-info";
+import {
+  BallMiniModel,
+  CannonMiniModel,
+  DominoMiniModel,
+  GolfTeeMiniModel,
+  MiniBook,
+  MiniPipe,
+  TrampolineMiniModel,
+} from "./shelf-3D-models/animated-mini-models";
 
 export default function ShelfInterface({
   currentItem,

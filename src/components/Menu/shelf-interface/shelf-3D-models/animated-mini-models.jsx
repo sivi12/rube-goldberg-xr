@@ -1,5 +1,4 @@
 import { useFrame, useLoader } from "@react-three/fiber";
-import getRandomColor from "../../RandomColor";
 import { useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { TextureLoader } from "three";

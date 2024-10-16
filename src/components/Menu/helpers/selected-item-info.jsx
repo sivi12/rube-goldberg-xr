@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox, Text } from "@react-three/drei";
 import * as THREE from "three";
-import { SchoolBoard } from "../3D-Models/Board_school";
+import { SchoolBoard } from "../shelf-interface/shelf-3D-models/Board_school";
 import GameManual from "./game-manual";
 
 export default function SelectedItemText({ currentInfo, position }) {

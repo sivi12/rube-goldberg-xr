@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { shoot } from "./helper-functions";
 import { useButton } from "../../helpers/buttons";
 import { useController } from "@react-three/xr";
-import { ButtonModel } from "../physical-game-box/Button";
+
 import { applyOffset } from "../../helpers/apply-offset";
 
 export default function CannonBall({ position, rotation, startGame }) {

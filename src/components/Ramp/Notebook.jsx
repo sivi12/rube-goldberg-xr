@@ -12,7 +12,7 @@ import { useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
 export function Notebook({ position, rotation }) {
-  const { nodes, materials } = useGLTF("/notebook.glb");
+  const { nodes, materials } = useGLTF("/Models/shelf-decoration/notebook.glb");
   const newTexture = useTexture("/Textures/bookTexture.jpg");
   const bookMaterial = new THREE.MeshStandardMaterial({ map: newTexture });
   return (
@@ -46,4 +46,4 @@ export function Notebook({ position, rotation }) {
   );
 }
 
-useGLTF.preload("/notebook.glb");
+useGLTF.preload("/Models/shelf-decoration/notebook.glb");

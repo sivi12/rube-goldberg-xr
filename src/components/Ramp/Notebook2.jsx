@@ -11,7 +11,9 @@ import React from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function Notebook2(props) {
-  const { nodes, materials } = useGLTF("/notebook2.glb");
+  const { nodes, materials } = useGLTF(
+    "/Models/shelf-decoration/notebook2.glb"
+  );
   return (
     <group dispose={null}>
       <mesh
@@ -24,4 +26,4 @@ export function Notebook2(props) {
   );
 }
 
-useGLTF.preload("/notebook2.glb");
+useGLTF.preload("/Models/shelf-decoration/notebook2.glb");

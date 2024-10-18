@@ -113,7 +113,7 @@ export const MiniBook = ({
   scale = [0.06, 0.06, 0.06],
   rotation = [0, 0, 0],
 }) => {
-  const { nodes, materials } = useGLTF("/notebook2.glb");
+  const { nodes, materials } = useGLTF("Models/shelf-decoration/notebook2.glb");
   return (
     <group dispose={null}>
       <mesh

@@ -11,7 +11,6 @@ import { useBox } from "@react-three/cannon";
 import { ItemSelector } from "../../helpers/item-selcetor";
 import { ItemSpawner } from "../../helpers/item-spwaner";
 import RemoveLastItem from "../../helpers/delete-last-item";
-import { Notebook } from "./Notebook";
 import { useGLTF } from "@react-three/drei";
 
 export function RampModel({ position, rotation, color, onRef }) {
@@ -35,7 +34,9 @@ export function RampModel({ position, rotation, color, onRef }) {
       api.rotation.set(0, rotation[1], Math.PI / 2);
     }
   }, [position, api.position, api]);
-  const { nodes, materials } = useGLTF("/notebook2.glb");
+  const { nodes, materials } = useGLTF(
+    "/Models/shelf-decoration/notebook2.glb"
+  );
   return (
     <>
       <mesh ref={ref}>

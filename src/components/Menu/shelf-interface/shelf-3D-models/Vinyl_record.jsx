@@ -11,7 +11,9 @@ import React from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function VinylRecord({ position = [-0.17, -0.307, 0] }) {
-  const { nodes, materials } = useGLTF("/vinyl_record.glb");
+  const { nodes, materials } = useGLTF(
+    "/Models/shelf-decoration//vinyl_record.glb"
+  );
   return (
     <group position={position} dispose={null}>
       <mesh
@@ -26,4 +28,4 @@ export function VinylRecord({ position = [-0.17, -0.307, 0] }) {
   );
 }
 
-useGLTF.preload("/vinyl_record.glb");
+useGLTF.preload("/Models/shelf-decoration//vinyl_record.glb");

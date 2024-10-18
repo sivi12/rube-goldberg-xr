@@ -11,7 +11,7 @@ import React from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function Books(props) {
-  const { nodes, materials } = useGLTF("/books.glb");
+  const { nodes, materials } = useGLTF("/Models/shelf-decoration/books.glb");
   return (
     <group position={[0.18, 0.325, -0.1]} dispose={null}>
       <group scale={0.0095}>
@@ -26,4 +26,4 @@ export function Books(props) {
   );
 }
 
-useGLTF.preload("/books.glb");
+useGLTF.preload("/Models/shelf-decoration/books.glb");

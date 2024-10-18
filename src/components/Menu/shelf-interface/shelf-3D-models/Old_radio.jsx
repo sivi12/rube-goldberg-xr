@@ -11,7 +11,9 @@ import React from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function Radio() {
-  const { nodes, materials } = useGLTF("/old_radio.glb");
+  const { nodes, materials } = useGLTF(
+    "/Models/shelf-decoration//old_radio.glb"
+  );
   return (
     <group dispose={null} position={[-0.17, 0.365, -0.07]}>
       <mesh
@@ -24,4 +26,4 @@ export function Radio() {
   );
 }
 
-useGLTF.preload("/old_radio.glb");
+useGLTF.preload("/Models/shelf-decoration//old_radio.glb");
